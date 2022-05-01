@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -19,31 +21,45 @@ import javax.swing.JSlider;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+public class DB {
+	private String filename = "db.txt"; 
+	public static void Main() {
+		
+	}
+	
+	private String getTable(String tableName) {
+		Path filePath = Path.of(filename);
+		String content = Files.readString(filePath);
+		return content;
+	}
+}
+
+
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField txtName;
-	private JTextField txtDob;
-	private JTextField txtPhone;
-	private JTextField txtEmail;
-	private JTextField txtGender;
-	private JTextField txtLogin;
-	private JTextField txtPassword;
-	private JTextField txtPhoto;
-	private JTable table;
-	private JTextField txtCustomer;
-	private JTextField txtTrainer;
-	private JTextField txtDate;
-	private JTextField txtTime;
-	private JTable table_1;
-	private JTable table_2;
-	private JTable table_3;
-	private JTextField txtFeedbackComment;
-	private JTable table_4;
-	private JTextField txtFilteringOptions;
-	private JTextField textField_2;
+	private JTextField loginEdit;
+	private JTextField passwordEdit;
+	private JTextField regNameEdit;
+	private JTextField regDobEdit;
+	private JTextField regPhoneEdit;
+	private JTextField regEmailEdit;
+	private JTextField regGenderEdit;
+	private JTextField regLoginEdit;
+	private JTextField regPasswordEdit;
+	private JTextField regPhotoEdit;
+	private JTable manageRegTable;
+	private JTextField bookCustomerEdit;
+	private JTextField bookTrainerEdit;
+	private JTextField bookDateEdit;
+	private JTextField bookTimeEdit;
+	private JTable sessionTable;
+	private JTable paymentTable;
+	private JTable feedbackTable;
+	private JTextField feedbackCommentEdit;
+	private JTable reportTable;
+	private JTextField reportFilterEdit;
+	private JTextField manageRegFilterEdit;
 
 	/**
 	 * Launch the application.
@@ -74,196 +90,196 @@ public class MainFrame extends JFrame {
 		CardLayout cl = new CardLayout(0, 0);
 		contentPane.setLayout(cl);
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, "1");
-		panel.setLayout(null);
+		JPanel authPanel = new JPanel();
+		contentPane.add(authPanel, "1");
+		authPanel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Authentication");
-		lblNewLabel.setBounds(199, 9, 122, 14);
-		panel.add(lblNewLabel);
+		JLabel authLabel = new JLabel("Authentication");
+		authLabel.setBounds(199, 9, 122, 14);
+		authPanel.add(authLabel);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, "2");
-		panel_1.setLayout(null);
+		JPanel mainMenuPanel = new JPanel();
+		contentPane.add(mainMenuPanel, "2");
+		mainMenuPanel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("register");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton regPanelButton = new JButton("register");
+		regPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "3");
 			}
 		});
-		btnNewButton_1.setBounds(180, 195, 89, 23);
-		panel_1.add(btnNewButton_1);
+		regPanelButton.setBounds(180, 195, 89, 23);
+		mainMenuPanel.add(regPanelButton);
 		
-		JButton btnNewButton_2 = new JButton("Manage registration");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton manageRegPanelButton = new JButton("Manage registration");
+		manageRegPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "4");
 			}
 		});
-		btnNewButton_2.setBounds(139, 260, 174, 23);
-		panel_1.add(btnNewButton_2);
+		manageRegPanelButton.setBounds(139, 260, 174, 23);
+		mainMenuPanel.add(manageRegPanelButton);
 		
-		JButton btnNewButton_3 = new JButton("Book session");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton bookPanelButton = new JButton("Book session");
+		bookPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "5");
 			}
 		});
-		btnNewButton_3.setBounds(156, 320, 133, 23);
-		panel_1.add(btnNewButton_3);
+		bookPanelButton.setBounds(156, 320, 133, 23);
+		mainMenuPanel.add(bookPanelButton);
 		
-		JButton btnNewButton_4 = new JButton("Generate report");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton reportPanelButton = new JButton("Generate report");
+		reportPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "6");
 			}
 		});
-		btnNewButton_4.setBounds(156, 375, 157, 23);
-		panel_1.add(btnNewButton_4);
+		reportPanelButton.setBounds(156, 375, 157, 23);
+		mainMenuPanel.add(reportPanelButton);
 		
-		JButton btnNewButton_5 = new JButton("check training session");
-		btnNewButton_5.addActionListener(new ActionListener() {
+		JButton sessionPanelButton = new JButton("check training session");
+		sessionPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "7");
 			}
 		});
-		btnNewButton_5.setBounds(588, 195, 212, 23);
-		panel_1.add(btnNewButton_5);
+		sessionPanelButton.setBounds(588, 195, 212, 23);
+		mainMenuPanel.add(sessionPanelButton);
 		
-		JButton btnNewButton_6 = new JButton("collect payments");
-		btnNewButton_6.addActionListener(new ActionListener() {
+		JButton paymentPanelButton = new JButton("collect payments");
+		paymentPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "8");
 			}
 		});
-		btnNewButton_6.setBounds(616, 273, 184, 23);
-		panel_1.add(btnNewButton_6);
+		paymentPanelButton.setBounds(616, 273, 184, 23);
+		mainMenuPanel.add(paymentPanelButton);
 		
-		JButton btnNewButton_7 = new JButton("provide feedback");
-		btnNewButton_7.addActionListener(new ActionListener() {
+		JButton feedbackPanelButton = new JButton("provide feedback");
+		feedbackPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "9");
 			}
 		});
-		btnNewButton_7.setBounds(630, 364, 151, 23);
-		panel_1.add(btnNewButton_7);
+		feedbackPanelButton.setBounds(630, 364, 151, 23);
+		mainMenuPanel.add(feedbackPanelButton);
 		
-		JButton btnNewButton = new JButton("Sign in");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton authButton = new JButton("Sign in");
+		authButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton.setBounds(199, 238, 89, 23);
-		panel.add(btnNewButton);
+		authButton.setBounds(199, 238, 89, 23);
+		authPanel.add(authButton);
 		
-		textField = new JTextField();
-		textField.setBounds(199, 97, 96, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		loginEdit = new JTextField();
+		loginEdit.setBounds(199, 97, 96, 20);
+		authPanel.add(loginEdit);
+		loginEdit.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("login");
-		lblNewLabel_2.setBounds(203, 72, 49, 14);
-		panel.add(lblNewLabel_2);
+		JLabel loginLabel = new JLabel("login");
+		loginLabel.setBounds(203, 72, 49, 14);
+		authPanel.add(loginLabel);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("password");
-		lblNewLabel_2_1.setBounds(196, 133, 99, 14);
-		panel.add(lblNewLabel_2_1);
+		JLabel passwordLabel = new JLabel("password");
+		passwordLabel.setBounds(196, 133, 99, 14);
+		authPanel.add(passwordLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(192, 158, 96, 20);
-		panel.add(textField_1);
+		passwordEdit = new JTextField();
+		passwordEdit.setColumns(10);
+		passwordEdit.setBounds(192, 158, 96, 20);
+		authPanel.add(passwordEdit);
 		
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, "3");
-		panel_2.setLayout(null);
+		JPanel registerPanel = new JPanel();
+		contentPane.add(registerPanel, "3");
+		registerPanel.setLayout(null);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Manager");
-		rdbtnNewRadioButton.setBounds(119, 121, 111, 23);
-		panel_2.add(rdbtnNewRadioButton);
+		JRadioButton regManagerRadio = new JRadioButton("Manager");
+		regManagerRadio.setBounds(119, 121, 111, 23);
+		registerPanel.add(regManagerRadio);
 		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("trainer");
-		rdbtnNewRadioButton_1.setBounds(119, 166, 111, 23);
-		panel_2.add(rdbtnNewRadioButton_1);
+		JRadioButton regTrainerRadio = new JRadioButton("trainer");
+		regTrainerRadio.setBounds(119, 166, 111, 23);
+		registerPanel.add(regTrainerRadio);
 		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("customer");
-		rdbtnNewRadioButton_2.setBounds(119, 214, 111, 23);
-		panel_2.add(rdbtnNewRadioButton_2);
+		JRadioButton regCustomerButton = new JRadioButton("customer");
+		regCustomerButton.setBounds(119, 214, 111, 23);
+		registerPanel.add(regCustomerButton);
 		
-		txtName = new JTextField();
-		txtName.setText("name");
-		txtName.setBounds(273, 121, 96, 20);
-		panel_2.add(txtName);
-		txtName.setColumns(10);
+		regNameEdit = new JTextField();
+		regNameEdit.setText("name");
+		regNameEdit.setBounds(273, 121, 96, 20);
+		registerPanel.add(regNameEdit);
+		regNameEdit.setColumns(10);
 		
-		txtDob = new JTextField();
-		txtDob.setText("DOB");
-		txtDob.setBounds(273, 166, 96, 20);
-		panel_2.add(txtDob);
-		txtDob.setColumns(10);
+		regDobEdit = new JTextField();
+		regDobEdit.setText("DOB");
+		regDobEdit.setBounds(273, 166, 96, 20);
+		registerPanel.add(regDobEdit);
+		regDobEdit.setColumns(10);
 		
-		txtPhone = new JTextField();
-		txtPhone.setText("phone");
-		txtPhone.setBounds(273, 215, 96, 20);
-		panel_2.add(txtPhone);
-		txtPhone.setColumns(10);
+		regPhoneEdit = new JTextField();
+		regPhoneEdit.setText("phone");
+		regPhoneEdit.setBounds(273, 215, 96, 20);
+		registerPanel.add(regPhoneEdit);
+		regPhoneEdit.setColumns(10);
 		
-		txtEmail = new JTextField();
-		txtEmail.setText("email");
-		txtEmail.setBounds(273, 276, 96, 20);
-		panel_2.add(txtEmail);
-		txtEmail.setColumns(10);
+		regEmailEdit = new JTextField();
+		regEmailEdit.setText("email");
+		regEmailEdit.setBounds(273, 276, 96, 20);
+		registerPanel.add(regEmailEdit);
+		regEmailEdit.setColumns(10);
 		
-		txtGender = new JTextField();
-		txtGender.setText("gender");
-		txtGender.setBounds(273, 333, 96, 20);
-		panel_2.add(txtGender);
-		txtGender.setColumns(10);
+		regGenderEdit = new JTextField();
+		regGenderEdit.setText("gender");
+		regGenderEdit.setBounds(273, 333, 96, 20);
+		registerPanel.add(regGenderEdit);
+		regGenderEdit.setColumns(10);
 		
-		txtLogin = new JTextField();
-		txtLogin.setText("login");
-		txtLogin.setBounds(476, 122, 96, 20);
-		panel_2.add(txtLogin);
-		txtLogin.setColumns(10);
+		regLoginEdit = new JTextField();
+		regLoginEdit.setText("login");
+		regLoginEdit.setBounds(476, 122, 96, 20);
+		registerPanel.add(regLoginEdit);
+		regLoginEdit.setColumns(10);
 		
-		txtPassword = new JTextField();
-		txtPassword.setText("password");
-		txtPassword.setBounds(476, 184, 96, 20);
-		panel_2.add(txtPassword);
-		txtPassword.setColumns(10);
+		regPasswordEdit = new JTextField();
+		regPasswordEdit.setText("password");
+		regPasswordEdit.setBounds(476, 184, 96, 20);
+		registerPanel.add(regPasswordEdit);
+		regPasswordEdit.setColumns(10);
 		
-		txtPhoto = new JTextField();
-		txtPhoto.setText("photo");
-		txtPhoto.setBounds(695, 122, 96, 20);
-		panel_2.add(txtPhoto);
-		txtPhoto.setColumns(10);
+		regPhotoEdit = new JTextField();
+		regPhotoEdit.setText("photo");
+		regPhotoEdit.setBounds(695, 122, 96, 20);
+		registerPanel.add(regPhotoEdit);
+		regPhotoEdit.setColumns(10);
 		
-		JButton btnNewButton_8 = new JButton("register");
-		btnNewButton_8.addActionListener(new ActionListener() {
+		JButton regButton = new JButton("register");
+		regButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_8.setBounds(528, 495, 89, 23);
-		panel_2.add(btnNewButton_8);
+		regButton.setBounds(528, 495, 89, 23);
+		registerPanel.add(regButton);
 		
-		JButton btnNewButton_14 = new JButton("Back");
-		btnNewButton_14.addActionListener(new ActionListener() {
+		JButton regBackButton = new JButton("Back");
+		regBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_14.setBounds(241, 495, 89, 23);
-		panel_2.add(btnNewButton_14);
+		regBackButton.setBounds(241, 495, 89, 23);
+		registerPanel.add(regBackButton);
 		
-		JPanel panel_3 = new JPanel();
-		contentPane.add(panel_3, "4");
-		panel_3.setLayout(null);
+		JPanel manageRegPanel = new JPanel();
+		contentPane.add(manageRegPanel, "4");
+		manageRegPanel.setLayout(null);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		manageRegTable = new JTable();
+		manageRegTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"a", "b"},
 				{"c", "d"},
@@ -272,79 +288,79 @@ public class MainFrame extends JFrame {
 				"col 1", "col 2"
 			}
 		));
-		table.setBounds(159, 28, 807, 403);
-		panel_3.add(table);
+		manageRegTable.setBounds(159, 28, 807, 403);
+		manageRegPanel.add(manageRegTable);
 		
-		JButton btnNewButton_9 = new JButton("Save");
-		btnNewButton_9.setBounds(701, 504, 89, 23);
-		panel_3.add(btnNewButton_9);
+		JButton manageRegSaveButton = new JButton("Save");
+		manageRegSaveButton.setBounds(701, 504, 89, 23);
+		manageRegPanel.add(manageRegSaveButton);
 		
-		JButton btnNewButton_10 = new JButton("Back");
-		btnNewButton_10.addActionListener(new ActionListener() {
+		JButton manageRegBackButton = new JButton("Back");
+		manageRegBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_10.setBounds(316, 504, 89, 23);
-		panel_3.add(btnNewButton_10);
+		manageRegBackButton.setBounds(316, 504, 89, 23);
+		manageRegPanel.add(manageRegBackButton);
 		
-		textField_2 = new JTextField();
-		textField_2.setText("Filtering options");
-		textField_2.setColumns(10);
-		textField_2.setBounds(655, 457, 96, 20);
-		panel_3.add(textField_2);
+		manageRegFilterEdit = new JTextField();
+		manageRegFilterEdit.setText("Filtering options");
+		manageRegFilterEdit.setColumns(10);
+		manageRegFilterEdit.setBounds(655, 457, 96, 20);
+		manageRegPanel.add(manageRegFilterEdit);
 		
-		JButton btnNewButton_15 = new JButton("Delete");
-		btnNewButton_15.setBounds(503, 504, 89, 23);
-		panel_3.add(btnNewButton_15);
+		JButton manageRegDeleteButton = new JButton("Delete");
+		manageRegDeleteButton.setBounds(503, 504, 89, 23);
+		manageRegPanel.add(manageRegDeleteButton);
 		
-		JPanel panel_4 = new JPanel();
-		contentPane.add(panel_4, "5");
-		panel_4.setLayout(null);
+		JPanel bookPanel = new JPanel();
+		contentPane.add(bookPanel, "5");
+		bookPanel.setLayout(null);
 		
-		JButton btnNewButton_11 = new JButton("back");
-		btnNewButton_11.addActionListener(new ActionListener() {
+		JButton bookBackButton = new JButton("back");
+		bookBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_11.setBounds(179, 482, 89, 23);
-		panel_4.add(btnNewButton_11);
+		bookBackButton.setBounds(179, 482, 89, 23);
+		bookPanel.add(bookBackButton);
 		
-		JButton btnNewButton_12 = new JButton("book");
-		btnNewButton_12.setBounds(553, 482, 89, 23);
-		panel_4.add(btnNewButton_12);
+		JButton bookButton = new JButton("book");
+		bookButton.setBounds(553, 482, 89, 23);
+		bookPanel.add(bookButton);
 		
-		txtCustomer = new JTextField();
-		txtCustomer.setText("customer");
-		txtCustomer.setBounds(179, 145, 96, 20);
-		panel_4.add(txtCustomer);
-		txtCustomer.setColumns(10);
+		bookCustomerEdit = new JTextField();
+		bookCustomerEdit.setText("customer");
+		bookCustomerEdit.setBounds(179, 145, 96, 20);
+		bookPanel.add(bookCustomerEdit);
+		bookCustomerEdit.setColumns(10);
 		
-		txtTrainer = new JTextField();
-		txtTrainer.setText("trainer");
-		txtTrainer.setBounds(172, 193, 96, 20);
-		panel_4.add(txtTrainer);
-		txtTrainer.setColumns(10);
+		bookTrainerEdit = new JTextField();
+		bookTrainerEdit.setText("trainer");
+		bookTrainerEdit.setBounds(179, 193, 96, 20);
+		bookPanel.add(bookTrainerEdit);
+		bookTrainerEdit.setColumns(10);
 		
-		txtDate = new JTextField();
-		txtDate.setText("date");
-		txtDate.setBounds(179, 276, 96, 20);
-		panel_4.add(txtDate);
-		txtDate.setColumns(10);
+		bookDateEdit = new JTextField();
+		bookDateEdit.setText("date");
+		bookDateEdit.setBounds(179, 276, 96, 20);
+		bookPanel.add(bookDateEdit);
+		bookDateEdit.setColumns(10);
 		
-		txtTime = new JTextField();
-		txtTime.setText("time");
-		txtTime.setBounds(172, 351, 96, 20);
-		panel_4.add(txtTime);
-		txtTime.setColumns(10);
+		bookTimeEdit = new JTextField();
+		bookTimeEdit.setText("time");
+		bookTimeEdit.setBounds(172, 351, 96, 20);
+		bookPanel.add(bookTimeEdit);
+		bookTimeEdit.setColumns(10);
 		
-		JPanel panel_3_1 = new JPanel();
-		panel_3_1.setLayout(null);
-		contentPane.add(panel_3_1, "7");
+		JPanel sessionPanel = new JPanel();
+		sessionPanel.setLayout(null);
+		contentPane.add(sessionPanel, "7");
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		sessionTable = new JTable();
+		sessionTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Session list"},
 			},
@@ -352,24 +368,24 @@ public class MainFrame extends JFrame {
 				"New column"
 			}
 		));
-		table_1.setBounds(159, 28, 807, 403);
-		panel_3_1.add(table_1);
+		sessionTable.setBounds(159, 28, 807, 403);
+		sessionPanel.add(sessionTable);
 		
-		JButton btnNewButton_10_1 = new JButton("Back");
-		btnNewButton_10_1.addActionListener(new ActionListener() {
+		JButton sessionBackButton = new JButton("Back");
+		sessionBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_10_1.setBounds(316, 504, 89, 23);
-		panel_3_1.add(btnNewButton_10_1);
+		sessionBackButton.setBounds(316, 504, 89, 23);
+		sessionPanel.add(sessionBackButton);
 		
-		JPanel panel_3_2 = new JPanel();
-		panel_3_2.setLayout(null);
-		contentPane.add(panel_3_2, "8");
+		JPanel paymentPanel = new JPanel();
+		paymentPanel.setLayout(null);
+		contentPane.add(paymentPanel, "8");
 		
-		table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(
+		paymentTable = new JTable();
+		paymentTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"Choose session"},
 			},
@@ -377,32 +393,32 @@ public class MainFrame extends JFrame {
 				"New column"
 			}
 		));
-		table_2.setBounds(159, 28, 807, 403);
-		panel_3_2.add(table_2);
+		paymentTable.setBounds(159, 28, 807, 403);
+		paymentPanel.add(paymentTable);
 		
-		JButton btnNewButton_9_2 = new JButton("Save");
-		btnNewButton_9_2.setBounds(701, 504, 89, 23);
-		panel_3_2.add(btnNewButton_9_2);
+		JButton paymentSaveButton = new JButton("Save");
+		paymentSaveButton.setBounds(701, 504, 89, 23);
+		paymentPanel.add(paymentSaveButton);
 		
-		JButton btnNewButton_10_2 = new JButton("Back");
-		btnNewButton_10_2.addActionListener(new ActionListener() {
+		JButton paymentBackButton = new JButton("Back");
+		paymentBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_10_2.setBounds(316, 504, 89, 23);
-		panel_3_2.add(btnNewButton_10_2);
+		paymentBackButton.setBounds(316, 504, 89, 23);
+		paymentPanel.add(paymentBackButton);
 		
-		JButton btnNewButton_13 = new JButton("Collect payment");
-		btnNewButton_13.setBounds(478, 466, 121, 23);
-		panel_3_2.add(btnNewButton_13);
+		JButton paymentCollectButton = new JButton("Collect payment");
+		paymentCollectButton.setBounds(478, 466, 121, 23);
+		paymentPanel.add(paymentCollectButton);
 		
-		JPanel panel_3_3 = new JPanel();
-		panel_3_3.setLayout(null);
-		contentPane.add(panel_3_3, "9");
+		JPanel feedbackPanel = new JPanel();
+		feedbackPanel.setLayout(null);
+		contentPane.add(feedbackPanel, "9");
 		
-		table_3 = new JTable();
-		table_3.setModel(new DefaultTableModel(
+		feedbackTable = new JTable();
+		feedbackTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"choose the session"},
 			},
@@ -410,54 +426,54 @@ public class MainFrame extends JFrame {
 				"New column"
 			}
 		));
-		table_3.setBounds(159, 28, 807, 403);
-		panel_3_3.add(table_3);
+		feedbackTable.setBounds(159, 28, 807, 403);
+		feedbackPanel.add(feedbackTable);
 		
-		JButton btnNewButton_9_3 = new JButton("Save");
-		btnNewButton_9_3.setBounds(632, 568, 89, 23);
-		panel_3_3.add(btnNewButton_9_3);
+		JButton feedbackSaveButton = new JButton("Save");
+		feedbackSaveButton.setBounds(632, 568, 89, 23);
+		feedbackPanel.add(feedbackSaveButton);
 		
-		JButton btnNewButton_10_3 = new JButton("Back");
-		btnNewButton_10_3.addActionListener(new ActionListener() {
+		JButton feedbackBackButton = new JButton("Back");
+		feedbackBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_10_3.setBounds(301, 568, 89, 23);
-		panel_3_3.add(btnNewButton_10_3);
+		feedbackBackButton.setBounds(301, 568, 89, 23);
+		feedbackPanel.add(feedbackBackButton);
 		
-		txtFeedbackComment = new JTextField();
-		txtFeedbackComment.setText("feedback comment");
-		txtFeedbackComment.setBounds(426, 506, 134, 20);
-		panel_3_3.add(txtFeedbackComment);
-		txtFeedbackComment.setColumns(10);
+		feedbackCommentEdit = new JTextField();
+		feedbackCommentEdit.setText("feedback comment");
+		feedbackCommentEdit.setBounds(426, 506, 134, 20);
+		feedbackPanel.add(feedbackCommentEdit);
+		feedbackCommentEdit.setColumns(10);
 		
-		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton("1");
-		rdbtnNewRadioButton_3.setBounds(387, 453, 43, 23);
-		panel_3_3.add(rdbtnNewRadioButton_3);
+		JRadioButton feedbackRate1Radio = new JRadioButton("1");
+		feedbackRate1Radio.setBounds(387, 453, 43, 23);
+		feedbackPanel.add(feedbackRate1Radio);
 		
-		JRadioButton rdbtnNewRadioButton_3_1 = new JRadioButton("2");
-		rdbtnNewRadioButton_3_1.setBounds(432, 453, 43, 23);
-		panel_3_3.add(rdbtnNewRadioButton_3_1);
+		JRadioButton feedbackRate2Radio = new JRadioButton("2");
+		feedbackRate2Radio.setBounds(432, 453, 43, 23);
+		feedbackPanel.add(feedbackRate2Radio);
 		
-		JRadioButton rdbtnNewRadioButton_3_2 = new JRadioButton("3");
-		rdbtnNewRadioButton_3_2.setBounds(473, 453, 43, 23);
-		panel_3_3.add(rdbtnNewRadioButton_3_2);
+		JRadioButton feedbackRate3Radio = new JRadioButton("3");
+		feedbackRate3Radio.setBounds(473, 453, 43, 23);
+		feedbackPanel.add(feedbackRate3Radio);
 		
-		JRadioButton rdbtnNewRadioButton_3_3 = new JRadioButton("4");
-		rdbtnNewRadioButton_3_3.setBounds(518, 453, 43, 23);
-		panel_3_3.add(rdbtnNewRadioButton_3_3);
+		JRadioButton feedbackRate4Radio = new JRadioButton("4");
+		feedbackRate4Radio.setBounds(518, 453, 43, 23);
+		feedbackPanel.add(feedbackRate4Radio);
 		
-		JRadioButton rdbtnNewRadioButton_3_4 = new JRadioButton("5");
-		rdbtnNewRadioButton_3_4.setBounds(563, 453, 43, 23);
-		panel_3_3.add(rdbtnNewRadioButton_3_4);
+		JRadioButton feedbackRate5Radio = new JRadioButton("5");
+		feedbackRate5Radio.setBounds(563, 453, 43, 23);
+		feedbackPanel.add(feedbackRate5Radio);
 		
-		JPanel panel_3_4 = new JPanel();
-		panel_3_4.setLayout(null);
-		contentPane.add(panel_3_4, "6");
+		JPanel reportPanel = new JPanel();
+		reportPanel.setLayout(null);
+		contentPane.add(reportPanel, "6");
 		
-		table_4 = new JTable();
-		table_4.setModel(new DefaultTableModel(
+		reportTable = new JTable();
+		reportTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"a", "b"},
 				{"c", "d"},
@@ -466,31 +482,31 @@ public class MainFrame extends JFrame {
 				"New column", "New column"
 			}
 		));
-		table_4.setBounds(159, 28, 807, 403);
-		panel_3_4.add(table_4);
+		reportTable.setBounds(159, 28, 807, 403);
+		reportPanel.add(reportTable);
 		
-		JButton btnNewButton_9_4 = new JButton("Generate");
-		btnNewButton_9_4.setBounds(701, 504, 89, 23);
-		panel_3_4.add(btnNewButton_9_4);
+		JButton reportGenerateButton = new JButton("Generate");
+		reportGenerateButton.setBounds(701, 504, 89, 23);
+		reportPanel.add(reportGenerateButton);
 		
-		JButton btnNewButton_10_4 = new JButton("Back");
-		btnNewButton_10_4.addActionListener(new ActionListener() {
+		JButton reportBackButton = new JButton("Back");
+		reportBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_10_4.setBounds(316, 504, 89, 23);
-		panel_3_4.add(btnNewButton_10_4);
+		reportBackButton.setBounds(316, 504, 89, 23);
+		reportPanel.add(reportBackButton);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"select table"}));
-		comboBox.setBounds(299, 442, 129, 22);
-		panel_3_4.add(comboBox);
+		JComboBox reportTableDropdown = new JComboBox();
+		reportTableDropdown.setModel(new DefaultComboBoxModel(new String[] {"select table"}));
+		reportTableDropdown.setBounds(299, 442, 129, 22);
+		reportPanel.add(reportTableDropdown);
 		
-		txtFilteringOptions = new JTextField();
-		txtFilteringOptions.setText("Filtering options");
-		txtFilteringOptions.setBounds(682, 443, 96, 20);
-		panel_3_4.add(txtFilteringOptions);
-		txtFilteringOptions.setColumns(10);
+		reportFilterEdit = new JTextField();
+		reportFilterEdit.setText("Filtering options");
+		reportFilterEdit.setBounds(682, 443, 96, 20);
+		reportPanel.add(reportFilterEdit);
+		reportFilterEdit.setColumns(10);
 	}
 }
