@@ -3,6 +3,7 @@ The gym assignment for the OODJ (Java) class
 
 ### The files and folders:
 - **src**: the folder with the Java source code
+- **db.txt**: the database file
 - **design**: the folder with the flowcharts
 - **2202-OODJ-AsstQuestion.pdf**: the assignment question
 - **Gym_club_management_System_for_Bahir_Dar.pdf**: the example assignment
