@@ -8,31 +8,22 @@ import javax.swing.JLabel;
 import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.JSlider;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
-public class DB {
-	private String filename = "db.txt"; 
-	public static void Main() {
-		
-	}
-	
-	private String getTable(String tableName) {
-		Path filePath = Path.of(filename);
-		String content = Files.readString(filePath);
-		return content;
-	}
-}
+import javax.swing.JRadioButtonMenuItem;
 
 
 public class MainFrame extends JFrame {
@@ -80,7 +71,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame() {
+	public MainFrame(){
 		setTitle("Main Menu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 672);
@@ -95,8 +86,17 @@ public class MainFrame extends JFrame {
 		authPanel.setLayout(null);
 		
 		JLabel authLabel = new JLabel("Authentication");
-		authLabel.setBounds(199, 9, 122, 14);
+		authLabel.setBounds(191, 25, 104, 23);
 		authPanel.add(authLabel);
+		
+		DB db = new DB();
+		try {
+			Map<String, String> session = db.getSession(2);
+			if (session != null)
+				authLabel.setText(session.get("date"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		
 		JPanel mainMenuPanel = new JPanel();
 		contentPane.add(mainMenuPanel, "2");
@@ -479,11 +479,15 @@ public class MainFrame extends JFrame {
 				{"c", "d"},
 			},
 			new String[] {
-				"New column", "New column"
+				"col1", "col2"
 			}
 		));
-		reportTable.setBounds(159, 28, 807, 403);
+		reportTable.setBounds(181, 23, 807, 403);
 		reportPanel.add(reportTable);
+		
+		JTableHeader reportTableHeader = reportTable.getTableHeader();
+		reportTableHeader.setBounds(181, 0, 807, 20);
+		reportPanel.add(reportTableHeader);
 		
 		JButton reportGenerateButton = new JButton("Generate");
 		reportGenerateButton.setBounds(701, 504, 89, 23);
