@@ -9,28 +9,22 @@ public class DB {
 	private static String filename = "db.txt"; // this the db's txt file location
 	
 	// these are the lines that help us find the beginnings of the tables in the txt file
-	private static String personsBeginLine = "##############PERSONS##############\r\n";
-	private static String usersBeginLine = "###############USERS###############\r\n";
+	private static String usersBeginLine = "##############USERS################\r\n";
 	private static String trainersBeginLine = "#############TRAINERS##############\r\n";
 	private static String managersBeginLine = "#############MANAGERS##############\r\n";
+	private static String customersBeginLine = "#############CUSTOMERS#############\r\n";
 	private static String sessionsBeginLine = "#############SESSIONS##############\r\n";
 	
 	// this line helps us find any table's end. Start searching only from the begin line
 	private static String endLine = "\r\n###############END#################";
 	
 	// the column names for each table
-	private static String[] personCols = {"id", "name", "DOB", "phone"};
-	private static String[] userCols = {"id", "login", "password"};
+	private static String[] userCols = {"id", "name", "login", "password", "DOB", "phone"};
 	private static String[] trainerCols = {"id", "photo"};
 	private static String[] managerCols = {"id"};
-	private static String[] sessionCols = {"id", "trainer", "customer", "date", "time", "price", "paid"};
-	
-	// The DB class's constructor function. Not sure if we need to put anything inside it
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-	
+	private static String[] customerCols = {"id"};
+	private static String[] sessionCols = {"id", "trainer", "customer", "date", "time", "price", "paid", "rating", "feedback"};
+		
 	// This function parses a row in a string format with each value separated by ;
 	// Returns a Map variable. Maps in Java are like dictionaries in python
 	// The returned Map object contains the column name as its key
@@ -47,7 +41,7 @@ public class DB {
 	// Reads the txt file and returns Map object of the table's rows
 	// The returned Map contains the row's index as its key
 	// and a Map object with the values of that row as the value
-	private static Map<String, Map<String, String>> getTable(String beginLine, String[] cols) throws IOException {
+	private static Map<String, Map<String, String>> getTable(String beginLine, String[] cols, Map<String, String> filter) throws IOException {
 		String content = new String(Files.readAllBytes(Path.of(filename)));
 		int beginIdx = content.indexOf(beginLine) + beginLine.length();
 		int endIdx = beginIdx + content.substring(beginIdx).indexOf(endLine);
@@ -56,7 +50,11 @@ public class DB {
 		Map<String, Map<String, String>> table = new HashMap<String, Map<String, String>>();
 		for (int i = 0; i < rows.length; i++) {
 			Map<String, String> row = parseRow(rows[i], cols);
-			table.put(row.get("id"), row);
+			boolean match = true;
+			for (String k: filter.keySet()) {
+				if (filter.get(k) != row.get(k)) match = false;
+			}
+			if (match) table.put(row.get("id"), row);
 		}
 		return table;
 	}
@@ -85,197 +83,240 @@ public class DB {
 		}
 	}
 	
-	// Reads the persons table from the txt file
-	// Right now returns a nested Map object as described in the comments of getTable() and getRow() functions
-	// Then it will be a Map object of Person class objects that we will implement later
-	public Map<String, Map<String, String>> getPersons() throws IOException {
-		Map<String, Map<String, String>> persons = getTable(personsBeginLine, personCols);
-		// convert the table into a Person map
-		return persons;
-	}
-	
-	// Reads the persons table from the txt file and returns a specific person
-	// Right now returns a Map object as described in the comments of getRow() function
-	// Then it will be a Person class object that we will implement later
-	public Map<String, String> getPerson(int idx) throws IOException {
-		Map<String, Map<String, String>> persons = getPersons();
-		Map<String, String> person = persons.get(Integer.toString(idx));
-		return person;
-	}
-	
-	// Adds or updates a person data in the txt file
-	// Right now as the input accepts a Map object as described in the comments of getRow() function
-	// Then it will be a Map object of Person class objects that we will implement later
-	public boolean setPerson(Map<String, String> person) throws IOException {
-		Map<String, Map<String, String>> persons = getPersons();
-		persons.put(person.get("id"), person);
-		// convert the Person map into a map full of strings
-		return setTable(persons, personsBeginLine, personCols);
-	}
-	
-	// Reads the users table from the txt file. Also adds values from the persons table
-	// Right now returns a nested Map object as described in the comments of getTable() and getRow() functions
-	// Then it will be a Map object of User class objects that we will implement later
-	public Map<String, Map<String, String>> getUsers() throws IOException {
-		Map<String, Map<String, String>> persons = getPersons();
-		Map<String, Map<String, String>> users = getTable(usersBeginLine, userCols);
-		String[] ids = users.keySet().toArray(new String[users.size()]);
-		for (int i = 0; i < users.size(); i++) {
-			Map<String, String> user = users.get(ids[i]);
-			Map<String, String> person = persons.get(user.get("id"));
-			for (int j = 1; j < personCols.length; j++) {
-				user.put(personCols[j], person.get(personCols[j]));
-			}
-			users.put(user.get("id"), user);
+	// Reads the users table from the txt file
+	// Returns a Map object of User class objects
+	// As the input accepts a Map object to filter the data
+	// The keys of the filter map represent the column names
+	// And values of the filter map represent the value for the appropriate column
+	public Map<String, User> getUsers(Map<String, String> filter) throws IOException {
+		Map<String, Map<String, String>> usersMap = getTable(usersBeginLine, userCols, filter);
+		Map<String, User> users = new HashMap<String, User>();
+		for (String k: usersMap.keySet()) {
+			users.put(k, new User(usersMap.get(k)));
 		}
-		// convert the table into a User map
 		return users;
 	}
 	
-	// Reads the users table from the txt file and returns a specific user. Also adds values from the persons table
-	// Right now returns a Map object as described in the comments of getRow() function
-	// Then it will be a User class object that we will implement later
-	public Map<String, String> getUser(int idx) throws IOException {
-		Map<String, Map<String, String>> users = getUsers();
-		Map<String, String> user = users.get(Integer.toString(idx));
+	// GetUsers with no filter
+	public Map<String, User> getUsers() throws IOException {
+		return getUsers(new HashMap<String, String>());
+	}
+	
+	// Reads the users table from the txt file and returns a specific user
+	// Returns a User class object
+	public User getUser(String idx) throws IOException {
+		Map<String, User> users = getUsers();
+		User user = users.get(idx);
 		return user;
 	}
 	
 	// Adds or updates a user data in the txt file
-	// Maybe should also update the person data
-	// Right now as the input accepts a Map object as described in the comments of getRow() function
-	// Then it will be a Map object of User class objects that we will implement later
-	public boolean setUser(Map<String, String> user) throws IOException {
-		Map<String, String> person = user; // in the future will make an actual conversion
-		if (setPerson(person)) {
-			Map<String, Map<String, String>> users = getUsers();
-			users.put(user.get("id"), user);
-			// convert the User map into a map full of strings
-			return setTable(users, usersBeginLine, userCols);
-		} else {
-			return false;
+	// As the input accepts a User class object
+	public boolean setUser(User user) throws IOException {
+		Map<String, User> users = getUsers();
+		users.put(user.id, user);
+		Map<String, Map<String, String>> usersMap = new HashMap<String, Map<String, String>>(); 
+		for (String k: users.keySet()) {
+			usersMap.put(k, users.get(k).toMap());
 		}
+		return setTable(usersMap, usersBeginLine, userCols);
 	}
+	
+	
 
-	// Reads the trainers table from the txt file. Also adds values from the persons and users tables
-	// Right now returns a nested Map object as described in the comments of getTable() and getRow() functions
-	// Then it will be a Map object of Trainer class objects that we will implement later
-	public Map<String, Map<String, String>> getTrainers() throws IOException {
-		Map<String, Map<String, String>> users = getUsers();
-		Map<String, Map<String, String>> trainers = getTable(trainersBeginLine, trainerCols);
-		String[] ids = trainers.keySet().toArray(new String[trainers.size()]);
-		for (int i = 0; i < trainers.size(); i++) {
-			Map<String, String> trainer = trainers.get(ids[i]);
-			Map<String, String> user = users.get(trainer.get("id"));
-			for (int j = 1; j < personCols.length; j++) {
-				trainer.put(personCols[j], user.get(personCols[j]));
-			}
-			for (int j = 1; j < userCols.length; j++) {
-				trainer.put(userCols[j], user.get(userCols[j]));
-			}
-			trainers.put(trainer.get("id"), trainer);
+	// Reads the trainers table from the txt file
+	// Returns a Map object of Trainer class objects
+	// As the input accepts a Map object to filter the data
+	// The keys of the filter map represent the column names
+	// And values of the filter map represent the value for the appropriate column
+	public Map<String, Trainer> getTrainers(Map<String, String> filter) throws IOException {
+		Map<String, User> users = getUsers();
+		Map<String, Map<String, String>> trainersMap = getTable(trainersBeginLine, trainerCols, filter);
+		Map<String, Trainer> trainers= new HashMap<String, Trainer>();
+		for (String k: trainersMap.keySet()) {
+			Map<String, String> trainer = trainersMap.get(k);
+			User user = users.get(k);
+			trainers.put(k, new Trainer(user, trainer));
 		}
 		// convert the table into a Trainer map
 		return trainers;
 	}
 	
-	// Reads the trainers table from the txt file and returns a specific trainer. Also adds values from the persons and users tables
-	// Right now returns a Map object as described in the comments of getRow() function
-	// Then it will be a Trainer class object that we will implement later
-	public Map<String, String> getTrainer(int idx) throws IOException {
-		Map<String, Map<String, String>> trainers = getTrainers();
-		Map<String, String> trainer = trainers.get(Integer.toString(idx));
+	// GetTrainers with no filter
+	public Map<String, Trainer> getTrainers() throws IOException {
+		return getTrainers(new HashMap<String, String>());
+	}
+	
+	// Adds or updates a trainer data in the txt file
+	// As the input accepts a trainer class object
+	public Trainer getTrainer(String idx) throws IOException {
+		Map<String, Trainer> trainers = getTrainers();
+		Trainer trainer = trainers.get(idx);
 		return trainer;
 	}
 	
 	// Adds or updates a trainer data in the txt file
-	// Maybe should also update the person and user data
-	// Right now as the input accepts a Map object as described in the comments of getRow() function
-	// Then it will be a Map object of Trainer class objects that we will implement later
-	public boolean setTrainer(Map<String, String> trainer) throws IOException {
-		Map<String, String> user = trainer; // in the future will make an actual conversion
+	// As the input accepts a Trainer class object
+	public boolean setTrainer(Trainer trainer) throws IOException {
+		User user = (User)trainer; // in the future will make an actual conversion
 		if (setUser(user)) {
-			Map<String, Map<String, String>> trainers = getTrainers();
-			trainers.put(trainer.get("id"), trainer);
+			Map<String, Trainer> trainers = getTrainers();
+			trainers.put(trainer.id, trainer);
+			Map<String, Map<String, String>> trainersMap = new HashMap<String, Map<String, String>>(); 
+			for (String k: trainers.keySet()) {
+				trainersMap.put(k, trainers.get(k).toMap());
+			}
 			// convert the User map into a map full of strings
-			return setTable(trainers, trainersBeginLine, trainerCols);
+			return setTable(trainersMap, trainersBeginLine, trainerCols);
 		} else {
 			return false;
 		}
 	}
 
-	// Reads the managers table from the txt file. Also adds values from the persons and users tables
-	// Right now returns a nested Map object as described in the comments of getTable() and getRow() functions
-	// Then it will be a Map object of Manager class objects that we will implement later
-	public Map<String, Map<String, String>> getManagers() throws IOException {
-		Map<String, Map<String, String>> users = getUsers();
-		Map<String, Map<String, String>> managers = getTable(managersBeginLine, managerCols);
-		String[] ids = managers.keySet().toArray(new String[managers.size()]);
-		for (int i = 0; i < managers.size(); i++) {
-			Map<String, String> manager = managers.get(ids[i]);
-			Map<String, String> user = users.get(manager.get("id"));
-			for (int j = 1; j < personCols.length; j++) {
-				manager.put(personCols[j], user.get(personCols[j]));
-			}
-			for (int j = 1; j < userCols.length; j++) {
-				manager.put(userCols[j], user.get(userCols[j]));
-			}
-			managers.put(manager.get("id"), manager);
+	// Reads the managers table from the txt file
+	// Returns a Map object of Manager class objects
+	// As the input accepts a Map object to filter the data
+	// The keys of the filter map represent the column names
+	// And values of the filter map represent the value for the appropriate column
+	public Map<String, Manager> getManagers(Map<String, String> filter) throws IOException {
+		Map<String, User> users = getUsers();
+		Map<String, Map<String, String>> managersMap = getTable(managersBeginLine, managerCols, filter);
+		Map<String, Manager> managers = new HashMap<String, Manager>(); 
+		for (String k: managersMap.keySet()) {
+			managers.put(k, new Manager(users.get(k)));
 		}
 		// convert the table into a Manager map
 		return managers;
 	}
 	
-	// Reads the managers table from the txt file and returns a specific manager. Also adds values from the persons and users tables
-	// Right now returns a Map object as described in the comments of getRow() function
-	// Then it will be a Manager class object that we will implement later
-	public Map<String, String> getManager(int idx) throws IOException {
-		Map<String, Map<String, String>> managers = getManagers();
-		Map<String, String> manager = managers.get(Integer.toString(idx));
+	// GetManagers with no filter
+	public Map<String, Manager> getManagers() throws IOException {
+		return getManagers(new HashMap<String, String>());
+	}
+	
+	// Adds or updates a manager data in the txt file
+	// As the input accepts a manager class object
+	public Manager getManager(String idx) throws IOException {
+		Map<String, Manager> managers = getManagers();
+		Manager manager = managers.get(idx);
 		return manager;
 	}
 	
 	// Adds or updates a manager data in the txt file
-	// Maybe should also update the person and user data
-	// Right now as the input accepts a Map object as described in the comments of getRow() function
-	// Then it will be a Map object of Manager class objects that we will implement later
-	public boolean setManager(Map<String, String> manager) throws IOException {
-		Map<String, String> user = manager; // in the future will make an actual conversion
+	// As the input accepts a Manager class object
+	public boolean setManager(Manager manager) throws IOException {
+		User user = (User)manager; // in the future will make an actual conversion
 		if (setUser(user)) {
-			Map<String, Map<String, String>> managers = getManagers();
-			managers.put(manager.get("id"), manager);
-			// convert the User map into a map full of strings
-			return setTable(managers, managersBeginLine, managerCols);
+			Map<String, Manager> managers = getManagers();
+			managers.put(manager.id, manager);
+			Map<String, Map<String, String>> managersMap = new HashMap<String, Map<String, String>>(); 
+			for (String k: managers.keySet()) {
+				managersMap.put(k, managers.get(k).toMap());
+			}
+			return setTable(managersMap, managersBeginLine, managerCols);
+		} else {
+			return false;
+		}
+	}
+	
+	// Reads the cutomers table from the txt file
+	// Returns a Map object of Customer class objects
+	// As the input accepts a Map object to filter the data
+	// The keys of the filter map represent the column names
+	// And values of the filter map represent the value for the appropriate column
+	public Map<String, Customer> getCustomers(Map<String, String> filter) throws IOException {
+		Map<String, User> users = getUsers();
+		Map<String, Map<String, String>> customersMap = getTable(customersBeginLine, customerCols, filter);
+		Map<String, Customer> customers = new HashMap<String, Customer>(); 
+		for (String k: customersMap.keySet()) {
+			customers.put(k, new Customer(users.get(k)));
+		}
+		// convert the table into a Customer map
+		return customers;
+	}
+	
+	// GetCustomers with no filter
+	public Map<String, Customer> getCustomers() throws IOException {
+		return getCustomers(new HashMap<String, String>());
+	}
+	
+	// Adds or updates a customer data in the txt file
+	// As the input accepts a customer class object
+	public Customer getCustomer(String idx) throws IOException {
+		Map<String, Customer> customers = getCustomers();
+		Customer customer = customers.get(idx);
+		return customer;
+	}
+	
+	// Adds or updates a customer data in the txt file
+	// As the input accepts a Customer class object
+	public boolean setCustomer(Customer customer) throws IOException {
+		User user = (User)customer; // in the future will make an actual conversion
+		if (setUser(user)) {
+			Map<String, Customer> customers = getCustomers();
+			customers.put(customer.id, customer);
+			Map<String, Map<String, String>> customersMap = new HashMap<String, Map<String, String>>();
+			for (String k: customers.keySet()) {
+				customersMap.put(k, customers.get(k).toMap());
+			}
+			return setTable(customersMap, customersBeginLine, customerCols);
 		} else {
 			return false;
 		}
 	}
 
 	// Reads the sessions table from the txt file
-	// Right now returns a nested Map object as described in the comments of getTable() and getRow() functions
-	// Then it will be a Map object of Session class objects that we will implement later
-	public Map<String, Map<String, String>> getSessions() throws IOException {
-		Map<String, Map<String, String>> sessions = getTable(sessionsBeginLine, sessionCols);
-		// convert the table into a Session map
+	// Returns a Map object of Session class objects
+	// As the input accepts a Map object to filter the data
+	// The keys of the filter map represent the column names
+	// And values of the filter map represent the value for the appropriate column
+	public Map<String, Session> getSessions(Map<String, String> filter) throws IOException {
+		Map<String, Map<String, String>> sessionsMap = getTable(sessionsBeginLine, sessionCols, filter);
+		Map<String, Session> sessions = new HashMap<String, Session>();
+		for (String k: sessionsMap.keySet()) {
+			sessions.put(k, new Session(sessionsMap.get(k)));
+		}
 		return sessions;
 	}
 	
-	// Reads the sessions table from the txt file and returns a specific session
-	// Right now returns a Map object as described in the comments of getRow() function
-	// Then it will be a Session class object that we will implement later
-	public Map<String, String> getSession(int idx) throws IOException {
-		Map<String, Map<String, String>> sessions = getSessions();
-		Map<String, String> session = sessions.get(Integer.toString(idx));
+	// GetSessions with no filter
+	public Map<String, Session> getSessions() throws IOException {
+		return getSessions(new HashMap<String, String>());
+	}
+	
+	// Adds or updates a session data in the txt file
+	// As the input accepts a session class object
+	public Session getSession(String idx) throws IOException {
+		Map<String, Session> sessions = getSessions();
+		Session session = sessions.get(idx);
 		return session;
 	}
 	
 	// Adds or updates a session data in the txt file
-	// Right now as the input accepts a Map object as described in the comments of getRow() function
-	// Then it will be a Map object of Session class objects that we will implement later
-	public boolean setSession(Map<String, String> session) throws IOException {
-		Map<String, Map<String, String>> sessions = getSessions();
-		sessions.put(session.get("id"), session);
-		// convert the Person map into a map full of strings
-		return setTable(sessions, sessionsBeginLine, sessionCols);
+	// As the input accepts a Session class object
+	public boolean setSession(Session session) throws IOException {
+		Map<String, Session> sessions = getSessions();
+		sessions.put(session.id, session);
+		Map<String, Map<String, String>> sessionsMap = new HashMap<String, Map<String, String>>();
+		for (String k: sessions.keySet()) {
+			sessionsMap.put(k, sessions.get(k).toMap());
+		}
+		return setTable(sessionsMap, sessionsBeginLine, sessionCols);
+	}
+	
+	// Tries to find a user with the login passed into the function
+	// And returns true if there is no such user in the database
+	public boolean checkLogin(String login) throws IOException {
+		Map<String, String> filter = new HashMap<String, String>();
+		filter.put("login", login);
+		Map<String, User> users = getUsers(filter);
+		return users.size() == 0;
+	}
+	
+	// Checks whether the password of the specified user
+	// matches the one passed into the function
+	public boolean checkPassword(String idx, String password) throws IOException {
+		User user = getUser(idx);
+		return password == user.password;
 	}
 }
