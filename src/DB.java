@@ -286,9 +286,9 @@ public class DB {
 	
 	// Adds or updates a session data in the txt file
 	// As the input accepts a session class object
-	public Session getSession(String idx) throws IOException {
+	public Session getSession(String i) throws IOException {
 		Map<String, Session> sessions = getSessions();
-		Session session = sessions.get(idx);
+		Session session = sessions.get(i);
 		return session;
 	}
 	
