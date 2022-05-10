@@ -1,7 +1,7 @@
 ##############USERS################
-1;John Smith;John Smith;SuperJohnny89;01-01-2001;60123456789
-2;Jane Smith;Jane Smith;SuperJaney78;02-02-2002;60123445678
-3;Elon Musk;Elon Musk;T3sl4T3sl4;28-06-1971;10023456789
+1;John Smith;John Smith;SuperJohnny89;2002-01-0160123456789
+2;Jane Smith;Jane Smith;SuperJaney78;2002-02-02;60123445678
+3;Elon Musk;Elon Musk;T3sl4T3sl4;1971-28-06-10023456789
 ###############END#################
 #############TRAINERS##############
 1;john_smith.jpg
@@ -13,5 +13,5 @@
 3
 ###############END#################
 #############SESSIONS##############
-1;1;3;01-05-2022;15:00;100;True;5;All good
+1;1;3;2022-01-05;15:00:00;100;True;5;All good
 ###############END#################
