@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Session {
 	// helps in string to date conversion and vice versa
-	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	// helps in string to time conversion and vice versa
 	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
@@ -63,6 +63,10 @@ public class Session {
 		map.put("rating", Integer.toString(rating));
 		map.put("feedback", feedback);
 		return map;
+	}
+	
+	public String getDateString() {
+		return date.format(dateFormatter);
 	}
 
 }
