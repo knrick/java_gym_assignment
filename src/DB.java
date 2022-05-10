@@ -52,7 +52,8 @@ public class DB {
 			Map<String, String> row = parseRow(rows[i], cols);
 			boolean match = true;
 			for (String k: filter.keySet()) {
-				if (filter.get(k) != row.get(k)) match = false;
+				if (!filter.get(k).equals(row.get(k))) match = false;
+				break;
 			}
 			if (match) table.put(row.get("id"), row);
 		}
@@ -317,6 +318,6 @@ public class DB {
 	// matches the one passed into the function
 	public boolean checkPassword(String idx, String password) throws IOException {
 		User user = getUser(idx);
-		return password == user.password;
+		return password.equals(user.password);
 	}
 }

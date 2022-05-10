@@ -30,7 +30,7 @@ public class Session {
 		date = LocalDate.parse(args[3], dateFormatter);
 		time = LocalTime.parse(args[4], timeFormatter);
 		price = Float.parseFloat(args[5]);
-		paid = args[6] == "1" | args[6].toLowerCase() == "true";
+		paid = args[6].equals("1") | args[6].toLowerCase().equals("true");
 		rating = Integer.parseInt(args[7]);
 		feedback = args[8];
 	}
