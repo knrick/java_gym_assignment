@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class User {
 	// helps in string to date conversion and vice versa
-	protected static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+	protected static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	public String id;
 	public String name;
