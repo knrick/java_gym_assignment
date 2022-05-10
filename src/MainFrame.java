@@ -42,6 +42,7 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.SwingConstants;
 
 
 
@@ -81,7 +82,6 @@ public class MainFrame extends JFrame {
 	private JTextField textField_11;
 	private JTextField textField_12;
 	private JTable paymentdetailTable;
-	JLabel gym_iconLabel;
 	private JPasswordField passwordEdit;
 	private JTextField textField_10;
 	private JTextField textField_13;
@@ -131,7 +131,7 @@ public class MainFrame extends JFrame {
 		Image image1 = new ImageIcon("/img/APU logo (1).jpg").getImage();
 		authLabel.setIcon(new ImageIcon(image1));
 		authLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		authLabel.setBounds(107, 59, 442, 290);
+		authLabel.setBounds(588, -50, 470, 290);
 		authPanel.add(authLabel);
 		
 		DB db = new DB();
@@ -151,68 +151,68 @@ public class MainFrame extends JFrame {
 		
 		JButton regPanelButton = new JButton("register");
 		regPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		regPanelButton.setIcon(new ImageIcon("img/new member.png"));
+		regPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/new member.png")));
 		regPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "3");
 			}
 		});
-		regPanelButton.setBounds(180, 195, 246, 51);
+		regPanelButton.setBounds(13, 20, 244, 51);
 		mainMenuPanel.add(regPanelButton);
 		
 		JButton manageRegPanelButton = new JButton("Manage registration");
 		manageRegPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		manageRegPanelButton.setIcon(new ImageIcon("img/list of members.png"));
+		manageRegPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/list of members.png")));
 		manageRegPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "4");
 			}
 		});
-		manageRegPanelButton.setBounds(190, 297, 254, 51);
+		manageRegPanelButton.setBounds(284, 20, 244, 51);
 		mainMenuPanel.add(manageRegPanelButton);
 		
 		JButton bookPanelButton = new JButton("Book session");
 		bookPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		bookPanelButton.setIcon(new ImageIcon("img/session-idle-time-icon.png"));
+		bookPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/session-idle-time-icon.png")));
 		bookPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "5");
 			}
 		});
-		bookPanelButton.setBounds(207, 385, 225, 51);
+		bookPanelButton.setBounds(560, 20, 225, 51);
 		mainMenuPanel.add(bookPanelButton);
 		
 		JButton sessionPanelButton = new JButton("check training session");
 		sessionPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		sessionPanelButton.setIcon(new ImageIcon("img/234.png"));
+		sessionPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/234.png")));
 		sessionPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "7");
 			}
 		});
-		sessionPanelButton.setBounds(588, 195, 246, 33);
+		sessionPanelButton.setBounds(13, 20, 244, 51);
 		mainMenuPanel.add(sessionPanelButton);
 		
 		JButton cust_trainSessPanelButton = new JButton("view own training session");
 		cust_trainSessPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cust_trainSessPanelButton.setIcon(new ImageIcon("img/Actions-contact-date-icon.png"));
+		cust_trainSessPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Actions-contact-date-icon.png")));
 		cust_trainSessPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane,"10");
 			}
 		});
-		cust_trainSessPanelButton.setBounds(885, 195, 252, 50);
+		cust_trainSessPanelButton.setBounds(13, 20, 271, 51);
 		mainMenuPanel.add(cust_trainSessPanelButton);
 		
 		JButton custPresonalBotton = new JButton("Presonal Details ");
-		custPresonalBotton.setIcon(new ImageIcon("img/Resume-icon.png"));
+		custPresonalBotton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Resume-icon.png")));
 		custPresonalBotton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		custPresonalBotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane,"Presonal_Details");
 			}
 		});
-		custPresonalBotton.setBounds(900, 314, 212, 34);
+		custPresonalBotton.setBounds(306, 20, 244, 51);
 		mainMenuPanel.add(custPresonalBotton);
 		
 		JButton btnNewButton_7 = new JButton("View feedback");
@@ -221,18 +221,21 @@ public class MainFrame extends JFrame {
 				cl.show(contentPane,"name_1043485758744900");
 			}
 		});
-		btnNewButton_7.setIcon(new ImageIcon("img/rating-icon.png"));
+		btnNewButton_7.setIcon(new ImageIcon(MainFrame.class.getResource("/images/rating-icon.png")));
 		btnNewButton_7.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_7.setBounds(573, 261, 261, 44);
+		btnNewButton_7.setBounds(284, 20, 244, 51);
 		mainMenuPanel.add(btnNewButton_7);
+		
+		JLabel lblNewLabel_27 = new JLabel("WELCOME");
+		lblNewLabel_27.setIcon(new ImageIcon(MainFrame.class.getResource("/images/welcome-icon.png")));
+		lblNewLabel_27.setFont(new Font("Algerian", Font.PLAIN, 52));
+		lblNewLabel_27.setBounds(409, 314, 449, 191);
+		mainMenuPanel.add(lblNewLabel_27);
 		
 		mainMenuPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				// TODO Put all the buttons to the center so that all the users will see them at the same positions
-				// Or not to just to the center but wherever it will look great
-				// Because right now if you log in as a customer, your buttons will be on the right which looks weird
-				// You can do it either here in the code or in Design
+				
 				if (userType != UserType.MANAGER) {
 					regPanelButton.setVisible(false);
 					manageRegPanelButton.setVisible(false);
@@ -253,8 +256,8 @@ public class MainFrame extends JFrame {
 		
 		JButton authButton = new JButton("Sign in");
 		authButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		authButton.setIcon(new ImageIcon("img/Ok-icon.png"));
-		authButton.setBounds(258, 563, 179, 47);
+		authButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/login.png")));
+		authButton.setBounds(855, 444, 179, 47);
 		authButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Map<String, String> filter = new HashMap<String, String>();
@@ -265,7 +268,9 @@ public class MainFrame extends JFrame {
 					Map<String, User> allUsers = db.getUsers();
 					Map<String, User> users = db.getUsers(filter);
 					if (users.size() < 1) {
-						// TODO Show the message "Invalid login or password"
+						
+						JOptionPane.showMessageDialog(null, "Invalid login or password","warning",JOptionPane.INFORMATION_MESSAGE);
+						
 					} else {
 						user = users.get(users.keySet().toArray()[0]);
 						if (db.getManager(user.id) != null) {
@@ -276,64 +281,55 @@ public class MainFrame extends JFrame {
 							userType = UserType.CUSTOMER;
 						} else {
 							// TODO Show the same message as in the above
+							JOptionPane.showMessageDialog(null, "Invalid login or password","warning",JOptionPane.INFORMATION_MESSAGE);
 						}
 						if (user != null && userType != null)
 							cl.show(contentPane, "2");
 					}
 				} catch (IOException exc) {
-					// TODO Show the message "We're sorry but the system's servers right are unavailable"
-					// Basically this will happen if something is wrong with db.txt
+					
+					JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
 		authPanel.add(authButton);
 		
 		loginEdit = new JTextField();
-		loginEdit.setBounds(270, 406, 243, 33);
+		loginEdit.setBounds(833, 288, 225, 33);
 		authPanel.add(loginEdit);
 		loginEdit.setColumns(10);
 		
 		JLabel loginLabel = new JLabel("Username");
 		loginLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		loginLabel.setBounds(124, 409, 122, 25);
+		loginLabel.setBounds(701, 296, 122, 25);
 		authPanel.add(loginLabel);
 		
 		JLabel passwordLabel = new JLabel("password");
 		passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		passwordLabel.setBounds(119, 476, 122, 33);
+		passwordLabel.setBounds(701, 358, 122, 33);
 		authPanel.add(passwordLabel);
-		
-		gym_iconLabel = new JLabel("");
 		Image image = new ImageIcon("img/gym_logo.png").getImage();
-		gym_iconLabel.setIcon(new ImageIcon(image));
-		gym_iconLabel.setBounds(627, 0, 537, 693);
-		authPanel.add(gym_iconLabel);
 		
 		passwordEdit = new JPasswordField();
-		passwordEdit.setBounds(269, 478, 243, 35);
+		passwordEdit.setBounds(833, 361, 225, 35);
 		authPanel.add(passwordEdit);
+		
+		JLabel lblNewLabel_28 = new JLabel("");
+		lblNewLabel_28.setIcon(new ImageIcon(MainFrame.class.getResource("/images/APU logo (1).jpg")));
+		lblNewLabel_28.setBounds(30, 201, 500, 290);
+		authPanel.add(lblNewLabel_28);
+		
+		JLabel lblNewLabel_29 = new JLabel("");
+		lblNewLabel_29.setIcon(new ImageIcon(MainFrame.class.getResource("/images/login background.PNG")));
+		lblNewLabel_29.setBounds(10, 0, 1175, 657);
+		authPanel.add(lblNewLabel_29);
 		
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(Color.CYAN);
 		contentPane.add(registerPanel, "3");
 		registerPanel.setLayout(null);
 		
-		JRadioButton regTrainerRadio = new JRadioButton("trainer");
-		regTrainerRadio.setBackground(Color.CYAN);
-		regTrainerRadio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		regTrainerRadio.setBounds(5, 162, 83, 23);
-		registerPanel.add(regTrainerRadio);
-		
-		JRadioButton regCustomerRadio = new JRadioButton("customer");
-		regCustomerRadio.setSelected(true);
-		regCustomerRadio.setBackground(Color.CYAN);
-		regCustomerRadio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		regCustomerRadio.setBounds(5, 122, 96, 23);
-		registerPanel.add(regCustomerRadio);
-		
 		ButtonGroup regRadioGroup = new ButtonGroup();
-	    regRadioGroup.add(regTrainerRadio);
-	    regRadioGroup.add(regCustomerRadio);
 		
 		regNameEdit = new JTextField();
 		regNameEdit.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -373,24 +369,24 @@ public class MainFrame extends JFrame {
 		
 		JButton regButton = new JButton("ADD");
 		regButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regButton.setIcon(new ImageIcon("img/add.png"));
+		regButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/new member.png")));
 		regButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "member added successfully","message",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		regButton.setBounds(393, 522, 179, 88);
+		regButton.setBounds(393, 522, 165, 62);
 		registerPanel.add(regButton);
 		
 		JButton regBackButton = new JButton("Back");
 		regBackButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regBackButton.setIcon(new ImageIcon("img/logout.png"));
+		regBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
 		regBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		regBackButton.setBounds(69, 514, 152, 80);
+		regBackButton.setBounds(64, 522, 165, 57);
 		registerPanel.add(regBackButton);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
@@ -442,7 +438,7 @@ public class MainFrame extends JFrame {
 		JLabel lblNewLabel_14 = new JLabel("New Member");
 		lblNewLabel_14.setForeground(Color.BLUE);
 		lblNewLabel_14.setFont(new Font("Aldhabi", Font.BOLD, 48));
-		lblNewLabel_14.setIcon(new ImageIcon("img/new member.png"));
+		lblNewLabel_14.setIcon(new ImageIcon(MainFrame.class.getResource("/images/new member.png")));
 		lblNewLabel_14.setBounds(323, 28, 298, 62);
 		registerPanel.add(lblNewLabel_14);
 		
@@ -464,6 +460,12 @@ public class MainFrame extends JFrame {
 		comboBox_2.setBounds(233, 416, 45, 21);
 		registerPanel.add(comboBox_2);
 		
+		JComboBox comboBox_6_1 = new JComboBox();
+		comboBox_6_1.setModel(new DefaultComboBoxModel(new String[] {"Manager ", "Trainer", "Customer"}));
+		comboBox_6_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		comboBox_6_1.setBounds(10, 133, 86, 21);
+		registerPanel.add(comboBox_6_1);
+		
 		JPanel manageRegPanel = new JPanel();
 		manageRegPanel.setBackground(Color.CYAN);
 		contentPane.add(manageRegPanel, "4");
@@ -483,12 +485,12 @@ public class MainFrame extends JFrame {
 		manageRegPanel.add(manageRegTable);
 		
 		JButton manageRegSaveButton = new JButton("Save");
-		manageRegSaveButton.setIcon(new ImageIcon("img/save.png"));
+		manageRegSaveButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/save.png")));
 		manageRegSaveButton.setBounds(693, 493, 117, 63);
 		manageRegPanel.add(manageRegSaveButton);
 		
 		JButton manageRegBackButton = new JButton("Back");
-		manageRegBackButton.setIcon(new ImageIcon("img/arrow-back-icon.png"));
+		manageRegBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
 		manageRegBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -498,7 +500,7 @@ public class MainFrame extends JFrame {
 		manageRegPanel.add(manageRegBackButton);
 		
 		JButton manageRegDeleteButton = new JButton("Delete");
-		manageRegDeleteButton.setIcon(new ImageIcon("img/delete.png"));
+		manageRegDeleteButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/delete.png")));
 		manageRegDeleteButton.setBounds(489, 493, 142, 63);
 		manageRegPanel.add(manageRegDeleteButton);
 		
@@ -512,20 +514,8 @@ public class MainFrame extends JFrame {
 		manageRegPanel.add(textField);
 		textField.setColumns(10);
 		
-		JRadioButton searchtrainer = new JRadioButton("trainer");
-		searchtrainer.setBackground(Color.CYAN);
-		searchtrainer.setFont(new Font("Tahoma", Font.BOLD, 15));
-		searchtrainer.setBounds(22, 181, 103, 21);
-		manageRegPanel.add(searchtrainer);
-		
-		JRadioButton searchtcust = new JRadioButton("customer");
-		searchtcust.setBackground(Color.CYAN);
-		searchtcust.setFont(new Font("Tahoma", Font.BOLD, 15));
-		searchtcust.setBounds(22, 214, 103, 21);
-		manageRegPanel.add(searchtcust);
-		
 		JButton searchBotton = new JButton("Search");
-		searchBotton.setIcon(new ImageIcon("img/search.png"));
+		searchBotton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/search.png")));
 		searchBotton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		searchBotton.setBounds(15, 246, 126, 30);
 		manageRegPanel.add(searchBotton);
@@ -539,6 +529,12 @@ public class MainFrame extends JFrame {
 		textField_13.setColumns(10);
 		textField_13.setBounds(15, 141, 103, 30);
 		manageRegPanel.add(textField_13);
+		
+		JComboBox comboBox_6 = new JComboBox();
+		comboBox_6.setFont(new Font("Tahoma", Font.BOLD, 10));
+		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"Manager", "Trainer", "Customer"}));
+		comboBox_6.setBounds(15, 191, 86, 21);
+		manageRegPanel.add(comboBox_6);
 		
 		JPanel bookPanel = new JPanel();
 		bookPanel.setBackground(Color.CYAN);
@@ -579,7 +575,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_17 = new JLabel("Book training Session");
 		lblNewLabel_17.setFont(new Font("Algerian", Font.BOLD, 25));
-		lblNewLabel_17.setIcon(new ImageIcon("img/Schedule-icon.png"));
+		lblNewLabel_17.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Schedule-icon.png")));
 		lblNewLabel_17.setBounds(293, 36, 551, 96);
 		bookPanel.add(lblNewLabel_17);
 		
@@ -629,7 +625,7 @@ public class MainFrame extends JFrame {
 		sessionPanel.add(sessionTable);
 		
 		JButton sessionBackButton = new JButton("Back");
-		sessionBackButton.setIcon(new ImageIcon("img/Go-back-icon.png"));
+		sessionBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
 		sessionBackButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		sessionBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -641,7 +637,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_21 = new JLabel("Training Sessions");
 		lblNewLabel_21.setFont(new Font("Algerian", Font.PLAIN, 27));
-		lblNewLabel_21.setIcon(new ImageIcon("img/Actions-view-calendar-timeline-icon.png"));
+		lblNewLabel_21.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Actions-view-calendar-timeline-icon.png")));
 		lblNewLabel_21.setBounds(290, 10, 443, 106);
 		sessionPanel.add(lblNewLabel_21);
 		
@@ -692,16 +688,18 @@ public class MainFrame extends JFrame {
 		paymentPanel.add(paymentTable);
 		
 		JButton paymentSaveButton = new JButton("Save");
-		paymentSaveButton.setBounds(701, 504, 89, 23);
+		paymentSaveButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/save.png")));
+		paymentSaveButton.setBounds(701, 504, 105, 40);
 		paymentPanel.add(paymentSaveButton);
 		
 		JButton paymentBackButton = new JButton("Back");
+		paymentBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
 		paymentBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		paymentBackButton.setBounds(316, 504, 89, 23);
+		paymentBackButton.setBounds(276, 504, 129, 40);
 		paymentPanel.add(paymentBackButton);
 		
 		JButton paymentCollectButton = new JButton("Collect payment");
@@ -1042,7 +1040,7 @@ public class MainFrame extends JFrame {
 		custPersonalPanel.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("Presonal Details ");
-		lblNewLabel_2.setIcon(new ImageIcon("img/personal-information-icon.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(MainFrame.class.getResource("/images/personal-information-icon.png")));
 		lblNewLabel_2.setFont(new Font("Algerian", Font.PLAIN, 25));
 		lblNewLabel_2.setBounds(247, 27, 297, 66);
 		custPersonalPanel.add(lblNewLabel_2);
@@ -1108,13 +1106,13 @@ public class MainFrame extends JFrame {
 		custPersonalPanel.add(textField_12);
 		
 		JButton btnNewButton_2 = new JButton("update");
-		btnNewButton_2.setIcon(new ImageIcon("img/update & delete member.png"));
+		btnNewButton_2.setIcon(new ImageIcon(MainFrame.class.getResource("/images/update & delete member.png")));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_2.setBounds(470, 529, 160, 36);
 		custPersonalPanel.add(btnNewButton_2);
 		
 		JButton btnNewButton_2_1 = new JButton("Back");
-		btnNewButton_2_1.setIcon(new ImageIcon("img/Go-back-icon.png"));
+		btnNewButton_2_1.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -1125,7 +1123,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel profile = new JLabel("");
 		Image image2 = new ImageIcon("img/profile-icon.png").getImage();
-		profile.setIcon(new ImageIcon(image2));
+		profile.setIcon(new ImageIcon(MainFrame.class.getResource("/images/profile-icon.png")));
 		profile.setBounds(410, 167, 109, 80);
 		custPersonalPanel.add(profile);
 		
@@ -1210,7 +1208,7 @@ public class MainFrame extends JFrame {
 		Ratings.setLayout(null);
 		
 		JLabel lblNewLabel_25 = new JLabel("Feedback and Rating");
-		lblNewLabel_25.setIcon(new ImageIcon("img/feedvack.png"));
+		lblNewLabel_25.setIcon(new ImageIcon(MainFrame.class.getResource("/images/feedvack.png")));
 		lblNewLabel_25.setBounds(424, 40, 392, 90);
 		lblNewLabel_25.setFont(new Font("Algerian", Font.BOLD, 24));
 		Ratings.add(lblNewLabel_25);
@@ -1237,7 +1235,7 @@ public class MainFrame extends JFrame {
 				cl.show(contentPane,"2");
 			}
 		});
-		sessionBackButton_1.setIcon(new ImageIcon("img/Go-back-icon.png"));
+		sessionBackButton_1.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
 		sessionBackButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		sessionBackButton_1.setBounds(128, 588, 122, 23);
 		Ratings.add(sessionBackButton_1);
