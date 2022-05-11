@@ -58,11 +58,9 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField loginEdit;
 	private JTextField regNameEdit;
-	private JTextField regDobEdit;
 	private JTextField regPhoneEdit;
 	private JTextField regEmailEdit;
 	private JTextField regLoginEdit;
-	private JTextField regPasswordEdit;
 	private JTable manageRegTable;
 	private JTable sessionTable;
 	private JTable paymentTable;
@@ -77,7 +75,6 @@ public class MainFrame extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_11;
 	private JTextField textField_12;
@@ -90,6 +87,7 @@ public class MainFrame extends JFrame {
 	private JTextField textField_14;
 	private JTextField textField_8;
 	private JTextField textField_9;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -151,68 +149,68 @@ public class MainFrame extends JFrame {
 		
 		JButton regPanelButton = new JButton("register");
 		regPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		regPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/new member.png")));
+		regPanelButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\new member.png"));
 		regPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "3");
 			}
 		});
-		regPanelButton.setBounds(13, 20, 244, 51);
+		regPanelButton.setBounds(13, 23, 244, 51);
 		mainMenuPanel.add(regPanelButton);
 		
 		JButton manageRegPanelButton = new JButton("Manage registration");
 		manageRegPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		manageRegPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/list of members.png")));
+		manageRegPanelButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\list of members.png"));
 		manageRegPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "4");
 			}
 		});
-		manageRegPanelButton.setBounds(284, 20, 244, 51);
+		manageRegPanelButton.setBounds(284, 23, 244, 51);
 		mainMenuPanel.add(manageRegPanelButton);
 		
 		JButton bookPanelButton = new JButton("Book session");
 		bookPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		bookPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/session-idle-time-icon.png")));
+		bookPanelButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\session-idle-time-icon.png"));
 		bookPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "5");
 			}
 		});
-		bookPanelButton.setBounds(560, 20, 225, 51);
+		bookPanelButton.setBounds(554, 23, 225, 51);
 		mainMenuPanel.add(bookPanelButton);
 		
 		JButton sessionPanelButton = new JButton("check training session");
 		sessionPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		sessionPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/234.png")));
+		sessionPanelButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\234.png"));
 		sessionPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "7");
 			}
 		});
-		sessionPanelButton.setBounds(13, 20, 244, 51);
+		sessionPanelButton.setBounds(13, 23, 244, 51);
 		mainMenuPanel.add(sessionPanelButton);
 		
 		JButton cust_trainSessPanelButton = new JButton("view own training session");
 		cust_trainSessPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cust_trainSessPanelButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Actions-contact-date-icon.png")));
+		cust_trainSessPanelButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Actions-contact-date-icon.png"));
 		cust_trainSessPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane,"10");
 			}
 		});
-		cust_trainSessPanelButton.setBounds(13, 20, 271, 51);
+		cust_trainSessPanelButton.setBounds(3, 23, 271, 51);
 		mainMenuPanel.add(cust_trainSessPanelButton);
 		
 		JButton custPresonalBotton = new JButton("Presonal Details ");
-		custPresonalBotton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Resume-icon.png")));
+		custPresonalBotton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Resume-icon.png"));
 		custPresonalBotton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		custPresonalBotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane,"Presonal_Details");
 			}
 		});
-		custPresonalBotton.setBounds(306, 20, 244, 51);
+		custPresonalBotton.setBounds(296, 23, 244, 51);
 		mainMenuPanel.add(custPresonalBotton);
 		
 		JButton btnNewButton_7 = new JButton("View feedback");
@@ -221,13 +219,13 @@ public class MainFrame extends JFrame {
 				cl.show(contentPane,"name_1043485758744900");
 			}
 		});
-		btnNewButton_7.setIcon(new ImageIcon(MainFrame.class.getResource("/images/rating-icon.png")));
+		btnNewButton_7.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\rating-icon.png"));
 		btnNewButton_7.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_7.setBounds(284, 20, 244, 51);
+		btnNewButton_7.setBounds(284, 23, 244, 51);
 		mainMenuPanel.add(btnNewButton_7);
 		
 		JLabel lblNewLabel_27 = new JLabel("WELCOME");
-		lblNewLabel_27.setIcon(new ImageIcon(MainFrame.class.getResource("/images/welcome-icon.png")));
+		lblNewLabel_27.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\welcome-icon.png"));
 		lblNewLabel_27.setFont(new Font("Algerian", Font.PLAIN, 52));
 		lblNewLabel_27.setBounds(409, 314, 449, 191);
 		mainMenuPanel.add(lblNewLabel_27);
@@ -256,7 +254,7 @@ public class MainFrame extends JFrame {
 		
 		JButton authButton = new JButton("Sign in");
 		authButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		authButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/login.png")));
+		authButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\login.png"));
 		authButton.setBounds(855, 444, 179, 47);
 		authButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -315,12 +313,12 @@ public class MainFrame extends JFrame {
 		authPanel.add(passwordEdit);
 		
 		JLabel lblNewLabel_28 = new JLabel("");
-		lblNewLabel_28.setIcon(new ImageIcon(MainFrame.class.getResource("/images/APU logo (1).jpg")));
+		lblNewLabel_28.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\APU logo (1).jpg"));
 		lblNewLabel_28.setBounds(30, 201, 500, 290);
 		authPanel.add(lblNewLabel_28);
 		
 		JLabel lblNewLabel_29 = new JLabel("");
-		lblNewLabel_29.setIcon(new ImageIcon(MainFrame.class.getResource("/images/login background.PNG")));
+		lblNewLabel_29.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\login background.PNG"));
 		lblNewLabel_29.setBounds(10, 0, 1175, 657);
 		authPanel.add(lblNewLabel_29);
 		
@@ -336,12 +334,6 @@ public class MainFrame extends JFrame {
 		regNameEdit.setBounds(221, 196, 96, 20);
 		registerPanel.add(regNameEdit);
 		regNameEdit.setColumns(10);
-		
-		regDobEdit = new JTextField();
-		regDobEdit.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regDobEdit.setBounds(221, 238, 96, 20);
-		registerPanel.add(regDobEdit);
-		regDobEdit.setColumns(10);
 		
 		regPhoneEdit = new JTextField();
 		regPhoneEdit.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -361,15 +353,9 @@ public class MainFrame extends JFrame {
 		registerPanel.add(regLoginEdit);
 		regLoginEdit.setColumns(10);
 		
-		regPasswordEdit = new JTextField();
-		regPasswordEdit.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regPasswordEdit.setBounds(476, 184, 145, 20);
-		registerPanel.add(regPasswordEdit);
-		regPasswordEdit.setColumns(10);
-		
 		JButton regButton = new JButton("ADD");
 		regButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/new member.png")));
+		regButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\new member.png"));
 		regButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "member added successfully","message",JOptionPane.INFORMATION_MESSAGE);
@@ -380,7 +366,7 @@ public class MainFrame extends JFrame {
 		
 		JButton regBackButton = new JButton("Back");
 		regBackButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
+		regBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		regBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -391,7 +377,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		Image image4 = new ImageIcon("img/profile-icon.png").getImage();
-		lblNewLabel_5.setIcon(new ImageIcon(image4));
+		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\profile-icon.png"));
 		lblNewLabel_5.setBounds(471, 239, 135, 88);
 		registerPanel.add(lblNewLabel_5);
 		
@@ -427,7 +413,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_12 = new JLabel("password");
 		lblNewLabel_12.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_12.setBounds(390, 187, 76, 13);
+		lblNewLabel_12.setBounds(390, 187, 76, 29);
 		registerPanel.add(lblNewLabel_12);
 		
 		JLabel lblNewLabel_13 = new JLabel("Personal Photo");
@@ -438,7 +424,7 @@ public class MainFrame extends JFrame {
 		JLabel lblNewLabel_14 = new JLabel("New Member");
 		lblNewLabel_14.setForeground(Color.BLUE);
 		lblNewLabel_14.setFont(new Font("Aldhabi", Font.BOLD, 48));
-		lblNewLabel_14.setIcon(new ImageIcon(MainFrame.class.getResource("/images/new member.png")));
+		lblNewLabel_14.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\new member.png"));
 		lblNewLabel_14.setBounds(323, 28, 298, 62);
 		registerPanel.add(lblNewLabel_14);
 		
@@ -466,6 +452,14 @@ public class MainFrame extends JFrame {
 		comboBox_6_1.setBounds(10, 133, 86, 21);
 		registerPanel.add(comboBox_6_1);
 		
+		JDateChooser dateChooser_3 = new JDateChooser();
+		dateChooser_3.setBounds(221, 239, 96, 20);
+		registerPanel.add(dateChooser_3);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(476, 196, 145, 19);
+		registerPanel.add(passwordField);
+		
 		JPanel manageRegPanel = new JPanel();
 		manageRegPanel.setBackground(Color.CYAN);
 		contentPane.add(manageRegPanel, "4");
@@ -485,12 +479,12 @@ public class MainFrame extends JFrame {
 		manageRegPanel.add(manageRegTable);
 		
 		JButton manageRegSaveButton = new JButton("Save");
-		manageRegSaveButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/save.png")));
+		manageRegSaveButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\save.png"));
 		manageRegSaveButton.setBounds(693, 493, 117, 63);
 		manageRegPanel.add(manageRegSaveButton);
 		
 		JButton manageRegBackButton = new JButton("Back");
-		manageRegBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
+		manageRegBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		manageRegBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -500,7 +494,7 @@ public class MainFrame extends JFrame {
 		manageRegPanel.add(manageRegBackButton);
 		
 		JButton manageRegDeleteButton = new JButton("Delete");
-		manageRegDeleteButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/delete.png")));
+		manageRegDeleteButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\delete.png"));
 		manageRegDeleteButton.setBounds(489, 493, 142, 63);
 		manageRegPanel.add(manageRegDeleteButton);
 		
@@ -515,7 +509,7 @@ public class MainFrame extends JFrame {
 		textField.setColumns(10);
 		
 		JButton searchBotton = new JButton("Search");
-		searchBotton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/search.png")));
+		searchBotton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\search.png"));
 		searchBotton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		searchBotton.setBounds(15, 246, 126, 30);
 		manageRegPanel.add(searchBotton);
@@ -542,7 +536,7 @@ public class MainFrame extends JFrame {
 		bookPanel.setLayout(null);
 		
 		JButton bookBackButton = new JButton("back");
-		bookBackButton.setIcon(new ImageIcon("img/Go-back-icon.png"));
+		bookBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		bookBackButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		bookBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -554,7 +548,7 @@ public class MainFrame extends JFrame {
 		
 		JButton bookButton = new JButton("book");
 		bookButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		bookButton.setIcon(new ImageIcon("img/Sketch-Book-icon.png"));
+		bookButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Sketch-Book-icon.png"));
 		bookButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Session booked successfully","message",JOptionPane.INFORMATION_MESSAGE);
@@ -575,7 +569,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_17 = new JLabel("Book training Session");
 		lblNewLabel_17.setFont(new Font("Algerian", Font.BOLD, 25));
-		lblNewLabel_17.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Schedule-icon.png")));
+		lblNewLabel_17.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Schedule-icon.png"));
 		lblNewLabel_17.setBounds(293, 36, 551, 96);
 		bookPanel.add(lblNewLabel_17);
 		
@@ -625,7 +619,7 @@ public class MainFrame extends JFrame {
 		sessionPanel.add(sessionTable);
 		
 		JButton sessionBackButton = new JButton("Back");
-		sessionBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
+		sessionBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		sessionBackButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		sessionBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -637,7 +631,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel lblNewLabel_21 = new JLabel("Training Sessions");
 		lblNewLabel_21.setFont(new Font("Algerian", Font.PLAIN, 27));
-		lblNewLabel_21.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Actions-view-calendar-timeline-icon.png")));
+		lblNewLabel_21.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Actions-view-calendar-timeline-icon.png"));
 		lblNewLabel_21.setBounds(290, 10, 443, 106);
 		sessionPanel.add(lblNewLabel_21);
 		
@@ -688,12 +682,12 @@ public class MainFrame extends JFrame {
 		paymentPanel.add(paymentTable);
 		
 		JButton paymentSaveButton = new JButton("Save");
-		paymentSaveButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/save.png")));
+		paymentSaveButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\save.png"));
 		paymentSaveButton.setBounds(701, 504, 105, 40);
 		paymentPanel.add(paymentSaveButton);
 		
 		JButton paymentBackButton = new JButton("Back");
-		paymentBackButton.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
+		paymentBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		paymentBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -836,7 +830,7 @@ public class MainFrame extends JFrame {
 		cust_trainSessPanel.add(cust_trainSesslabel);
 		
 		JButton cust_trainSessBackbotton = new JButton("Back");
-		cust_trainSessBackbotton.setIcon(new ImageIcon("img/Go-back-icon.png"));
+		cust_trainSessBackbotton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		cust_trainSessBackbotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -847,7 +841,7 @@ public class MainFrame extends JFrame {
 		cust_trainSessPanel.add(cust_trainSessBackbotton);
 		
 		JButton payBotton = new JButton("Pay");
-		payBotton.setIcon(new ImageIcon("img/payment.png"));
+		payBotton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\payment.png"));
 		payBotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "name_527830163244599");
@@ -1040,7 +1034,7 @@ public class MainFrame extends JFrame {
 		custPersonalPanel.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("Presonal Details ");
-		lblNewLabel_2.setIcon(new ImageIcon(MainFrame.class.getResource("/images/personal-information-icon.png")));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\personal-information-icon.png"));
 		lblNewLabel_2.setFont(new Font("Algerian", Font.PLAIN, 25));
 		lblNewLabel_2.setBounds(247, 27, 297, 66);
 		custPersonalPanel.add(lblNewLabel_2);
@@ -1049,11 +1043,6 @@ public class MainFrame extends JFrame {
 		textField_5.setColumns(10);
 		textField_5.setBounds(81, 169, 96, 20);
 		custPersonalPanel.add(textField_5);
-		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(81, 242, 96, 20);
-		custPersonalPanel.add(textField_6);
 		
 		textField_7 = new JTextField();
 		textField_7.setColumns(10);
@@ -1106,13 +1095,13 @@ public class MainFrame extends JFrame {
 		custPersonalPanel.add(textField_12);
 		
 		JButton btnNewButton_2 = new JButton("update");
-		btnNewButton_2.setIcon(new ImageIcon(MainFrame.class.getResource("/images/update & delete member.png")));
+		btnNewButton_2.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\update & delete member.png"));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_2.setBounds(470, 529, 160, 36);
 		custPersonalPanel.add(btnNewButton_2);
 		
 		JButton btnNewButton_2_1 = new JButton("Back");
-		btnNewButton_2_1.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
+		btnNewButton_2_1.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		btnNewButton_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
@@ -1123,7 +1112,7 @@ public class MainFrame extends JFrame {
 		
 		JLabel profile = new JLabel("");
 		Image image2 = new ImageIcon("img/profile-icon.png").getImage();
-		profile.setIcon(new ImageIcon(MainFrame.class.getResource("/images/profile-icon.png")));
+		profile.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\profile-icon.png"));
 		profile.setBounds(410, 167, 109, 80);
 		custPersonalPanel.add(profile);
 		
@@ -1141,6 +1130,10 @@ public class MainFrame extends JFrame {
 		textField_9.setColumns(10);
 		textField_9.setBounds(81, 119, 96, 20);
 		custPersonalPanel.add(textField_9);
+		
+		JDateChooser dateChooser_4 = new JDateChooser();
+		dateChooser_4.setBounds(81, 243, 70, 19);
+		custPersonalPanel.add(dateChooser_4);
 		
 		JPanel paymentdetailsPanel = new JPanel();
 		paymentdetailsPanel.setBackground(Color.CYAN);
@@ -1208,7 +1201,7 @@ public class MainFrame extends JFrame {
 		Ratings.setLayout(null);
 		
 		JLabel lblNewLabel_25 = new JLabel("Feedback and Rating");
-		lblNewLabel_25.setIcon(new ImageIcon(MainFrame.class.getResource("/images/feedvack.png")));
+		lblNewLabel_25.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\feedvack.png"));
 		lblNewLabel_25.setBounds(424, 40, 392, 90);
 		lblNewLabel_25.setFont(new Font("Algerian", Font.BOLD, 24));
 		Ratings.add(lblNewLabel_25);
@@ -1235,7 +1228,7 @@ public class MainFrame extends JFrame {
 				cl.show(contentPane,"2");
 			}
 		});
-		sessionBackButton_1.setIcon(new ImageIcon(MainFrame.class.getResource("/images/Go-back-icon.png")));
+		sessionBackButton_1.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
 		sessionBackButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		sessionBackButton_1.setBounds(128, 588, 122, 23);
 		Ratings.add(sessionBackButton_1);
