@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JRadioButtonMenuItem;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Window;
 
 import javax.swing.JTextPane;
 import javax.swing.JList;
@@ -63,31 +64,19 @@ public class MainFrame extends JFrame {
 	private JTextField regLoginEdit;
 	private JTable manageRegTable;
 	private JTable sessionTable;
-	private JTable paymentTable;
-	private JTable feedbackTable;
-	private JTextField feedbackCommentEdit;
-	private JTable reportTable;
-	private JTextField reportFilterEdit;
 	private JTextField textField;
 	private JTable cust_trainSessTable;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_7;
 	private JTextField textField_11;
 	private JTextField textField_12;
-	private JTable paymentdetailTable;
 	private JPasswordField passwordEdit;
-	private JTextField textField_10;
 	private JTextField textField_13;
-	private JTable table;
-	private JTable table_1;
 	private JTextField textField_14;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JPasswordField passwordField;
+	protected Window btnNewButton_7;
 
 	/**
 	 * Launch the application.
@@ -212,17 +201,6 @@ public class MainFrame extends JFrame {
 		});
 		custPresonalBotton.setBounds(296, 23, 244, 51);
 		mainMenuPanel.add(custPresonalBotton);
-		
-		JButton btnNewButton_7 = new JButton("View feedback");
-		btnNewButton_7.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane,"name_1043485758744900");
-			}
-		});
-		btnNewButton_7.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\rating-icon.png"));
-		btnNewButton_7.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_7.setBounds(284, 23, 244, 51);
-		mainMenuPanel.add(btnNewButton_7);
 		
 		JLabel lblNewLabel_27 = new JLabel("WELCOME");
 		lblNewLabel_27.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\welcome-icon.png"));
@@ -428,18 +406,6 @@ public class MainFrame extends JFrame {
 		lblNewLabel_14.setBounds(323, 28, 298, 62);
 		registerPanel.add(lblNewLabel_14);
 		
-		JLabel lblNewLabel_15 = new JLabel("ID");
-		lblNewLabel_15.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_15.setBounds(131, 127, 45, 13);
-		registerPanel.add(lblNewLabel_15);
-		
-		textField_10 = new JTextField();
-		textField_10.setFont(new Font("Tahoma", Font.BOLD, 10));
-		textField_10.setText("00");
-		textField_10.setBounds(167, 126, 34, 19);
-		registerPanel.add(textField_10);
-		textField_10.setColumns(10);
-		
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setFont(new Font("Tahoma", Font.BOLD, 10));
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
@@ -449,7 +415,7 @@ public class MainFrame extends JFrame {
 		JComboBox comboBox_6_1 = new JComboBox();
 		comboBox_6_1.setModel(new DefaultComboBoxModel(new String[] {"Manager ", "Trainer", "Customer"}));
 		comboBox_6_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		comboBox_6_1.setBounds(10, 133, 86, 21);
+		comboBox_6_1.setBounds(137, 133, 86, 21);
 		registerPanel.add(comboBox_6_1);
 		
 		JDateChooser dateChooser_3 = new JDateChooser();
@@ -468,19 +434,23 @@ public class MainFrame extends JFrame {
 		manageRegTable = new JTable();
 		manageRegTable.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"a", "b"},
-				{"c", "d"},
+				{"a", "b", null, null, null, null},
+				{"c", "d", null, null, null, null},
 			},
 			new String[] {
-				"col 1", "col 2"
+				"name", "DOB", "phone", "email", "gender", "photo"
 			}
 		));
-		manageRegTable.setBounds(159, 28, 807, 403);
+		manageRegTable.setBounds(171, 112, 807, 403);
 		manageRegPanel.add(manageRegTable);
+		
+		JTableHeader manageRegTableHeader = manageRegTable.getTableHeader();
+		manageRegTableHeader.setBounds(171, 92, 807, 20);
+		manageRegPanel.add(manageRegTableHeader);
 		
 		JButton manageRegSaveButton = new JButton("Save");
 		manageRegSaveButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\save.png"));
-		manageRegSaveButton.setBounds(693, 493, 117, 63);
+		manageRegSaveButton.setBounds(694, 540, 117, 63);
 		manageRegPanel.add(manageRegSaveButton);
 		
 		JButton manageRegBackButton = new JButton("Back");
@@ -490,12 +460,12 @@ public class MainFrame extends JFrame {
 				cl.show(contentPane, "2");
 			}
 		});
-		manageRegBackButton.setBounds(275, 493, 161, 63);
+		manageRegBackButton.setBounds(193, 540, 161, 63);
 		manageRegPanel.add(manageRegBackButton);
 		
 		JButton manageRegDeleteButton = new JButton("Delete");
 		manageRegDeleteButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\delete.png"));
-		manageRegDeleteButton.setBounds(489, 493, 142, 63);
+		manageRegDeleteButton.setBounds(476, 540, 142, 63);
 		manageRegPanel.add(manageRegDeleteButton);
 		
 		JLabel search_label = new JLabel("Enter ID :");
@@ -609,14 +579,18 @@ public class MainFrame extends JFrame {
 		sessionTable = new JTable();
 		sessionTable.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Session list"},
+				{"Session list"}, //TODO custname,Date , time,price ,status,feedback,ratings
 			},
 			new String[] {
-				"New column"
+				"customer name","Date","Time","price","status","feedback","Rating"
 			}
 		));
 		sessionTable.setBounds(318, 122, 807, 403);
 		sessionPanel.add(sessionTable);
+		
+		JTableHeader sessionTableHeader = sessionTable.getTableHeader();
+		sessionTableHeader.setBounds(318, 102, 807, 20);
+		sessionPanel.add(sessionTableHeader);
 		
 		JButton sessionBackButton = new JButton("Back");
 		sessionBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
@@ -664,143 +638,6 @@ public class MainFrame extends JFrame {
 		comboBox_5.setBounds(167, 292, 79, 23);
 		sessionPanel.add(comboBox_5);
 		
-		JPanel paymentPanel = new JPanel();
-		paymentPanel.setBackground(Color.CYAN);
-		paymentPanel.setLayout(null);
-		contentPane.add(paymentPanel, "8");
-		
-		paymentTable = new JTable();
-		paymentTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Choose session"},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		paymentTable.setBounds(159, 28, 807, 403);
-		paymentPanel.add(paymentTable);
-		
-		JButton paymentSaveButton = new JButton("Save");
-		paymentSaveButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\save.png"));
-		paymentSaveButton.setBounds(701, 504, 105, 40);
-		paymentPanel.add(paymentSaveButton);
-		
-		JButton paymentBackButton = new JButton("Back");
-		paymentBackButton.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
-		paymentBackButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "2");
-			}
-		});
-		paymentBackButton.setBounds(276, 504, 129, 40);
-		paymentPanel.add(paymentBackButton);
-		
-		JButton paymentCollectButton = new JButton("Collect payment");
-		paymentCollectButton.setBounds(478, 466, 121, 23);
-		paymentPanel.add(paymentCollectButton);
-		
-		JPanel feedbackPanel = new JPanel();
-		feedbackPanel.setBackground(Color.CYAN);
-		feedbackPanel.setLayout(null);
-		contentPane.add(feedbackPanel, "9");
-		
-		feedbackTable = new JTable();
-		feedbackTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"choose the session"},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		feedbackTable.setBounds(159, 28, 807, 403);
-		feedbackPanel.add(feedbackTable);
-		
-		JButton feedbackSaveButton = new JButton("Save");
-		feedbackSaveButton.setBounds(632, 568, 89, 23);
-		feedbackPanel.add(feedbackSaveButton);
-		
-		JButton feedbackBackButton = new JButton("Back");
-		feedbackBackButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "2");
-			}
-		});
-		feedbackBackButton.setBounds(301, 568, 89, 23);
-		feedbackPanel.add(feedbackBackButton);
-		
-		feedbackCommentEdit = new JTextField();
-		feedbackCommentEdit.setText("feedback comment");
-		feedbackCommentEdit.setBounds(426, 506, 134, 20);
-		feedbackPanel.add(feedbackCommentEdit);
-		feedbackCommentEdit.setColumns(10);
-		
-		JRadioButton feedbackRate1Radio = new JRadioButton("1");
-		feedbackRate1Radio.setBounds(387, 453, 43, 23);
-		feedbackPanel.add(feedbackRate1Radio);
-		
-		JRadioButton feedbackRate2Radio = new JRadioButton("2");
-		feedbackRate2Radio.setBounds(432, 453, 43, 23);
-		feedbackPanel.add(feedbackRate2Radio);
-		
-		JRadioButton feedbackRate3Radio = new JRadioButton("3");
-		feedbackRate3Radio.setBounds(473, 453, 43, 23);
-		feedbackPanel.add(feedbackRate3Radio);
-		
-		JRadioButton feedbackRate4Radio = new JRadioButton("4");
-		feedbackRate4Radio.setBounds(518, 453, 43, 23);
-		feedbackPanel.add(feedbackRate4Radio);
-		
-		JRadioButton feedbackRate5Radio = new JRadioButton("5");
-		feedbackRate5Radio.setBounds(563, 453, 43, 23);
-		feedbackPanel.add(feedbackRate5Radio);
-		
-		JPanel reportPanel = new JPanel();
-		reportPanel.setBackground(Color.CYAN);
-		reportPanel.setLayout(null);
-		contentPane.add(reportPanel, "6");
-		
-		reportTable = new JTable();
-		reportTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"a", "b"},
-				{"c", "d"},
-			},
-			new String[] {
-				"col1", "col2"
-			}
-		));
-		reportTable.setBounds(181, 23, 807, 403);
-		reportPanel.add(reportTable);
-		
-		JTableHeader reportTableHeader = reportTable.getTableHeader();
-		reportTableHeader.setBounds(181, 0, 807, 20);
-		reportPanel.add(reportTableHeader);
-		
-		JButton reportGenerateButton = new JButton("Generate");
-		reportGenerateButton.setBounds(701, 504, 89, 23);
-		reportPanel.add(reportGenerateButton);
-		
-		JButton reportBackButton = new JButton("Back");
-		reportBackButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "2");
-			}
-		});
-		reportBackButton.setBounds(316, 504, 89, 23);
-		reportPanel.add(reportBackButton);
-		
-		JComboBox reportTableDropdown = new JComboBox();
-		reportTableDropdown.setModel(new DefaultComboBoxModel(new String[] {"select table"}));
-		reportTableDropdown.setBounds(299, 442, 129, 22);
-		reportPanel.add(reportTableDropdown);
-		
-		reportFilterEdit = new JTextField();
-		reportFilterEdit.setText("Filtering options");
-		reportFilterEdit.setBounds(682, 443, 96, 20);
-		reportPanel.add(reportFilterEdit);
-		reportFilterEdit.setColumns(10);
 		
 		JPanel cust_trainSessPanel = new JPanel();
 		cust_trainSessPanel.setBackground(Color.CYAN);
@@ -814,14 +651,24 @@ public class MainFrame extends JFrame {
 				{null, null, null},
 			},
 			new String[] {
-				"Trainer name", "Date", "Time"
+				"Trainer name", "Date", "Time","price","status" //TODO price , status
 			}
 		));
 		cust_trainSessTable.setBounds(121, 65, 674, 403);
 		cust_trainSessPanel.add(cust_trainSessTable);
 		
+		
+		//
+//		private int[] calcHeaderBounds(int[] tableBounds) {
+//			int x = tableBounds[0];
+//			int width = tableBounds[2];
+//			int height = 20;
+//			int y = tableBounds[1] - height;
+//			return new int[]{x, y, width, height};
+//		}
+		
 		JTableHeader cust_trainSessTableHeader = cust_trainSessTable.getTableHeader();
-		cust_trainSessTableHeader.setBounds(181, 0, 807, 20);
+		cust_trainSessTableHeader.setBounds(121, 45, 674, 20);
 		cust_trainSessPanel.add(cust_trainSessTableHeader);
 		
 		JLabel cust_trainSesslabel = new JLabel("My training sesseions :");
@@ -851,42 +698,37 @@ public class MainFrame extends JFrame {
 		payBotton.setBounds(623, 495, 175, 39);
 		cust_trainSessPanel.add(payBotton);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Choose session"},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		table_1.setBounds(848, 54, 280, 403);
-		cust_trainSessPanel.add(table_1);
-		
 		JRadioButton feedbackRate1Radio_1 = new JRadioButton("1");
-		feedbackRate1Radio_1.setBounds(882, 463, 43, 23);
+		feedbackRate1Radio_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		feedbackRate1Radio_1.setBounds(871, 145, 43, 23);
 		cust_trainSessPanel.add(feedbackRate1Radio_1);
 		
 		JRadioButton feedbackRate2Radio_1 = new JRadioButton("2");
-		feedbackRate2Radio_1.setBounds(927, 463, 43, 23);
+		feedbackRate2Radio_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		feedbackRate2Radio_1.setBounds(916, 145, 43, 23);
 		cust_trainSessPanel.add(feedbackRate2Radio_1);
 		
 		JRadioButton feedbackRate3Radio_1 = new JRadioButton("3");
-		feedbackRate3Radio_1.setBounds(968, 463, 43, 23);
+		feedbackRate3Radio_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		feedbackRate3Radio_1.setBounds(957, 145, 43, 23);
 		cust_trainSessPanel.add(feedbackRate3Radio_1);
 		
 		JRadioButton feedbackRate4Radio_1 = new JRadioButton("4");
-		feedbackRate4Radio_1.setBounds(1013, 463, 43, 23);
+		feedbackRate4Radio_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		feedbackRate4Radio_1.setBounds(1002, 145, 43, 23);
 		cust_trainSessPanel.add(feedbackRate4Radio_1);
 		
 		JRadioButton feedbackRate5Radio_1 = new JRadioButton("5");
-		feedbackRate5Radio_1.setBounds(1058, 463, 43, 23);
+		feedbackRate5Radio_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		feedbackRate5Radio_1.setBounds(1047, 145, 43, 23);
 		cust_trainSessPanel.add(feedbackRate5Radio_1);
 		
 		textField_14 = new JTextField();
+		textField_14.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_14.setFont(new Font("Tahoma", Font.BOLD, 14));
 		textField_14.setText("feedback comment");
 		textField_14.setColumns(10);
-		textField_14.setBounds(922, 504, 134, 20);
+		textField_14.setBounds(849, 198, 241, 87);
 		cust_trainSessPanel.add(textField_14);
 		
 		JButton btnNewButton_8 = new JButton("Submit feedback");
@@ -897,7 +739,7 @@ public class MainFrame extends JFrame {
 		});
 		btnNewButton_8.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnNewButton_8.setIcon(new ImageIcon("img/save.png"));
-		btnNewButton_8.setBounds(927, 556, 174, 29);
+		btnNewButton_8.setBounds(884, 317, 174, 29);
 		cust_trainSessPanel.add(btnNewButton_8);
 		
 		JLabel lblNewLabel_26 = new JLabel("Start Date");
@@ -918,115 +760,11 @@ public class MainFrame extends JFrame {
 		dateChooser_2_1.setBounds(20, 217, 70, 19);
 		cust_trainSessPanel.add(dateChooser_2_1);
 		
-		JPanel payPanel = new JPanel();
-		payPanel.setBackground(Color.CYAN);
-		contentPane.add(payPanel, "name_527830163244599");
-		payPanel.setLayout(null);
-		
-		JLabel paymentSumLabel = new JLabel("paymet summary");
-		paymentSumLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		paymentSumLabel.setBounds(145, 10, 167, 35);
-		payPanel.add(paymentSumLabel);
-		
-		JLabel paymentMethodlabel = new JLabel("payment method");
-		paymentMethodlabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		paymentMethodlabel.setBounds(69, 77, 125, 28);
-		payPanel.add(paymentMethodlabel);
-		
-		JComboBox paymetTypecomboBox = new JComboBox();
-		paymetTypecomboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		paymetTypecomboBox.setModel(new DefaultComboBoxModel(new String[] {"VISA", "MasteCard", "PayPal", "other"}));
-		paymetTypecomboBox.setBounds(204, 69, 79, 35);
-		payPanel.add(paymetTypecomboBox);
-		
-		JLabel lblNewLabel = new JLabel("Card Number:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setBounds(69, 115, 108, 28);
-		payPanel.add(lblNewLabel);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_1.setBounds(204, 120, 138, 19);
-		payPanel.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblCardHolderName = new JLabel("card Holder Name:");
-		lblCardHolderName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCardHolderName.setBounds(69, 153, 147, 28);
-		payPanel.add(lblCardHolderName);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(204, 160, 138, 19);
-		payPanel.add(textField_2);
-		
-		JLabel lblValidUntil = new JLabel("Valid Until ");
-		lblValidUntil.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblValidUntil.setBounds(69, 203, 87, 28);
-		payPanel.add(lblValidUntil);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
-		comboBox.setBounds(176, 209, 54, 21);
-		payPanel.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"2022\t", "2023", "2024", "2025", "2026"}));
-		comboBox_1.setBounds(254, 209, 58, 21);
-		payPanel.add(comboBox_1);
-		
-		JLabel lblCardHolderName_1 = new JLabel("CCV");
-		lblCardHolderName_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCardHolderName_1.setBounds(322, 203, 87, 28);
-		payPanel.add(lblCardHolderName_1);
-		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		textField_3.setColumns(10);
-		textField_3.setBounds(363, 210, 74, 19);
-		payPanel.add(textField_3);
-		
-		JLabel lblNewLabel_1 = new JLabel("TOTAL:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(267, 286, 75, 28);
-		payPanel.add(lblNewLabel_1);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(340, 286, 97, 26);
-		payPanel.add(textField_4);
-		textField_4.setColumns(10);
-		
-		JButton btnNewButton = new JButton("Pay Now");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "payment done successfully","message",JOptionPane.INFORMATION_MESSAGE);
-				
-				
-			}
-		});
-		btnNewButton.setBackground(Color.GREEN);
-		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnNewButton.setBounds(301, 353, 136, 28);
-		payPanel.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "10");
-			}
-		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton_1.setBounds(59, 361, 85, 21);
-		payPanel.add(btnNewButton_1);
-		
-		JLabel visaImage = new JLabel("");
+		JLabel lblNewLabel = new JLabel("please select Session from the table\r\n and provide your feedback");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNewLabel.setBounds(805, 65, 349, 74);
+		cust_trainSessPanel.add(lblNewLabel);
 		Image image3 = new ImageIcon("img/payment-creditcard-visa-icon.png").getImage();
-		visaImage.setIcon(new ImageIcon(image3));
-		visaImage.setBounds(540, 57, 214, 100);
-		payPanel.add(visaImage);
 		
 		JPanel custPersonalPanel = new JPanel();
 		custPersonalPanel.setBackground(Color.CYAN);
@@ -1134,103 +872,5 @@ public class MainFrame extends JFrame {
 		JDateChooser dateChooser_4 = new JDateChooser();
 		dateChooser_4.setBounds(81, 243, 70, 19);
 		custPersonalPanel.add(dateChooser_4);
-		
-		JPanel paymentdetailsPanel = new JPanel();
-		paymentdetailsPanel.setBackground(Color.CYAN);
-		contentPane.add(paymentdetailsPanel, "paymentDetails");
-		paymentdetailsPanel.setLayout(null);
-		
-		paymentdetailTable = new JTable();
-		paymentdetailTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"choose payment"},
-			},
-			new String[] {
-				"New column"
-			}
-		));
-		paymentdetailTable.setBounds(34, 86, 807, 403);
-		paymentdetailsPanel.add(paymentdetailTable);
-		
-		JButton btnNewButton_3 = new JButton("view details");
-		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane,"receipt");
-			}
-		});
-		btnNewButton_3.setBounds(616, 516, 170, 33);
-		paymentdetailsPanel.add(btnNewButton_3);
-		
-		JButton btnNewButton_4 = new JButton("Back");
-		btnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "2");
-			}
-		});
-		btnNewButton_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton_4.setBounds(141, 516, 85, 21);
-		paymentdetailsPanel.add(btnNewButton_4);
-		
-		JPanel ReciptPanel = new JPanel();
-		ReciptPanel.setBackground(Color.CYAN);
-		contentPane.add(ReciptPanel, "receipt");
-		ReciptPanel.setLayout(null);
-		
-		JLabel lblNewLabel_4 = new JLabel("Payment receipt");
-		lblNewLabel_4.setBounds(472, 25, 164, 38);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		ReciptPanel.add(lblNewLabel_4);
-		
-		JButton btnNewButton_5 = new JButton("Back");
-		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "paymentDetails");
-			}
-		});
-		btnNewButton_5.setBounds(376, 399, 85, 21);
-		ReciptPanel.add(btnNewButton_5);
-		
-		JButton btnNewButton_6 = new JButton("print");
-		btnNewButton_6.setBounds(673, 399, 85, 21);
-		ReciptPanel.add(btnNewButton_6);
-		
-		JPanel Ratings = new JPanel();
-		Ratings.setBackground(Color.CYAN);
-		contentPane.add(Ratings, "name_1043485758744900");
-		Ratings.setLayout(null);
-		
-		JLabel lblNewLabel_25 = new JLabel("Feedback and Rating");
-		lblNewLabel_25.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\feedvack.png"));
-		lblNewLabel_25.setBounds(424, 40, 392, 90);
-		lblNewLabel_25.setFont(new Font("Algerian", Font.BOLD, 24));
-		Ratings.add(lblNewLabel_25);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"Customer name", "Session", "Rating"
-			}
-		));
-		table.setBounds(183, 140, 885, 414);
-		Ratings.add(table);
-		
-		JButton sessionBackButton_1 = new JButton("Back");
-		sessionBackButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane,"2");
-			}
-		});
-		sessionBackButton_1.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\Go-back-icon.png"));
-		sessionBackButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		sessionBackButton_1.setBounds(128, 588, 122, 23);
-		Ratings.add(sessionBackButton_1);
 	}
 }
