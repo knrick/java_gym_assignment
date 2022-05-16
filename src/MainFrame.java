@@ -77,6 +77,10 @@ public class MainFrame extends JFrame {
 	private JTextField textField_9;
 	private JPasswordField passwordField;
 	protected Window btnNewButton_7;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JPasswordField passwordField_1;
+	private JTextField textField_3;
 
 	/**
 	 * Launch the application.
@@ -207,6 +211,17 @@ public class MainFrame extends JFrame {
 		lblNewLabel_27.setFont(new Font("Algerian", Font.PLAIN, 52));
 		lblNewLabel_27.setBounds(409, 314, 449, 191);
 		mainMenuPanel.add(lblNewLabel_27);
+		
+		JButton btnNewButton_3 = new JButton("Log out");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl.show(contentPane,"1");
+			}
+		});
+		btnNewButton_3.setIcon(new ImageIcon("C:\\Users\\EQS\\Downloads\\Gym Icon Jframe (1)\\Icon Gym Jframe\\logout.png"));
+		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_3.setBounds(31, 596, 157, 51);
+		mainMenuPanel.add(btnNewButton_3);
 		
 		mainMenuPanel.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -419,7 +434,7 @@ public class MainFrame extends JFrame {
 		registerPanel.add(comboBox_6_1);
 		
 		JDateChooser dateChooser_3 = new JDateChooser();
-		dateChooser_3.setBounds(221, 239, 96, 20);
+		dateChooser_3.setBounds(221, 239, 145, 20);
 		registerPanel.add(dateChooser_3);
 		
 		passwordField = new JPasswordField();
@@ -634,7 +649,7 @@ public class MainFrame extends JFrame {
 		
 		JComboBox comboBox_5 = new JComboBox();
 		comboBox_5.setFont(new Font("Tahoma", Font.BOLD, 14));
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Paid", "Unpaid"}));
+		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"Paid", "Unpaid", "Both"}));
 		comboBox_5.setBounds(167, 292, 79, 23);
 		sessionPanel.add(comboBox_5);
 		
@@ -691,7 +706,7 @@ public class MainFrame extends JFrame {
 		payBotton.setIcon(new ImageIcon("img\\payment.png"));
 		payBotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl.show(contentPane, "name_527830163244599");
+				cl.show(contentPane, "name_85984622353700");
 			}
 		});
 		payBotton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -872,5 +887,103 @@ public class MainFrame extends JFrame {
 		JDateChooser dateChooser_4 = new JDateChooser();
 		dateChooser_4.setBounds(81, 243, 70, 19);
 		custPersonalPanel.add(dateChooser_4);
+		
+		JPanel PayPanel = new JPanel();
+		contentPane.add(PayPanel, "name_85984622353700");
+		PayPanel.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Payment Summary");
+		lblNewLabel_1.setFont(new Font("Algerian", Font.BOLD, 37));
+		lblNewLabel_1.setBounds(58, 26, 500, 117);
+		PayPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_4 = new JLabel("Card type");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_4.setBounds(30, 149, 83, 30);
+		PayPanel.add(lblNewLabel_4);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"VISA", "MasterCard", "PayPal"}));
+		comboBox.setBounds(156, 156, 83, 21);
+		PayPanel.add(comboBox);
+		
+		JLabel lblNewLabel_15 = new JLabel("Card number");
+		lblNewLabel_15.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_15.setBounds(30, 208, 111, 21);
+		PayPanel.add(lblNewLabel_15);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(143, 211, 209, 19);
+		PayPanel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel_15_1 = new JLabel("Cardholder Name");
+		lblNewLabel_15_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_15_1.setBounds(30, 361, 143, 21);
+		PayPanel.add(lblNewLabel_15_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(199, 364, 153, 19);
+		PayPanel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JLabel lblNewLabel_15_1_1 = new JLabel("Expiration Date");
+		lblNewLabel_15_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_15_1_1.setBounds(30, 263, 143, 21);
+		PayPanel.add(lblNewLabel_15_1_1);
+		
+		JDateChooser dateChooser_5 = new JDateChooser();
+		dateChooser_5.setBounds(181, 263, 103, 19);
+		PayPanel.add(dateChooser_5);
+		
+		JLabel lblNewLabel_25 = new JLabel("Security Code");
+		lblNewLabel_25.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_25.setBounds(30, 314, 100, 21);
+		PayPanel.add(lblNewLabel_25);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		passwordField_1.setBounds(154, 317, 103, 19);
+		PayPanel.add(passwordField_1);
+		
+		JLabel lblNewLabel_30 = new JLabel("TOTAL:");
+		lblNewLabel_30.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_30.setBounds(242, 424, 61, 39);
+		PayPanel.add(lblNewLabel_30);
+		
+		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textField_3.setText("00");
+		textField_3.setBounds(321, 424, 69, 39);
+		PayPanel.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JButton btnNewButton = new JButton("PAY");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "payment successful","message",JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton.setIcon(new ImageIcon("img\\payment.png"));
+		btnNewButton.setBounds(358, 504, 153, 30);
+		PayPanel.add(btnNewButton);
+		
+		JLabel lblNewLabel_31 = new JLabel("");
+		lblNewLabel_31.setIcon(new ImageIcon("img\\payment-creditcard-visa-icon (1).png"));
+		lblNewLabel_31.setBounds(505, 170, 228, 189);
+		PayPanel.add(lblNewLabel_31);
+		
+		JButton btnNewButton_1 = new JButton("Back");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl.show(contentPane,"10");
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_1.setIcon(new ImageIcon("img\\Go-back-icon.png"));
+		btnNewButton_1.setBounds(58, 511, 115, 30);
+		PayPanel.add(btnNewButton_1);
 	}
 }
