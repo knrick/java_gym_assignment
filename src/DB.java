@@ -271,7 +271,9 @@ public class DB {
 			trainers.put(trainer.id, trainer);
 			Map<String, Map<String, String>> trainersMap = new HashMap<String, Map<String, String>>(); 
 			for (String k: trainers.keySet()) {
-				trainersMap.put(k, trainers.get(k).toMap());
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("id", k);
+				trainersMap.put(k, map);
 			}
 			// convert the User map into a map full of strings
 			return setTable(trainersMap, trainersBeginLine, trainerCols);
@@ -318,7 +320,9 @@ public class DB {
 			managers.put(manager.id, manager);
 			Map<String, Map<String, String>> managersMap = new HashMap<String, Map<String, String>>(); 
 			for (String k: managers.keySet()) {
-				managersMap.put(k, managers.get(k).toMap());
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("id", k);
+				managersMap.put(k, map);
 			}
 			return setTable(managersMap, managersBeginLine, managerCols);
 		} else {
@@ -364,7 +368,9 @@ public class DB {
 			customers.put(customer.id, customer);
 			Map<String, Map<String, String>> customersMap = new HashMap<String, Map<String, String>>();
 			for (String k: customers.keySet()) {
-				customersMap.put(k, customers.get(k).toMap());
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("id", k);
+				customersMap.put(k, map);
 			}
 			return setTable(customersMap, customersBeginLine, customerCols);
 		} else {

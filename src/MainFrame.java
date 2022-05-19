@@ -1,6 +1,4 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.image.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -12,9 +10,6 @@ import java.awt.CardLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -29,29 +24,19 @@ import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-import javax.swing.JSlider;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JRadioButtonMenuItem;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Window;
 
-import javax.swing.JTextPane;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
 import javax.swing.ButtonGroup;
-import javax.swing.ListSelectionModel;
 import java.awt.Color;
 import javax.swing.JPasswordField;
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -74,42 +59,41 @@ public class MainFrame extends JFrame {
 	private UserType userType;
 	private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 	private static DateTimeFormatter localDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	private static DateTimeFormatter localTimeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 
 	private JPanel contentPane;
-	private JTextField loginEdit;
+	private JTextField authLoginEdit;
 	private JTextField regNameEdit;
 	private JTextField regPhoneEdit;
 	private JTextField regEmailEdit;
 	private JTextField regLoginEdit;
 	private PanelTable manageRegTable;
 	private PanelTable sessionTable;
-	private PanelTable cust_trainSessTable;
+	private PanelTable custSessTable;
 	private PanelTable bookTable;
 	private JTextField personalNameEdit;
 	private JTextField personalEmailEdit;
-	private JPasswordField passwordEdit;
+	private JPasswordField authPasswordEdit;
 	private JTextField manageRegNameEdit;
-	private JTextField cust_trainSessFeedbackEdit;
+	private JTextField custSessFeedbackEdit;
 	private JPasswordField regPasswordEdit;
 	protected Window btnNewButton_7;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JPasswordField passwordField_1;
-	private JTextField textField_3;
+	private JTextField payCardNumEdit;
+	private JTextField payCardholderEdit;
+	private JPasswordField paySecretEdit;
+	private JTextField payTotalEdit;
 	private JDateChooser sessionStartDateChooser;
 	private JDateChooser sessionEndDateChooser;
 	private JComboBox sessionPaidCombo;
-	private JDateChooser cust_trainSessStartDateChooser;
-	private JDateChooser cust_trainSessEndDateChooser;
-	private JComboBox cust_trainSessPaidCombo;
-	private ButtonGroup cust_trainSessRadioGroup;
-	private JRadioButton feedbackRate1Radio;
-	private JRadioButton feedbackRate2Radio;
-	private JRadioButton feedbackRate3Radio;
-	private JRadioButton feedbackRate4Radio;
-	private JRadioButton feedbackRate5Radio;
-	private JButton cust_trainSessPayButton;
+	private JDateChooser custSessStartDateChooser;
+	private JDateChooser custSessEndDateChooser;
+	private JComboBox custSessPaidCombo;
+	private ButtonGroup custSessRadioGroup;
+	private JRadioButton custSessFeedbackRate1Radio;
+	private JRadioButton custSessFeedbackRate2Radio;
+	private JRadioButton custSessFeedbackRate3Radio;
+	private JRadioButton custSessFeedbackRate4Radio;
+	private JRadioButton custSessFeedbackRate5Radio;
+	private JButton custSessPayButton;
 	private JPasswordField personalOldPassEdit;
 	private JPasswordField personalNewPassEdit;
 	private JTextField personalPhoneEdit;
@@ -142,7 +126,7 @@ public class MainFrame extends JFrame {
 			}
 			manageRegTable.fillData(map, new String[]{"id", "name", "login", "email", "DOB", "phone"});
 		} catch (IOException e) {
-			// TODO show message "Could not get the users data from the database"
+			JOptionPane.showMessageDialog(null, "Could not get the users data from the database","warning",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
@@ -180,7 +164,7 @@ public class MainFrame extends JFrame {
 			}
 			sessionTable.fillData(map, new String[]{"id", "trainer", "customer", "date", "time", "price", "paid", "rating", "feedback"}, colsToHide);
 		} catch (IOException e) {
-			// TODO show message "Could not get the sessions data from the database"
+			JOptionPane.showMessageDialog(null, "Could not get the sessions data from the database","warning",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
@@ -224,49 +208,49 @@ public class MainFrame extends JFrame {
 		);
 	}
 	
-	private void fillCust_trainSessTable() {
+	private void fillcustSessTable() {
 		fillSessionTable(
-			cust_trainSessTable,
-			cust_trainSessStartDateChooser.getDate(),
-			cust_trainSessEndDateChooser.getDate(),
-			String.valueOf(cust_trainSessPaidCombo.getSelectedItem()),
+			custSessTable,
+			custSessStartDateChooser.getDate(),
+			custSessEndDateChooser.getDate(),
+			String.valueOf(custSessPaidCombo.getSelectedItem()),
 			"customer",
 			new int[] {0, 7, 8}
 		);
-		if (user != null) handleCust_trainSessTableSelection();
+		if (user != null) handlecustSessTableSelection();
 	}
 	
-	private void handleCust_trainSessTableSelection() {
-		int row = cust_trainSessTable.getSelectedRow();
+	private void handlecustSessTableSelection() {
+		int row = custSessTable.getSelectedRow();
 		if (row == -1) {
-			cust_trainSessFeedbackEdit.setText("feedback comment");
-			cust_trainSessRadioGroup.clearSelection();
-			cust_trainSessPayButton.setEnabled(false);
+			custSessFeedbackEdit.setText("feedback comment");
+			custSessRadioGroup.clearSelection();
+			custSessPayButton.setEnabled(false);
 			return;
 		}
-		switch (String.valueOf(cust_trainSessTable.getValueAt(row, 7))) {
+		switch (String.valueOf(custSessTable.getValueAt(row, 7))) {
 		case "1":
-			feedbackRate1Radio.doClick();
+			custSessFeedbackRate1Radio.doClick();
 			break;
 		case "2":
-			feedbackRate2Radio.doClick();
+			custSessFeedbackRate2Radio.doClick();
 			break;
 		case "3":
-			feedbackRate3Radio.doClick();
+			custSessFeedbackRate3Radio.doClick();
 			break;
 		case "4":
-			feedbackRate4Radio.doClick();
+			custSessFeedbackRate4Radio.doClick();
 			break;
 		case "5":
-			feedbackRate5Radio.doClick();
+			custSessFeedbackRate5Radio.doClick();
 			break;
 		default:
 		}
-		cust_trainSessFeedbackEdit.setText(String.valueOf(cust_trainSessTable.getValueAt(row, 8)));
-		if (cust_trainSessTable.getValueAt(row, 6).equals("false"))
-			cust_trainSessPayButton.setEnabled(true);
+		custSessFeedbackEdit.setText(String.valueOf(custSessTable.getValueAt(row, 8)));
+		if (custSessTable.getValueAt(row, 6).equals("false"))
+			custSessPayButton.setEnabled(true);
 		else
-			cust_trainSessPayButton.setEnabled(false);
+			custSessPayButton.setEnabled(false);
 	}
 
 	/**
@@ -311,7 +295,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(mainMenuPanel, "2");
 		mainMenuPanel.setLayout(null);
 		
-		JButton regPanelButton = new JButton("register");
+		JButton regPanelButton = new JButton("Register");
 		regPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		regPanelButton.setIcon(new ImageIcon("img\\new member.png"));
 		regPanelButton.addActionListener(new ActionListener() {
@@ -344,7 +328,7 @@ public class MainFrame extends JFrame {
 		bookPanelButton.setBounds(554, 23, 225, 51);
 		mainMenuPanel.add(bookPanelButton);
 		
-		JButton sessionPanelButton = new JButton("check training session");
+		JButton sessionPanelButton = new JButton("Check training session");
 		sessionPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 		sessionPanelButton.setIcon(new ImageIcon("img\\234.png"));
 		sessionPanelButton.addActionListener(new ActionListener() {
@@ -358,36 +342,36 @@ public class MainFrame extends JFrame {
 		sessionPanelButton.setBounds(13, 23, 244, 51);
 		mainMenuPanel.add(sessionPanelButton);
 		
-		JButton cust_trainSessPanelButton = new JButton("view own training session");
-		cust_trainSessPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cust_trainSessPanelButton.setIcon(new ImageIcon("img\\Actions-contact-date-icon.png"));
-		cust_trainSessPanelButton.addActionListener(new ActionListener() {
+		JButton custSessPanelButton = new JButton("View own training session");
+		custSessPanelButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessPanelButton.setIcon(new ImageIcon("img\\Actions-contact-date-icon.png"));
+		custSessPanelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cust_trainSessStartDateChooser.setDate(null);
-				cust_trainSessEndDateChooser.setDate(null);
-				cust_trainSessPaidCombo.setSelectedIndex(0);
+				custSessStartDateChooser.setDate(null);
+				custSessEndDateChooser.setDate(null);
+				custSessPaidCombo.setSelectedIndex(0);
 				cl.show(contentPane,"10");
 			}
 		});
-		cust_trainSessPanelButton.setBounds(3, 23, 271, 51);
-		mainMenuPanel.add(cust_trainSessPanelButton);
+		custSessPanelButton.setBounds(3, 23, 271, 51);
+		mainMenuPanel.add(custSessPanelButton);
 		
-		JButton custPresonalBotton = new JButton("Presonal Details ");
-		custPresonalBotton.setIcon(new ImageIcon("img\\Resume-icon.png"));
-		custPresonalBotton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		custPresonalBotton.addActionListener(new ActionListener() {
+		JButton custPersonalButton = new JButton("Personal Details ");
+		custPersonalButton.setIcon(new ImageIcon("img\\Resume-icon.png"));
+		custPersonalButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custPersonalButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane,"Presonal_Details");
 			}
 		});
-		custPresonalBotton.setBounds(296, 23, 244, 51);
-		mainMenuPanel.add(custPresonalBotton);
+		custPersonalButton.setBounds(296, 23, 244, 51);
+		mainMenuPanel.add(custPersonalButton);
 		
-		JLabel lblNewLabel_27 = new JLabel("WELCOME");
-		lblNewLabel_27.setIcon(new ImageIcon("img\\welcome-icon.png"));
-		lblNewLabel_27.setFont(new Font("Algerian", Font.PLAIN, 52));
-		lblNewLabel_27.setBounds(409, 314, 449, 191);
-		mainMenuPanel.add(lblNewLabel_27);
+		JLabel mainMenuLabel = new JLabel("WELCOME");
+		mainMenuLabel.setIcon(new ImageIcon("img\\welcome-icon.png"));
+		mainMenuLabel.setFont(new Font("Algerian", Font.PLAIN, 52));
+		mainMenuLabel.setBounds(409, 314, 449, 191);
+		mainMenuPanel.add(mainMenuLabel);
 		
 		mainMenuPanel.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -405,8 +389,8 @@ public class MainFrame extends JFrame {
 				}
 
 				if (userType != UserType.CUSTOMER) {
-					cust_trainSessPanelButton.setVisible(false);
-					custPresonalBotton.setVisible(false);
+					custSessPanelButton.setVisible(false);
+					custPersonalButton.setVisible(false);
 				}
 			}
 		});
@@ -418,8 +402,8 @@ public class MainFrame extends JFrame {
 		authButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Map<String, String> filter = new HashMap<String, String>();
-				filter.put("login", loginEdit.getText());
-				filter.put("password", new String(passwordEdit.getPassword()));
+				filter.put("login", authLoginEdit.getText());
+				filter.put("password", new String(authPasswordEdit.getPassword()));
 				try {
 					DB db = new DB();
 					Map<String, User> allUsers = db.getUsers();
@@ -448,37 +432,35 @@ public class MainFrame extends JFrame {
 		});
 		authPanel.add(authButton);
 		
-		loginEdit = new JTextField();
-		loginEdit.setText("Jane Smith");
-		loginEdit.setBounds(833, 288, 225, 33);
-		authPanel.add(loginEdit);
-		loginEdit.setColumns(10);
+		authLoginEdit = new JTextField();
+		authLoginEdit.setBounds(833, 288, 225, 33);
+		authPanel.add(authLoginEdit);
+		authLoginEdit.setColumns(10);
 		
-		JLabel loginLabel = new JLabel("Username");
-		loginLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		loginLabel.setBounds(701, 296, 122, 25);
-		authPanel.add(loginLabel);
+		JLabel authLoginLabel = new JLabel("Username");
+		authLoginLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		authLoginLabel.setBounds(701, 296, 122, 25);
+		authPanel.add(authLoginLabel);
 		
-		JLabel passwordLabel = new JLabel("password");
-		passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		passwordLabel.setBounds(701, 358, 122, 33);
-		authPanel.add(passwordLabel);
+		JLabel authPasswordLabel = new JLabel("password");
+		authPasswordLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		authPasswordLabel.setBounds(701, 358, 122, 33);
+		authPanel.add(authPasswordLabel);
 		Image image = new ImageIcon("img/gym_logo.png").getImage();
 		
-		passwordEdit = new JPasswordField();
-		passwordEdit.setText("SuperJaney78");
-		passwordEdit.setBounds(833, 361, 225, 35);
-		authPanel.add(passwordEdit);
+		authPasswordEdit = new JPasswordField();
+		authPasswordEdit.setBounds(833, 361, 225, 35);
+		authPanel.add(authPasswordEdit);
 		
-		JLabel lblNewLabel_28 = new JLabel("");
-		lblNewLabel_28.setIcon(new ImageIcon("img\\APU logo (1).jpg"));
-		lblNewLabel_28.setBounds(30, 201, 500, 290);
-		authPanel.add(lblNewLabel_28);
+		JLabel authImgLabel = new JLabel("");
+		authImgLabel.setIcon(new ImageIcon("img\\APU logo (1).jpg"));
+		authImgLabel.setBounds(30, 201, 500, 290);
+		authPanel.add(authImgLabel);
 		
-		JLabel lblNewLabel_29 = new JLabel("");
-		lblNewLabel_29.setIcon(new ImageIcon("img\\login background.PNG"));
-		lblNewLabel_29.setBounds(10, 0, 1175, 657);
-		authPanel.add(lblNewLabel_29);
+		JLabel authBackgroundLabel = new JLabel("");
+		authBackgroundLabel.setIcon(new ImageIcon("img\\login background.PNG"));
+		authBackgroundLabel.setBounds(10, 0, 1175, 657);
+		authPanel.add(authBackgroundLabel);
 		
 		JPanel registerPanel = new JPanel();
 		registerPanel.setBackground(Color.CYAN);
@@ -509,59 +491,59 @@ public class MainFrame extends JFrame {
 		registerPanel.add(regLoginEdit);
 		regLoginEdit.setColumns(10);
 	
-		JComboBox userTypeComboBox = new JComboBox();
-		userTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"Manager ", "Trainer", "Customer"}));
-		userTypeComboBox.setFont(new Font("Tahoma", Font.BOLD, 10));
-		userTypeComboBox.setBounds(137, 133, 86, 21);
-		registerPanel.add(userTypeComboBox);
+		JComboBox regUserTypeCombo = new JComboBox();
+		regUserTypeCombo.setModel(new DefaultComboBoxModel(new String[] {"Manager", "Trainer", "Customer"}));
+		regUserTypeCombo.setFont(new Font("Tahoma", Font.BOLD, 10));
+		regUserTypeCombo.setBounds(137, 133, 86, 21);
+		registerPanel.add(regUserTypeCombo);
 		
-		JLabel lblNewLabel_6 = new JLabel("name");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_6.setBounds(137, 197, 64, 13);
-		registerPanel.add(lblNewLabel_6);
+		JLabel regNameLabel = new JLabel("name");
+		regNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regNameLabel.setBounds(137, 197, 64, 13);
+		registerPanel.add(regNameLabel);
 		
-		JLabel lblNewLabel_7 = new JLabel("DOB");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_7.setBounds(137, 236, 66, 18);
-		registerPanel.add(lblNewLabel_7);
+		JLabel regDateLabel = new JLabel("DOB");
+		regDateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regDateLabel.setBounds(137, 236, 66, 18);
+		registerPanel.add(regDateLabel);
 		
-		JLabel lblNewLabel_8 = new JLabel("phone");
-		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_8.setBounds(139, 289, 64, 19);
-		registerPanel.add(lblNewLabel_8);
+		JLabel regPhoneLabel = new JLabel("phone");
+		regPhoneLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regPhoneLabel.setBounds(139, 289, 64, 19);
+		registerPanel.add(regPhoneLabel);
 		
-		JLabel lblNewLabel_9 = new JLabel("email");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_9.setBounds(139, 355, 72, 13);
-		registerPanel.add(lblNewLabel_9);
+		JLabel regEmailLabel = new JLabel("email");
+		regEmailLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regEmailLabel.setBounds(139, 355, 72, 13);
+		registerPanel.add(regEmailLabel);
 		
-		JLabel lblNewLabel_10 = new JLabel("gender");
-		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_10.setBounds(139, 415, 72, 19);
-		registerPanel.add(lblNewLabel_10);
+		JLabel regGenderLabel = new JLabel("gender");
+		regGenderLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regGenderLabel.setBounds(139, 415, 72, 19);
+		registerPanel.add(regGenderLabel);
 		
-		JLabel lblNewLabel_11 = new JLabel("login");
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_11.setBounds(390, 126, 76, 31);
-		registerPanel.add(lblNewLabel_11);
+		JLabel regLoginLabel = new JLabel("login");
+		regLoginLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regLoginLabel.setBounds(390, 126, 76, 31);
+		registerPanel.add(regLoginLabel);
 		
-		JLabel lblNewLabel_12 = new JLabel("password");
-		lblNewLabel_12.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_12.setBounds(390, 187, 76, 29);
-		registerPanel.add(lblNewLabel_12);
+		JLabel regPasswordLabel = new JLabel("password");
+		regPasswordLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		regPasswordLabel.setBounds(390, 187, 76, 29);
+		registerPanel.add(regPasswordLabel);
 		
-		JLabel lblNewLabel_14 = new JLabel("New Member");
-		lblNewLabel_14.setForeground(Color.BLUE);
-		lblNewLabel_14.setFont(new Font("Aldhabi", Font.BOLD, 48));
-		lblNewLabel_14.setIcon(new ImageIcon("img\\new member.png"));
-		lblNewLabel_14.setBounds(323, 28, 298, 62);
-		registerPanel.add(lblNewLabel_14);
+		JLabel registerLabel = new JLabel("New Member");
+		registerLabel.setForeground(Color.BLUE);
+		registerLabel.setFont(new Font("Aldhabi", Font.BOLD, 48));
+		registerLabel.setIcon(new ImageIcon("img\\new member.png"));
+		registerLabel.setBounds(323, 28, 298, 62);
+		registerPanel.add(registerLabel);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
-		comboBox_2.setBounds(233, 416, 45, 21);
-		registerPanel.add(comboBox_2);
+		JComboBox regGenderCombo = new JComboBox();
+		regGenderCombo.setFont(new Font("Tahoma", Font.BOLD, 10));
+		regGenderCombo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
+		regGenderCombo.setBounds(233, 416, 45, 21);
+		registerPanel.add(regGenderCombo);
 		
 		JDateChooser regDateChooser = new JDateChooser();
 		regDateChooser.setBounds(221, 239, 96, 20);
@@ -577,36 +559,32 @@ public class MainFrame extends JFrame {
 		regButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				UserType userType;
-				switch (String.valueOf(userTypeComboBox.getSelectedItem())) {
-					case "trainer":
-						userType = UserType.TRAINER;
-						break;
-					case "manager":
-						userType = UserType.MANAGER;
-						break;
-					default:
-						userType = UserType.CUSTOMER;
-						break;
-				}
+				String selected = String.valueOf(regUserTypeCombo.getSelectedItem());
+				if (selected.equals("Trainer"))
+					userType = UserType.TRAINER;
+				else if (selected.equals("Manager"))
+					userType = UserType.MANAGER;
+				else
+					userType = UserType.CUSTOMER;
 				DB db = new DB();
 				try {
 					String id = db.getNextId(DB.Table.USERS);
 					String name = regNameEdit.getText();
 					String login = regLoginEdit.getText();
 					if (db.checkLogin(login) != null) {
-						// TODO show message "The user with such name already exists"
+						JOptionPane.showMessageDialog(null, "The user with such name already exists","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
 					String password = new String(regPasswordEdit.getPassword());
 					String email = regEmailEdit.getText();
 					if (db.checkEmail(email) != null) {
-						// TODO show message "The user with such email already exists"
+						JOptionPane.showMessageDialog(null, "The user with such email already exists","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
 					String dob = dateFormatter.format(regDateChooser.getDate());
 					String phone = regPhoneEdit.getText();
 					if (db.checkPhone(phone) != null) {
-						// TODO show message "The user with such phone already exists"
+						JOptionPane.showMessageDialog(null, "The user with such phone already exists","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
 					user = new User(new String[] {id, name, login, password, email, dob, phone});
@@ -627,11 +605,10 @@ public class MainFrame extends JFrame {
 					if (regStatus) {
 						JOptionPane.showMessageDialog(null, "member added successfully","message",JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						// TODO change this message to "We're sorry but the system's servers right now are unavailable"
-						JOptionPane.showMessageDialog(null, "ERROR!","message",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 					}
 				} catch (IOException exc) {
-					// TODO show message "We're sorry but the system's servers right now are unavailable"
+					JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 			}
@@ -674,27 +651,27 @@ public class MainFrame extends JFrame {
 						user.login = String.valueOf(manageRegTable.getValueAt(i, 2));
 						String checkId = db.checkLogin(user.login);
 						if (checkId != null && !checkId.equals(user.id)) {
-							// TODO show message "There is already a user with login " + login
+							JOptionPane.showMessageDialog(null, "There is already a user with login " + user.login,"warning",JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 						user.email = String.valueOf(manageRegTable.getValueAt(i, 3));
 						checkId = db.checkEmail(user.email);
 						if (checkId != null && !checkId.equals(user.id)) {
-							// TODO show message "There is already a user with email " + email
+							JOptionPane.showMessageDialog(null, "There is already a user with email " + user.email,"warning",JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 						user.dob = LocalDate.parse(String.valueOf(manageRegTable.getValueAt(i, 4)), localDateFormatter);
 						user.phone = String.valueOf(manageRegTable.getValueAt(i, 5));
 						checkId = db.checkPhone(user.phone);
 						if (checkId != null && !checkId.equals(user.id)) {
-							// TODO show message "There is already a user with phone " + phone
+							JOptionPane.showMessageDialog(null, "There is already a user with phone " + user.phone,"warning",JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 						if (!db.setUser(user)) {
-							JOptionPane.showMessageDialog(null, "Error trying update the user " + user.login, "message",JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Error trying update the user " + user.login, "warning",JOptionPane.INFORMATION_MESSAGE);
 						}
 					} catch (IOException exc) {
-						// TODO show message "We're sorry but the system's servers right now are unavailable"
+						JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
 				}
@@ -715,10 +692,10 @@ public class MainFrame extends JFrame {
 		manageRegBackButton.setBounds(193, 540, 161, 63);
 		manageRegPanel.add(manageRegBackButton);
 		
-		JLabel search_label_1 = new JLabel("Enter name :");
-		search_label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		search_label_1.setBounds(22, 112, 103, 30);
-		manageRegPanel.add(search_label_1);
+		JLabel manageRegNameLabel = new JLabel("Enter name :");
+		manageRegNameLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		manageRegNameLabel.setBounds(22, 112, 103, 30);
+		manageRegPanel.add(manageRegNameLabel);
 		
 		manageRegNameEdit = new JTextField();
 		manageRegNameEdit.setColumns(10);
@@ -732,16 +709,16 @@ public class MainFrame extends JFrame {
 		manageRegUserCombo.setBounds(15, 191, 86, 21);
 		manageRegPanel.add(manageRegUserCombo);
 		
-		JButton searchButton = new JButton("Search");
-		searchButton.addActionListener(new ActionListener() {
+		JButton manageRegSearchButton = new JButton("Search");
+		manageRegSearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fillManageRegTable(manageRegNameEdit.getText(), String.valueOf(manageRegUserCombo.getSelectedItem()));
 			}
 		});
-		searchButton.setIcon(new ImageIcon("img\\search.png"));
-		searchButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		searchButton.setBounds(15, 246, 126, 30);
-		manageRegPanel.add(searchButton);
+		manageRegSearchButton.setIcon(new ImageIcon("img\\search.png"));
+		manageRegSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		manageRegSearchButton.setBounds(15, 246, 126, 30);
+		manageRegPanel.add(manageRegSearchButton);
 		
 		manageRegPanel.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -778,11 +755,11 @@ public class MainFrame extends JFrame {
 		bookCustCombo.setBounds(152, 184, 89, 21);
 		bookPanel.add(bookCustCombo);
 		
-		JLabel lblNewLabel_17 = new JLabel("Book training Session");
-		lblNewLabel_17.setFont(new Font("Algerian", Font.BOLD, 25));
-		lblNewLabel_17.setIcon(new ImageIcon("img\\Schedule-icon.png"));
-		lblNewLabel_17.setBounds(293, 36, 551, 96);
-		bookPanel.add(lblNewLabel_17);
+		JLabel bookLabel = new JLabel("Book training Session");
+		bookLabel.setFont(new Font("Algerian", Font.BOLD, 25));
+		bookLabel.setIcon(new ImageIcon("img\\Schedule-icon.png"));
+		bookLabel.setBounds(293, 36, 551, 96);
+		bookPanel.add(bookLabel);
 		
 		JLabel bookPriceLabel = new JLabel("RM 200");
 		bookPriceLabel.setFont(new Font("Dialog", Font.BOLD, 28));
@@ -820,9 +797,9 @@ public class MainFrame extends JFrame {
 					bookButton.setEnabled(false);
 				}
 				else
-					JOptionPane.showMessageDialog(null, "Sorry, we could not book your session. Try again later","message",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Sorry, we could not book your session. Try again later","warning",JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(null, "Unfortunately, our servers are not available at the moment","message",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Unfortunately, our servers are not available at the moment","warning",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -924,34 +901,34 @@ public class MainFrame extends JFrame {
 		sessionBackButton.setBounds(202, 578, 122, 23);
 		sessionPanel.add(sessionBackButton);
 		
-		JLabel lblNewLabel_21 = new JLabel("Training Sessions");
-		lblNewLabel_21.setFont(new Font("Algerian", Font.PLAIN, 27));
-		lblNewLabel_21.setIcon(new ImageIcon("img\\Actions-view-calendar-timeline-icon.png"));
-		lblNewLabel_21.setBounds(290, 10, 443, 106);
-		sessionPanel.add(lblNewLabel_21);
+		JLabel sessionLabel = new JLabel("Training Sessions");
+		sessionLabel.setFont(new Font("Algerian", Font.PLAIN, 27));
+		sessionLabel.setIcon(new ImageIcon("img\\Actions-view-calendar-timeline-icon.png"));
+		sessionLabel.setBounds(290, 10, 443, 106);
+		sessionPanel.add(sessionLabel);
 		
-		JLabel lblNewLabel_22 = new JLabel("Start Date");
-		lblNewLabel_22.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_22.setBounds(40, 150, 89, 23);
-		sessionPanel.add(lblNewLabel_22);
+		JLabel sessionStartDateLabel = new JLabel("Start Date");
+		sessionStartDateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		sessionStartDateLabel.setBounds(40, 150, 89, 23);
+		sessionPanel.add(sessionStartDateLabel);
 		
 		sessionStartDateChooser = new JDateChooser();
 		sessionStartDateChooser.setBounds(139, 154, 70, 19);
 		sessionPanel.add(sessionStartDateChooser);
 		
-		JLabel lblNewLabel_23 = new JLabel("End Date");
-		lblNewLabel_23.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_23.setBounds(40, 218, 89, 23);
-		sessionPanel.add(lblNewLabel_23);
+		JLabel sessionEndDateLabel = new JLabel("End Date");
+		sessionEndDateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		sessionEndDateLabel.setBounds(40, 218, 89, 23);
+		sessionPanel.add(sessionEndDateLabel);
 		
 		sessionEndDateChooser = new JDateChooser();
 		sessionEndDateChooser.setBounds(139, 218, 70, 19);
 		sessionPanel.add(sessionEndDateChooser);
 		
-		JLabel lblNewLabel_24 = new JLabel("Payment Status");
-		lblNewLabel_24.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_24.setBounds(29, 291, 114, 23);
-		sessionPanel.add(lblNewLabel_24);
+		JLabel sessionPaidLabel = new JLabel("Payment Status");
+		sessionPaidLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		sessionPaidLabel.setBounds(29, 291, 114, 23);
+		sessionPanel.add(sessionPaidLabel);
 		
 		sessionPaidCombo = new JComboBox();
 		sessionPaidCombo.addItemListener(new ItemListener() {
@@ -982,309 +959,309 @@ public class MainFrame extends JFrame {
 		    }
 	    );
 		
-		JPanel cust_trainSessPanel = new JPanel();
-		cust_trainSessPanel.setBackground(Color.CYAN);
-		contentPane.add(cust_trainSessPanel, "10");
-		cust_trainSessPanel.setLayout(null);
+		JPanel custSessPanel = new JPanel();
+		custSessPanel.setBackground(Color.CYAN);
+		contentPane.add(custSessPanel, "10");
+		custSessPanel.setLayout(null);
 		
 
-		JButton cust_trainSessFeedbackSubmitButton = new JButton("Submit feedback");
-		cust_trainSessFeedbackSubmitButton.setEnabled(false);
-		cust_trainSessFeedbackSubmitButton.addActionListener(new ActionListener() {
+		JButton custSessFeedbackSubmitButton = new JButton("Submit feedback");
+		custSessFeedbackSubmitButton.setEnabled(false);
+		custSessFeedbackSubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DB db = new DB();
 				try {
 					Session session = db.getSession(
 							String.valueOf(
-									cust_trainSessTable.getValueAt(
-											cust_trainSessTable.getSelectedRow(),
+									custSessTable.getValueAt(
+											custSessTable.getSelectedRow(),
 											0
 									)
 							)
 					);
-					session.rating = Integer.valueOf(cust_trainSessRadioGroup.getSelection().getActionCommand());
-					session.feedback = cust_trainSessFeedbackEdit.getText();
+					session.rating = Integer.valueOf(custSessRadioGroup.getSelection().getActionCommand());
+					session.feedback = custSessFeedbackEdit.getText();
 					if (db.setSession(session))
 						JOptionPane.showMessageDialog(null, "Thanks for giving us you feedback","message",JOptionPane.INFORMATION_MESSAGE);
 					else
-						JOptionPane.showMessageDialog(null, "Could not update the feedback","message",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Could not update the feedback","warning",JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(null, "Sorry, our servers are unavailable at the moment","message",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Sorry, our servers are unavailable at the moment","warning",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
-		cust_trainSessFeedbackSubmitButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		cust_trainSessFeedbackSubmitButton.setIcon(new ImageIcon("img/save.png"));
-		cust_trainSessFeedbackSubmitButton.setBounds(884, 317, 174, 29);
-		cust_trainSessPanel.add(cust_trainSessFeedbackSubmitButton);
+		custSessFeedbackSubmitButton.setFont(new Font("Tahoma", Font.BOLD, 10));
+		custSessFeedbackSubmitButton.setIcon(new ImageIcon("img/save.png"));
+		custSessFeedbackSubmitButton.setBounds(884, 317, 174, 29);
+		custSessPanel.add(custSessFeedbackSubmitButton);
 		
 
-		cust_trainSessPayButton = new JButton("Pay");
-		cust_trainSessPayButton.setIcon(new ImageIcon("img\\payment.png"));
-		cust_trainSessPayButton.addActionListener(new ActionListener() {
+		custSessPayButton = new JButton("Pay");
+		custSessPayButton.setIcon(new ImageIcon("img\\payment.png"));
+		custSessPayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "name_85984622353700");
 			}
 		});
-		cust_trainSessPayButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cust_trainSessPayButton.setBounds(623, 495, 175, 39);
-		cust_trainSessPanel.add(cust_trainSessPayButton);
+		custSessPayButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		custSessPayButton.setBounds(623, 495, 175, 39);
+		custSessPanel.add(custSessPayButton);
 		
-		feedbackRate1Radio = new JRadioButton("1");
-		feedbackRate1Radio.setActionCommand(feedbackRate1Radio.getText());
-		feedbackRate1Radio.addItemListener(new ItemListener() {
+		custSessFeedbackRate1Radio = new JRadioButton("1");
+		custSessFeedbackRate1Radio.setActionCommand(custSessFeedbackRate1Radio.getText());
+		custSessFeedbackRate1Radio.addItemListener(new ItemListener() {
 			@Override
 		    public void itemStateChanged(ItemEvent e) {
-				if (cust_trainSessRadioGroup.getSelection() == null)
-					cust_trainSessFeedbackSubmitButton.setEnabled(false);
+				if (custSessRadioGroup.getSelection() == null)
+					custSessFeedbackSubmitButton.setEnabled(false);
 				else
-					cust_trainSessFeedbackSubmitButton.setEnabled(true);
+					custSessFeedbackSubmitButton.setEnabled(true);
 					
 			}
 		});
-		feedbackRate1Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		feedbackRate1Radio.setBounds(871, 145, 43, 23);
-		cust_trainSessPanel.add(feedbackRate1Radio);
+		custSessFeedbackRate1Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessFeedbackRate1Radio.setBounds(871, 145, 43, 23);
+		custSessPanel.add(custSessFeedbackRate1Radio);
 		
-		feedbackRate2Radio = new JRadioButton("2");
-		feedbackRate2Radio.setActionCommand(feedbackRate2Radio.getText());
-		feedbackRate2Radio.addItemListener(new ItemListener() {
+		custSessFeedbackRate2Radio = new JRadioButton("2");
+		custSessFeedbackRate2Radio.setActionCommand(custSessFeedbackRate2Radio.getText());
+		custSessFeedbackRate2Radio.addItemListener(new ItemListener() {
 			@Override
 		    public void itemStateChanged(ItemEvent e) {
-				if (cust_trainSessRadioGroup.getSelection() == null)
-					cust_trainSessFeedbackSubmitButton.setEnabled(false);
+				if (custSessRadioGroup.getSelection() == null)
+					custSessFeedbackSubmitButton.setEnabled(false);
 				else
-					cust_trainSessFeedbackSubmitButton.setEnabled(true);
+					custSessFeedbackSubmitButton.setEnabled(true);
 					
 			}
 		});
-		feedbackRate2Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		feedbackRate2Radio.setBounds(916, 145, 43, 23);
-		cust_trainSessPanel.add(feedbackRate2Radio);
+		custSessFeedbackRate2Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessFeedbackRate2Radio.setBounds(916, 145, 43, 23);
+		custSessPanel.add(custSessFeedbackRate2Radio);
 		
-		feedbackRate3Radio = new JRadioButton("3");
-		feedbackRate3Radio.setActionCommand(feedbackRate3Radio.getText());
-		feedbackRate3Radio.addItemListener(new ItemListener() {
+		custSessFeedbackRate3Radio = new JRadioButton("3");
+		custSessFeedbackRate3Radio.setActionCommand(custSessFeedbackRate3Radio.getText());
+		custSessFeedbackRate3Radio.addItemListener(new ItemListener() {
 			@Override
 		    public void itemStateChanged(ItemEvent e) {
-				if (cust_trainSessRadioGroup.getSelection() == null)
-					cust_trainSessFeedbackSubmitButton.setEnabled(false);
+				if (custSessRadioGroup.getSelection() == null)
+					custSessFeedbackSubmitButton.setEnabled(false);
 				else
-					cust_trainSessFeedbackSubmitButton.setEnabled(true);
+					custSessFeedbackSubmitButton.setEnabled(true);
 					
 			}
 		});
-		feedbackRate3Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		feedbackRate3Radio.setBounds(957, 145, 43, 23);
-		cust_trainSessPanel.add(feedbackRate3Radio);
+		custSessFeedbackRate3Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessFeedbackRate3Radio.setBounds(957, 145, 43, 23);
+		custSessPanel.add(custSessFeedbackRate3Radio);
 		
-		feedbackRate4Radio = new JRadioButton("4");
-		feedbackRate4Radio.setActionCommand(feedbackRate4Radio.getText());
-		feedbackRate4Radio.addItemListener(new ItemListener() {
+		custSessFeedbackRate4Radio = new JRadioButton("4");
+		custSessFeedbackRate4Radio.setActionCommand(custSessFeedbackRate4Radio.getText());
+		custSessFeedbackRate4Radio.addItemListener(new ItemListener() {
 			@Override
 		    public void itemStateChanged(ItemEvent e) {
-				if (cust_trainSessRadioGroup.getSelection() == null)
-					cust_trainSessFeedbackSubmitButton.setEnabled(false);
+				if (custSessRadioGroup.getSelection() == null)
+					custSessFeedbackSubmitButton.setEnabled(false);
 				else
-					cust_trainSessFeedbackSubmitButton.setEnabled(true);
+					custSessFeedbackSubmitButton.setEnabled(true);
 			}
 		});
-		feedbackRate4Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		feedbackRate4Radio.setBounds(1002, 145, 43, 23);
-		cust_trainSessPanel.add(feedbackRate4Radio);
+		custSessFeedbackRate4Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessFeedbackRate4Radio.setBounds(1002, 145, 43, 23);
+		custSessPanel.add(custSessFeedbackRate4Radio);
 		
-		feedbackRate5Radio = new JRadioButton("5");
-		feedbackRate5Radio.setActionCommand(feedbackRate5Radio.getText());
-		feedbackRate5Radio.addItemListener(new ItemListener() {
+		custSessFeedbackRate5Radio = new JRadioButton("5");
+		custSessFeedbackRate5Radio.setActionCommand(custSessFeedbackRate5Radio.getText());
+		custSessFeedbackRate5Radio.addItemListener(new ItemListener() {
 			@Override
 		    public void itemStateChanged(ItemEvent e) {
-				if (cust_trainSessRadioGroup.getSelection() == null)
-					cust_trainSessFeedbackSubmitButton.setEnabled(false);
+				if (custSessRadioGroup.getSelection() == null)
+					custSessFeedbackSubmitButton.setEnabled(false);
 				else
-					cust_trainSessFeedbackSubmitButton.setEnabled(true);
+					custSessFeedbackSubmitButton.setEnabled(true);
 					
 			}
 		});
-		feedbackRate5Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
-		feedbackRate5Radio.setBounds(1047, 145, 43, 23);
-		cust_trainSessPanel.add(feedbackRate5Radio);
+		custSessFeedbackRate5Radio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessFeedbackRate5Radio.setBounds(1047, 145, 43, 23);
+		custSessPanel.add(custSessFeedbackRate5Radio);
 		
-		cust_trainSessTable = new PanelTable() {
+		custSessTable = new PanelTable() {
 			public boolean isCellEditable(int row, int column) {                
                 return false;               
 			};
 		};
-		cust_trainSessTable.setCellSelectionEnabled(true);
-		cust_trainSessTable.addMouseListener(new MouseAdapter() {
+		custSessTable.setCellSelectionEnabled(true);
+		custSessTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				handleCust_trainSessTableSelection();
+				handlecustSessTableSelection();
 			}
 		});
-		cust_trainSessTable.setBounds(121, 65, 674, 403);
-		cust_trainSessPanel.add(cust_trainSessTable);
+		custSessTable.setBounds(121, 65, 674, 403);
+		custSessPanel.add(custSessTable);
 		
 		
-		JTableHeader cust_trainSessTableHeader = cust_trainSessTable.getTableHeader();
-		cust_trainSessTableHeader.setBounds(121, 45, 674, 20);
-		cust_trainSessPanel.add(cust_trainSessTableHeader);
+		JTableHeader custSessTableHeader = custSessTable.getTableHeader();
+		custSessTableHeader.setBounds(121, 45, 674, 20);
+		custSessPanel.add(custSessTableHeader);
 		
-		JLabel cust_trainSesslabel = new JLabel("My training sesseions :");
-		cust_trainSesslabel.setFont(new Font("Algerian", Font.BOLD, 24));
-		cust_trainSesslabel.setBounds(54, 10, 301, 46);
-		cust_trainSessPanel.add(cust_trainSesslabel);
+		JLabel custSessLabel = new JLabel("My training sessions :");
+		custSessLabel.setFont(new Font("Algerian", Font.BOLD, 24));
+		custSessLabel.setBounds(54, 10, 301, 46);
+		custSessPanel.add(custSessLabel);
 		
-		JButton cust_trainSessBackbotton = new JButton("Back");
-		cust_trainSessBackbotton.setIcon(new ImageIcon("img\\Go-back-icon.png"));
-		cust_trainSessBackbotton.addActionListener(new ActionListener() {
+		JButton custSessBackbotton = new JButton("Back");
+		custSessBackbotton.setIcon(new ImageIcon("img\\Go-back-icon.png"));
+		custSessBackbotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		cust_trainSessBackbotton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cust_trainSessBackbotton.setBounds(99, 495, 140, 29);
-		cust_trainSessPanel.add(cust_trainSessBackbotton);
+		custSessBackbotton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		custSessBackbotton.setBounds(99, 495, 140, 29);
+		custSessPanel.add(custSessBackbotton);
 		
-		cust_trainSessRadioGroup = new ButtonGroup();
-		cust_trainSessRadioGroup.add(feedbackRate1Radio);
-		cust_trainSessRadioGroup.add(feedbackRate2Radio);
-		cust_trainSessRadioGroup.add(feedbackRate3Radio);
-		cust_trainSessRadioGroup.add(feedbackRate4Radio);
-		cust_trainSessRadioGroup.add(feedbackRate5Radio);
+		custSessRadioGroup = new ButtonGroup();
+		custSessRadioGroup.add(custSessFeedbackRate1Radio);
+		custSessRadioGroup.add(custSessFeedbackRate2Radio);
+		custSessRadioGroup.add(custSessFeedbackRate3Radio);
+		custSessRadioGroup.add(custSessFeedbackRate4Radio);
+		custSessRadioGroup.add(custSessFeedbackRate5Radio);
 		
-		cust_trainSessFeedbackEdit = new JTextField();
-		cust_trainSessFeedbackEdit.setHorizontalAlignment(SwingConstants.CENTER);
-		cust_trainSessFeedbackEdit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		cust_trainSessFeedbackEdit.setText("feedback comment");
-		cust_trainSessFeedbackEdit.setColumns(10);
-		cust_trainSessFeedbackEdit.setBounds(849, 198, 241, 87);
-		cust_trainSessPanel.add(cust_trainSessFeedbackEdit);
+		custSessFeedbackEdit = new JTextField();
+		custSessFeedbackEdit.setHorizontalAlignment(SwingConstants.CENTER);
+		custSessFeedbackEdit.setFont(new Font("Tahoma", Font.BOLD, 14));
+		custSessFeedbackEdit.setText("feedback comment");
+		custSessFeedbackEdit.setColumns(10);
+		custSessFeedbackEdit.setBounds(849, 198, 241, 87);
+		custSessPanel.add(custSessFeedbackEdit);
 		
-		JLabel lblNewLabel_26 = new JLabel("Start Date");
-		lblNewLabel_26.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_26.setBounds(20, 112, 77, 23);
-		cust_trainSessPanel.add(lblNewLabel_26);
+		JLabel custSessStartDateLabel = new JLabel("Start Date");
+		custSessStartDateLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		custSessStartDateLabel.setBounds(20, 112, 77, 23);
+		custSessPanel.add(custSessStartDateLabel);
 		
-		cust_trainSessStartDateChooser = new JDateChooser();
-		cust_trainSessStartDateChooser.setBounds(20, 145, 70, 19);
-		cust_trainSessPanel.add(cust_trainSessStartDateChooser);
+		custSessStartDateChooser = new JDateChooser();
+		custSessStartDateChooser.setBounds(20, 145, 70, 19);
+		custSessPanel.add(custSessStartDateChooser);
 		
-		JLabel lblNewLabel_26_1 = new JLabel("END Date");
-		lblNewLabel_26_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_26_1.setBounds(20, 184, 77, 23);
-		cust_trainSessPanel.add(lblNewLabel_26_1);
+		JLabel custSessEndDateLabel = new JLabel("End Date");
+		custSessEndDateLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		custSessEndDateLabel.setBounds(20, 184, 77, 23);
+		custSessPanel.add(custSessEndDateLabel);
 		
-		cust_trainSessEndDateChooser = new JDateChooser();
-		cust_trainSessEndDateChooser.setBounds(20, 217, 70, 19);
-		cust_trainSessPanel.add(cust_trainSessEndDateChooser);
+		custSessEndDateChooser = new JDateChooser();
+		custSessEndDateChooser.setBounds(20, 217, 70, 19);
+		custSessPanel.add(custSessEndDateChooser);
 		
-		JLabel lblNewLabel = new JLabel("please select Session from the table\r\n and provide your feedback");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel.setBounds(805, 65, 349, 74);
-		cust_trainSessPanel.add(lblNewLabel);
+		JLabel custSessFeedbackLabel = new JLabel("please select Session from the table\r\n and provide your feedback");
+		custSessFeedbackLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		custSessFeedbackLabel.setBounds(805, 65, 349, 74);
+		custSessPanel.add(custSessFeedbackLabel);
 		
-		cust_trainSessPaidCombo = new JComboBox();
-		cust_trainSessPaidCombo.addItemListener(new ItemListener() {
+		custSessPaidCombo = new JComboBox();
+		custSessPaidCombo.addItemListener(new ItemListener() {
 		    public void itemStateChanged(ItemEvent e) {
 		    	if (sessionPaidCombo.getSelectedIndex() > -1)
-		    		fillCust_trainSessTable();
+		    		fillcustSessTable();
 		    }
 		});
-		cust_trainSessPaidCombo.setModel(new DefaultComboBoxModel(new String[] {"Any", "Paid", "Unpaid"}));
-		cust_trainSessPaidCombo.setSelectedIndex(0);
-		cust_trainSessPaidCombo.setFont(new Font("Tahoma", Font.BOLD, 10));
-		cust_trainSessPaidCombo.setBounds(18, 307, 72, 23);
-		cust_trainSessPanel.add(cust_trainSessPaidCombo);
+		custSessPaidCombo.setModel(new DefaultComboBoxModel(new String[] {"Any", "Paid", "Unpaid"}));
+		custSessPaidCombo.setSelectedIndex(0);
+		custSessPaidCombo.setFont(new Font("Tahoma", Font.BOLD, 10));
+		custSessPaidCombo.setBounds(18, 307, 72, 23);
+		custSessPanel.add(custSessPaidCombo);
 		
-		JLabel lblNewLabel_24_1 = new JLabel("Payment Status");
-		lblNewLabel_24_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_24_1.setBounds(10, 273, 114, 23);
-		cust_trainSessPanel.add(lblNewLabel_24_1);
+		JLabel custSessPaidLabel = new JLabel("Payment Status");
+		custSessPaidLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
+		custSessPaidLabel.setBounds(10, 273, 114, 23);
+		custSessPanel.add(custSessPaidLabel);
 		Image image3 = new ImageIcon("img/payment-creditcard-visa-icon.png").getImage();
 		
-		cust_trainSessStartDateChooser.getDateEditor().addPropertyChangeListener(
+		custSessStartDateChooser.getDateEditor().addPropertyChangeListener(
 		    new PropertyChangeListener() {
 		        @Override
 		        public void propertyChange(PropertyChangeEvent e) {
-		        	fillCust_trainSessTable();
+		        	fillcustSessTable();
 		        }
 		    }
 	    );
-		cust_trainSessEndDateChooser.getDateEditor().addPropertyChangeListener(
+		custSessEndDateChooser.getDateEditor().addPropertyChangeListener(
 		    new PropertyChangeListener() {
 		        @Override
 		        public void propertyChange(PropertyChangeEvent e) {
-		        	fillCust_trainSessTable();
+		        	fillcustSessTable();
 		        }
 		    }
 	    );
 		
-		JPanel custPersonalPanel = new JPanel();
-		custPersonalPanel.setBackground(Color.CYAN);
-		contentPane.add(custPersonalPanel, "Presonal_Details");
-		custPersonalPanel.setLayout(null);
+		JPanel personalPanel = new JPanel();
+		personalPanel.setBackground(Color.CYAN);
+		contentPane.add(personalPanel, "Presonal_Details");
+		personalPanel.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("Presonal Details ");
-		lblNewLabel_2.setIcon(new ImageIcon("img\\personal-information-icon.png"));
-		lblNewLabel_2.setFont(new Font("Algerian", Font.PLAIN, 25));
-		lblNewLabel_2.setBounds(247, 27, 297, 66);
-		custPersonalPanel.add(lblNewLabel_2);
+		JLabel personalLabel = new JLabel("Personal Details ");
+		personalLabel.setIcon(new ImageIcon("img\\personal-information-icon.png"));
+		personalLabel.setFont(new Font("Algerian", Font.PLAIN, 25));
+		personalLabel.setBounds(247, 27, 297, 66);
+		personalPanel.add(personalLabel);
 		
 		personalNameEdit = new JTextField();
 		personalNameEdit.setColumns(10);
 		personalNameEdit.setBounds(219, 119, 96, 20);
-		custPersonalPanel.add(personalNameEdit);
+		personalPanel.add(personalNameEdit);
 		
 		personalEmailEdit = new JTextField();
 		personalEmailEdit.setColumns(10);
 		personalEmailEdit.setBounds(219, 371, 96, 20);
-		custPersonalPanel.add(personalEmailEdit);
+		personalPanel.add(personalEmailEdit);
 		
-		JLabel lblNewLabel_3 = new JLabel("name");
-		lblNewLabel_3.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(10, 121, 45, 13);
-		custPersonalPanel.add(lblNewLabel_3);
+		JLabel personalNameLabel = new JLabel("name");
+		personalNameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		personalNameLabel.setBounds(10, 121, 45, 13);
+		personalPanel.add(personalNameLabel);
 		
-		JLabel lblNewLabel_3_1 = new JLabel("DOB");
-		lblNewLabel_3_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_3_1.setBounds(10, 316, 45, 13);
-		custPersonalPanel.add(lblNewLabel_3_1);
+		JLabel personalDateLabel = new JLabel("DOB");
+		personalDateLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		personalDateLabel.setBounds(10, 316, 45, 13);
+		personalPanel.add(personalDateLabel);
 		
-		JLabel lblNewLabel_3_2 = new JLabel("email");
-		lblNewLabel_3_2.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_3_2.setBounds(10, 369, 61, 20);
-		custPersonalPanel.add(lblNewLabel_3_2);
+		JLabel personalEmailLabel = new JLabel("email");
+		personalEmailLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		personalEmailLabel.setBounds(10, 369, 61, 20);
+		personalPanel.add(personalEmailLabel);
 		
-		JButton btnNewButton_2_1 = new JButton("Back");
-		btnNewButton_2_1.setIcon(new ImageIcon("img\\Go-back-icon.png"));
-		btnNewButton_2_1.addActionListener(new ActionListener() {
+		JButton personalBackButton = new JButton("Back");
+		personalBackButton.setIcon(new ImageIcon("img\\Go-back-icon.png"));
+		personalBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "2");
 			}
 		});
-		btnNewButton_2_1.setBounds(140, 531, 109, 36);
-		custPersonalPanel.add(btnNewButton_2_1);
+		personalBackButton.setBounds(140, 531, 109, 36);
+		personalPanel.add(personalBackButton);
 		
 		JDateChooser personalDateChooser = new JDateChooser();
 		personalDateChooser.setBounds(219, 304, 96, 19);
-		custPersonalPanel.add(personalDateChooser);
+		personalPanel.add(personalDateChooser);
 		
 
-		JButton btnNewButton_2 = new JButton("update");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton personalUpdateButton = new JButton("update");
+		personalUpdateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DB db = new DB();
 				try {
 					if (!user.password.equals(String.valueOf(personalOldPassEdit.getPassword()))) {
-						JOptionPane.showMessageDialog(null, "Your old password is incorrect","message",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Your old password is incorrect","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
 					if (db.checkEmail(personalEmailEdit.getText()) != null && !user.id.equals(db.checkEmail(personalEmailEdit.getText()))) {
-						JOptionPane.showMessageDialog(null, "The user with such email already exists","message",JOptionPane.INFORMATION_MESSAGE); 
+						JOptionPane.showMessageDialog(null, "The user with such email already exists","warning",JOptionPane.INFORMATION_MESSAGE); 
 						return;
 					}
 					if (db.checkPhone(personalPhoneEdit.getText()) != null && !user.id.equals(db.checkPhone(personalPhoneEdit.getText()))) {
-						JOptionPane.showMessageDialog(null, "The user with such phone number already exists","message",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "The user with such phone number already exists","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
 					String oldName = user.name;
@@ -1307,135 +1284,135 @@ public class MainFrame extends JFrame {
 						user.dob = oldDob;
 						user.email = oldEmail;
 						user.phone = oldPhone;
-						JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","message",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 					}
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","message",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
-		btnNewButton_2.setIcon(new ImageIcon("img\\update & delete member.png"));
-		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_2.setBounds(470, 529, 160, 36);
-		custPersonalPanel.add(btnNewButton_2);
+		personalUpdateButton.setIcon(new ImageIcon("img\\update & delete member.png"));
+		personalUpdateButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		personalUpdateButton.setBounds(470, 529, 160, 36);
+		personalPanel.add(personalUpdateButton);
 		
-		JLabel lblNewLabel_3_3 = new JLabel("Old password");
-		lblNewLabel_3_3.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_3_3.setBounds(10, 192, 167, 13);
-		custPersonalPanel.add(lblNewLabel_3_3);
+		JLabel personalOldPassLabel = new JLabel("Old password");
+		personalOldPassLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		personalOldPassLabel.setBounds(10, 192, 167, 13);
+		personalPanel.add(personalOldPassLabel);
 		
-		JLabel lblNewLabel_3_4 = new JLabel("New password");
-		lblNewLabel_3_4.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_3_4.setBounds(10, 251, 135, 13);
-		custPersonalPanel.add(lblNewLabel_3_4);
+		JLabel personalNewPassLabel = new JLabel("New password");
+		personalNewPassLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		personalNewPassLabel.setBounds(10, 251, 135, 13);
+		personalPanel.add(personalNewPassLabel);
 		
 		personalOldPassEdit = new JPasswordField();
 		personalOldPassEdit.setBounds(219, 190, 96, 20);
-		custPersonalPanel.add(personalOldPassEdit);
+		personalPanel.add(personalOldPassEdit);
 		
 		personalNewPassEdit = new JPasswordField();
 		personalNewPassEdit.setBounds(219, 249, 96, 20);
-		custPersonalPanel.add(personalNewPassEdit);
+		personalPanel.add(personalNewPassEdit);
 		
-		JLabel lblNewLabel_3_2_1 = new JLabel("phone");
-		lblNewLabel_3_2_1.setFont(new Font("Dialog", Font.BOLD, 15));
-		lblNewLabel_3_2_1.setBounds(10, 438, 61, 20);
-		custPersonalPanel.add(lblNewLabel_3_2_1);
+		JLabel personalPhoneLabel = new JLabel("phone");
+		personalPhoneLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		personalPhoneLabel.setBounds(10, 438, 61, 20);
+		personalPanel.add(personalPhoneLabel);
 		
 		personalPhoneEdit = new JTextField();
 		personalPhoneEdit.setColumns(10);
 		personalPhoneEdit.setBounds(219, 440, 96, 20);
-		custPersonalPanel.add(personalPhoneEdit);
+		personalPanel.add(personalPhoneEdit);
 		
-		JPanel PayPanel = new JPanel();
-		contentPane.add(PayPanel, "name_85984622353700");
-		PayPanel.setLayout(null);
+		JPanel payPanel = new JPanel();
+		contentPane.add(payPanel, "name_85984622353700");
+		payPanel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Payment Summary");
-		lblNewLabel_1.setFont(new Font("Algerian", Font.BOLD, 37));
-		lblNewLabel_1.setBounds(58, 26, 500, 117);
-		PayPanel.add(lblNewLabel_1);
+		JLabel payLabel = new JLabel("Payment Summary");
+		payLabel.setFont(new Font("Algerian", Font.BOLD, 37));
+		payLabel.setBounds(58, 26, 500, 117);
+		payPanel.add(payLabel);
 		
-		JLabel lblNewLabel_4 = new JLabel("Card type");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_4.setBounds(30, 149, 83, 30);
-		PayPanel.add(lblNewLabel_4);
+		JLabel payCardTypeLabel = new JLabel("Card type");
+		payCardTypeLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payCardTypeLabel.setBounds(30, 149, 83, 30);
+		payPanel.add(payCardTypeLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"VISA", "MasterCard", "PayPal"}));
-		comboBox.setBounds(156, 156, 83, 21);
-		PayPanel.add(comboBox);
+		JComboBox payCardTypeCombo = new JComboBox();
+		payCardTypeCombo.setModel(new DefaultComboBoxModel(new String[] {"VISA", "MasterCard", "PayPal"}));
+		payCardTypeCombo.setBounds(156, 156, 83, 21);
+		payPanel.add(payCardTypeCombo);
 		
-		JLabel lblNewLabel_15 = new JLabel("Card number");
-		lblNewLabel_15.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_15.setBounds(30, 208, 111, 21);
-		PayPanel.add(lblNewLabel_15);
+		JLabel payCardNumLabel = new JLabel("Card number");
+		payCardNumLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payCardNumLabel.setBounds(30, 208, 111, 21);
+		payPanel.add(payCardNumLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(143, 211, 209, 19);
-		PayPanel.add(textField_1);
-		textField_1.setColumns(10);
+		payCardNumEdit = new JTextField();
+		payCardNumEdit.setBounds(143, 211, 209, 19);
+		payPanel.add(payCardNumEdit);
+		payCardNumEdit.setColumns(10);
 		
-		JLabel lblNewLabel_15_1 = new JLabel("Cardholder Name");
-		lblNewLabel_15_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_15_1.setBounds(30, 361, 143, 21);
-		PayPanel.add(lblNewLabel_15_1);
+		JLabel payCardholderLabel = new JLabel("Cardholder Name");
+		payCardholderLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payCardholderLabel.setBounds(30, 361, 143, 21);
+		payPanel.add(payCardholderLabel);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(199, 364, 153, 19);
-		PayPanel.add(textField_2);
-		textField_2.setColumns(10);
+		payCardholderEdit = new JTextField();
+		payCardholderEdit.setBounds(199, 364, 153, 19);
+		payPanel.add(payCardholderEdit);
+		payCardholderEdit.setColumns(10);
 		
-		JLabel lblNewLabel_15_1_1 = new JLabel("Expiration Date");
-		lblNewLabel_15_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_15_1_1.setBounds(30, 263, 143, 21);
-		PayPanel.add(lblNewLabel_15_1_1);
+		JLabel payExpiryDateLabel = new JLabel("Expiration Date");
+		payExpiryDateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payExpiryDateLabel.setBounds(30, 263, 143, 21);
+		payPanel.add(payExpiryDateLabel);
 		
-		JDateChooser dateChooser_5 = new JDateChooser();
-		dateChooser_5.setBounds(181, 263, 103, 19);
-		PayPanel.add(dateChooser_5);
+		JDateChooser payExpiryDateChooser = new JDateChooser();
+		payExpiryDateChooser.setBounds(181, 263, 103, 19);
+		payPanel.add(payExpiryDateChooser);
 		
-		JLabel lblNewLabel_25 = new JLabel("Security Code");
-		lblNewLabel_25.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_25.setBounds(30, 314, 100, 21);
-		PayPanel.add(lblNewLabel_25);
+		JLabel paySecretLabel = new JLabel("Security Code");
+		paySecretLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		paySecretLabel.setBounds(30, 314, 100, 21);
+		payPanel.add(paySecretLabel);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		passwordField_1.setBounds(154, 317, 103, 19);
-		PayPanel.add(passwordField_1);
+		paySecretEdit = new JPasswordField();
+		paySecretEdit.setFont(new Font("Tahoma", Font.BOLD, 14));
+		paySecretEdit.setBounds(154, 317, 103, 19);
+		payPanel.add(paySecretEdit);
 		
-		JLabel lblNewLabel_30 = new JLabel("TOTAL:");
-		lblNewLabel_30.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_30.setBounds(242, 424, 61, 39);
-		PayPanel.add(lblNewLabel_30);
+		JLabel payTotalLabel = new JLabel("TOTAL:");
+		payTotalLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payTotalLabel.setBounds(242, 424, 61, 39);
+		payPanel.add(payTotalLabel);
 		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_3.setText("200");
-		textField_3.setBounds(321, 424, 69, 39);
-		PayPanel.add(textField_3);
-		textField_3.setColumns(10);
+		payTotalEdit = new JTextField();
+		payTotalEdit.setEnabled(false);
+		payTotalEdit.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payTotalEdit.setText("200");
+		payTotalEdit.setBounds(321, 424, 69, 39);
+		payPanel.add(payTotalEdit);
+		payTotalEdit.setColumns(10);
 		
-		JButton btnNewButton = new JButton("PAY");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton payButton = new JButton("PAY");
+		payButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					DB db = new DB();
-					Session session = db.getSession(String.valueOf(cust_trainSessTable.getValueAt(cust_trainSessTable.getSelectedRow(), 0)));
+					Session session = db.getSession(String.valueOf(custSessTable.getValueAt(custSessTable.getSelectedRow(), 0)));
 					session.paid = true;
 					if (db.setSession(session))
 						JOptionPane.showMessageDialog(null, "payment successful","message",JOptionPane.INFORMATION_MESSAGE);
 					else
-						JOptionPane.showMessageDialog(null, "Could not process the payment","message",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Could not process the payment","warning",JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(null, "Unfortunately our servers are not available","message",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Unfortunately our servers are not available","warning",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
 		
-		custPersonalPanel.addComponentListener(new ComponentAdapter() {
+		personalPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
 				personalNameEdit.setText(user.name);
@@ -1444,28 +1421,28 @@ public class MainFrame extends JFrame {
 				personalPhoneEdit.setText(user.phone);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton.setIcon(new ImageIcon("img\\payment.png"));
-		btnNewButton.setBounds(358, 504, 153, 30);
-		PayPanel.add(btnNewButton);
+		payButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payButton.setIcon(new ImageIcon("img\\payment.png"));
+		payButton.setBounds(358, 504, 153, 30);
+		payPanel.add(payButton);
 		
-		JLabel lblNewLabel_31 = new JLabel("");
-		lblNewLabel_31.setIcon(new ImageIcon("img\\payment-creditcard-visa-icon (1).png"));
-		lblNewLabel_31.setBounds(505, 170, 228, 189);
-		PayPanel.add(lblNewLabel_31);
+		JLabel payImgLabel = new JLabel("");
+		payImgLabel.setIcon(new ImageIcon("img\\payment-creditcard-visa-icon (1).png"));
+		payImgLabel.setBounds(505, 170, 228, 189);
+		payPanel.add(payImgLabel);
 		
-		JButton btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton payBackButton = new JButton("Back");
+		payBackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cust_trainSessStartDateChooser.setDate(null);
-				cust_trainSessEndDateChooser.setDate(null);
-				cust_trainSessPaidCombo.setSelectedIndex(0);
+				custSessStartDateChooser.setDate(null);
+				custSessEndDateChooser.setDate(null);
+				custSessPaidCombo.setSelectedIndex(0);
 				cl.show(contentPane,"10");
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1.setIcon(new ImageIcon("img\\Go-back-icon.png"));
-		btnNewButton_1.setBounds(58, 511, 115, 30);
-		PayPanel.add(btnNewButton_1);
+		payBackButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		payBackButton.setIcon(new ImageIcon("img\\Go-back-icon.png"));
+		payBackButton.setBounds(58, 511, 115, 30);
+		payPanel.add(payBackButton);
 	}
 }
