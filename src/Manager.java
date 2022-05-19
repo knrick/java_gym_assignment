@@ -18,6 +18,7 @@ public class Manager extends User {
 			user.name,
 			user.login,
 			user.password,
+			user.email,
 			user.dob.format(dateFormatter),
 			user.phone,
 		});
@@ -34,7 +35,7 @@ public class Manager extends User {
 	// returns 1 if the update was a success
 	public int registerManager(Manager manager) throws IOException {
 		DB db = new DB();
-		if (db.checkLogin(manager.login)) {
+		if (db.checkLogin(manager.login) == null) {
 			return db.setManager(manager) ? 1 : 0;
 		}
 		return -1;
@@ -46,7 +47,7 @@ public class Manager extends User {
 	// returns 1 if the update was a success
 	public int registerTrainer(Trainer trainer) throws IOException {
 		DB db = new DB();
-		if (db.checkLogin(trainer.login)) {
+		if (db.checkLogin(trainer.login) == null) {
 			return db.setTrainer(trainer) ? 1 : 0;
 		}
 		return -1;
@@ -58,7 +59,7 @@ public class Manager extends User {
 	// returns 1 if the update was a success
 	public int registerCustomer(Customer customer) throws IOException {
 		DB db = new DB();
-		if (db.checkLogin(customer.login)) {
+		if (db.checkLogin(customer.login) == null) {
 			return db.setCustomer(customer) ? 1 : 0;
 		}
 		return -1;

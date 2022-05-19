@@ -2,10 +2,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DB {
+	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private static String filename = "db.txt"; // this the db's txt file location
 	
 	// these are the lines that help us find the beginnings of the tables in the txt file
@@ -19,11 +22,19 @@ public class DB {
 	private static String endLine = "\r\n###############END#################";
 	
 	// the column names for each table
-	private static String[] userCols = {"id", "name", "login", "password", "DOB", "phone"};
-	private static String[] trainerCols = {"id", "photo"};
+	private static String[] userCols = {"id", "name", "login", "password", "email", "DOB", "phone"};
+	private static String[] trainerCols = {"id"};
 	private static String[] managerCols = {"id"};
 	private static String[] customerCols = {"id"};
 	private static String[] sessionCols = {"id", "trainer", "customer", "date", "time", "price", "paid", "rating", "feedback"};
+	
+	enum Table {
+		USERS,
+		TRAINERS,
+		MANAGERS,
+		CUSTOMERS,
+		SESSIONS
+	}
 		
 	// This function parses a row in a string format with each value separated by ;
 	// Returns a Map variable. Maps in Java are like dictionaries in python
@@ -41,7 +52,12 @@ public class DB {
 	// Reads the txt file and returns Map object of the table's rows
 	// The returned Map contains the row's index as its key
 	// and a Map object with the values of that row as the value
-	private static Map<String, Map<String, String>> getTable(String beginLine, String[] cols, Map<String, String> filter) throws IOException {
+	private static Map<String, Map<String, String>> getTable(
+			String beginLine,
+			String[] cols,
+			Map<String, String> filter,
+			Map<String, String> likeFilter
+		) throws IOException {
 		String content = new String(Files.readAllBytes(Path.of(filename)));
 		int beginIdx = content.indexOf(beginLine) + beginLine.length();
 		int endIdx = beginIdx + content.substring(beginIdx).indexOf(endLine);
@@ -52,30 +68,59 @@ public class DB {
 			Map<String, String> row = parseRow(rows[i], cols);
 			boolean match = true;
 			for (String k: filter.keySet()) {
-				if (!filter.get(k).equals(row.get(k))) match = false;
-				break;
+				if (!row.get(k).toLowerCase().equals(filter.get(k).toLowerCase())) {
+					match = false;
+					break;
+				}
 			}
+			if (match)
+				for (String k: likeFilter.keySet()) {
+					String lower1 = row.get(k).toLowerCase();
+					String lower2 = likeFilter.get(k).toLowerCase();
+					if (!row.get(k).toLowerCase().contains(likeFilter.get(k).toLowerCase())) {
+						match = false;
+						break;
+					}
+				}
 			if (match) table.put(row.get("id"), row);
 		}
 		return table;
+	}
+	
+	private static Map<String, Map<String, String>> getTable(
+			String beginLine,
+			String[] cols,
+			Map<String, String> filter
+		) throws IOException {
+		return getTable(beginLine, cols, filter, new HashMap<String, String>());
+	}
+	
+	private static Map<String, Map<String, String>> getTable(
+			String beginLine,
+			String[] cols
+		) throws IOException {
+		return getTable(beginLine, cols, new HashMap<String, String>());
 	}
 	
 	// Pass a new table to rewrite the txt file
 	// the function will return a boolean value indicating whether the output was successful
 	private static boolean setTable(Map<String, Map<String, String>> table, String beginLine, String[] cols) {
 		try {
-			String[] rows = {};
+			String[] rows = new String[table.size()];
+			String[] ids = table.keySet().toArray(new String[table.size()]);
 			for (int i = 0; i < table.size(); i++) {
-				String[] row = {};
+				Map<String, String> mapRow = table.get(ids[i]);
+				String[] row = new String[mapRow.size()];
 				for (int j = 0; j < cols.length; j++) {
-					row[j] = table.get(table.keySet().toArray()[i]).get(cols[j]);
+					String col = cols[j];
+					row[j] = mapRow.get(col);
 				}
 				rows[i] = String.join(";", row);
 			}
 			String content = String.join("\r\n", rows);
 			String origContent = new String(Files.readAllBytes(Path.of(filename)));
-			int beginIdx = content.indexOf(beginLine) + beginLine.length();
-			int endIdx = beginIdx + content.substring(beginIdx).indexOf(endLine);
+			int beginIdx = origContent.indexOf(beginLine) + beginLine.length();
+			int endIdx = beginIdx + origContent.substring(beginIdx).indexOf(endLine);
 			content = origContent.substring(0, beginIdx) + content + origContent.substring(endIdx);
 			Files.writeString(Paths.get(filename), content);
 			return true;
@@ -84,16 +129,78 @@ public class DB {
 		}
 	}
 	
+	public String getNextId(Table table) throws IOException {
+		String beginLine = new String();
+		String[] cols;
+		switch (table) {
+			case USERS:
+				beginLine = usersBeginLine;
+				cols = userCols;
+				break;
+			case TRAINERS:
+				beginLine = trainersBeginLine;
+				cols = trainerCols;
+				break;
+			case MANAGERS:
+				beginLine = managersBeginLine;
+				cols = managerCols;
+				break;
+			case CUSTOMERS:
+				beginLine = customersBeginLine;
+				cols = customerCols;
+				break;
+			case SESSIONS:
+				beginLine = sessionsBeginLine;
+				cols = sessionCols;
+				break;
+			default:
+				cols = new String[]{};
+		}
+		Map<String, Map<String, String>> tableRows = getTable(beginLine, cols, new HashMap<String, String>());
+		int max = -1;
+		for (String k: tableRows.keySet()) {
+			int id = Integer.parseInt(k);
+			if (id > max) max = id;
+		}
+		return Integer.toString(max+1);
+	}
+	
 	// Reads the users table from the txt file
 	// Returns a Map object of User class objects
 	// As the input accepts a Map object to filter the data
 	// The keys of the filter map represent the column names
 	// And values of the filter map represent the value for the appropriate column
 	public Map<String, User> getUsers(Map<String, String> filter) throws IOException {
-		Map<String, Map<String, String>> usersMap = getTable(usersBeginLine, userCols, filter);
+		Map<String, String> likeFilter = new HashMap<String, String>();
+		String nameFilter = filter.get("name");
+		if (nameFilter != null) {
+			likeFilter.put("name", nameFilter);
+			filter.remove("name");
+		}
+		String userTypeFilter = filter.remove("userType");
+		Map<String, Map<String, String>> usersMap = getTable(usersBeginLine, userCols, filter, likeFilter);
 		Map<String, User> users = new HashMap<String, User>();
 		for (String k: usersMap.keySet()) {
-			users.put(k, new User(usersMap.get(k)));
+			String id = usersMap.get(k).get("id");
+			boolean add;
+			if (userTypeFilter == null)
+				add = true;
+			else
+				switch (userTypeFilter) {
+					case "Trainer":
+						add = getTrainer(id) != null;
+						break;
+					case "Manager":
+						add = getManager(id) != null;
+						break;
+					case "Customer":
+						add = getCustomer(id) != null;
+						break;
+					default:
+						add = true;
+				}
+			if (add)
+				users.put(k, new User(usersMap.get(k)));
 		}
 		return users;
 	}
@@ -136,8 +243,7 @@ public class DB {
 		Map<String, Trainer> trainers= new HashMap<String, Trainer>();
 		for (String k: trainersMap.keySet()) {
 			Map<String, String> trainer = trainersMap.get(k);
-			User user = users.get(k);
-			trainers.put(k, new Trainer(user, trainer));
+			trainers.put(k, new Trainer(users.get(k)));
 		}
 		// convert the table into a Trainer map
 		return trainers;
@@ -272,10 +378,21 @@ public class DB {
 	// The keys of the filter map represent the column names
 	// And values of the filter map represent the value for the appropriate column
 	public Map<String, Session> getSessions(Map<String, String> filter) throws IOException {
+		LocalDate from = null;
+		LocalDate to = null;
+		if (filter.get("fromDate") != null)
+			from = LocalDate.parse(filter.remove("fromDate"), dateFormatter);
+		if (filter.get("toDate") != null)
+			to = LocalDate.parse(filter.remove("toDate"), dateFormatter);
 		Map<String, Map<String, String>> sessionsMap = getTable(sessionsBeginLine, sessionCols, filter);
 		Map<String, Session> sessions = new HashMap<String, Session>();
 		for (String k: sessionsMap.keySet()) {
-			sessions.put(k, new Session(sessionsMap.get(k)));
+			Session session = new Session(sessionsMap.get(k));
+			if (
+				(from == null || session.date.isAfter(from.minusDays(1)))
+				&& (to == null || session.date.isBefore(to.plusDays(1)))
+			)
+				sessions.put(k, session);
 		}
 		return sessions;
 	}
@@ -306,12 +423,32 @@ public class DB {
 	}
 	
 	// Tries to find a user with the login passed into the function
-	// And returns true if there is no such user in the database
-	public boolean checkLogin(String login) throws IOException {
+	// And returns true if there is such user in the database
+	public String checkLogin(String login) throws IOException {
 		Map<String, String> filter = new HashMap<String, String>();
 		filter.put("login", login);
 		Map<String, User> users = getUsers(filter);
-		return users.size() == 0;
+		for (String k: users.keySet())
+			return k;
+		return null;
+	}
+	
+	public String checkEmail(String email) throws IOException {
+		Map<String, String> filter = new HashMap<String, String>();
+		filter.put("email", email);
+		Map<String, User> users = getUsers(filter);
+		for (String k: users.keySet())
+			return k;
+		return null;
+	}
+	
+	public String checkPhone(String phone) throws IOException {
+		Map<String, String> filter = new HashMap<String, String>();
+		filter.put("phone", phone);
+		Map<String, User> users = getUsers(filter);
+		for (String k: users.keySet())
+			return k;
+		return null;
 	}
 	
 	// Checks whether the password of the specified user

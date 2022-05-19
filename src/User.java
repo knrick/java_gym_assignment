@@ -12,6 +12,7 @@ public class User {
 	public String name;
 	public String login;
 	public String password;
+	public String email;
 	public LocalDate dob;
 	public String phone;
 	
@@ -21,8 +22,9 @@ public class User {
 		name = args[1];
 		login = args[2];
 		password = args[3];
-		dob = LocalDate.parse(args[4], dateFormatter);
-		phone = args[5];
+		email = args[4];
+		dob = LocalDate.parse(args[5], dateFormatter);
+		phone = args[6];
 	}
 	
 	// the class constructor that accepts the parameters in a Map format
@@ -32,6 +34,7 @@ public class User {
 				map.get("name"),
 				map.get("login"),
 				map.get("password"),
+				map.get("email"),
 				map.get("DOB"),
 				map.get("phone"),
 		});
@@ -44,6 +47,7 @@ public class User {
 		map.put("name", name);
 		map.put("login", login);
 		map.put("password", password);
+		map.put("email", email);
 		map.put("DOB", dob.format(dateFormatter));
 		map.put("phone", phone);
 		return map;

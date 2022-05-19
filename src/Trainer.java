@@ -15,51 +15,28 @@ public class Trainer extends User{
 	// helps in string to time conversion and vice versa
 	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 	
-	public String photo;
-
 	// the class constructor that accepts the parameters in a String array format
 	public Trainer(String[] args) {
 		super(args);
-		photo = args[6];
 	}
 	
 	// the class constructor that accepts a User object and imports its parameters
 	// for the trainer parameters additionally accepts a String array
-	public Trainer(User user, String[] args) {
+	public Trainer(User user) {
 		this(new String[]{
 			user.id,
 			user.name,
 			user.login,
 			user.password,
+			user.email,
 			user.dob.format(dateFormatter),
 			user.phone,
-			args[0],
 		});
-	}
-	
-	// the class constructor that accepts a User object and imports its parameters
-	// for the trainer parameters additionally accepts a Map object
-	public Trainer(User user, Map<String, String> map) {
-		this(user, new String[] {map.get("photo")});
 	}
 	
 	// the class constructor that accepts the parameters in a Map format
 	public Trainer(Map<String, String> map) {
 		super(map);
-		photo = map.get("photo");
-	}
-	
-	// the class constructor that accepts the parameters in a Map format
-	// for extra parameters additionally accepts a String array
-	public Trainer(Map<String, String> map, String[] args) {
-		this(new User(map), args);
-	}
-	
-	// converts the trainer's parameters into a Map object
-	public Map<String, String> toMap() {
-		Map<String, String> map = super.toMap();
-		map.put("photo", photo);
-		return map;
 	}
 	
 	// returns of datetime of the next monday
@@ -113,8 +90,9 @@ public class Trainer extends User{
 		Map<String, Session> sessions = db.getSessions(filter);
 		LocalDateTime[] bookedDateTimes = new LocalDateTime[sessions.size()];
 		Map<LocalDateTime, Boolean> dateTimes = new HashMap<LocalDateTime, Boolean>();
-		for (String k: sessions.keySet()) {
-			bookedDateTimes[bookedDateTimes.length] = LocalDateTime.of(sessions.get(k).date, sessions.get(k).time);
+		for (int i = 0; i < bookedDateTimes.length; i++) {
+			String k = String.valueOf(sessions.keySet().toArray()[i]);
+			bookedDateTimes[i] = LocalDateTime.of(sessions.get(k).date, sessions.get(k).time);
 		}
 		for (
 				LocalDateTime dateTime = getNextDateTime();
@@ -128,7 +106,7 @@ public class Trainer extends User{
 					break;
 				}
 			}
-			dateTimes.put(dateTime, isIn);
+			dateTimes.put(dateTime, !isIn);
 		}
 		return dateTimes;
 	}

@@ -18,6 +18,7 @@ public class Customer extends User {
 			user.name,
 			user.login,
 			user.password,
+			user.email,
 			user.dob.format(dateFormatter),
 			user.phone,
 		});
