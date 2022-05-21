@@ -191,7 +191,7 @@ public class MainFrame extends JFrame {
 				}
 			}
 			Map<String, Map<String, String>> map = new HashMap<String, Map<String, String>>();
-			bookTable.setModel(new DefaultTableModel(tableVals, new String[] {"09:00 AM", "11:00 AM", "01:00 PM", "03:00 PM", "05:00 PM"}));
+			bookTable.setModel(new DefaultTableModel(tableVals, new String[] {"09:00", "11:00", "01:00", "03:00", "05:00"}));
 		} catch (IOException e) {
 			// TODO show message "Could not get the users data from the database"
 		}
@@ -272,22 +272,7 @@ public class MainFrame extends JFrame {
 		authPanel.setForeground(Color.CYAN);
 		contentPane.add(authPanel, "1");
 		authPanel.setLayout(null);
-		
-		JLabel authLabel = new JLabel("");
 		Image image1 = new ImageIcon("APU logo.jpg").getImage();
-		authLabel.setIcon(new ImageIcon(image1));
-		authLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
-		authLabel.setBounds(588, -50, 470, 290);
-		authPanel.add(authLabel);
-		
-		DB db = new DB();
-		try {
-			Session session = db.getSession("2");
-			if (session != null)
-				authLabel.setText(session.getDateString());
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
 		
 		JPanel mainMenuPanel = new JPanel();
 
