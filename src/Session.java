@@ -8,7 +8,7 @@ public class Session {
 	// helps in string to date conversion and vice versa
 	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	// helps in string to time conversion and vice versa
-	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+	private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 	
 	public String id;
 	public String trainer;
@@ -22,6 +22,7 @@ public class Session {
 	
 	// the class constructor that accepts the parameters in a String array format
 	public Session(String[] args) {
+		String test = "hh:mm a";
 		id = args[0];
 		trainer = args[1];
 		customer = args[2];
