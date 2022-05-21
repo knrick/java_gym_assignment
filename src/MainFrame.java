@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,6 +98,7 @@ public class MainFrame extends JFrame {
 	private JPasswordField personalOldPassEdit;
 	private JPasswordField personalNewPassEdit;
 	private JTextField personalPhoneEdit;
+	private JComboBox personalGenderCombo;
 
 	/**
 	 * Launch the application.
@@ -124,7 +126,7 @@ public class MainFrame extends JFrame {
 			for (String k: users.keySet()) {
 				map.put(k, users.get(k).toMap());
 			}
-			manageRegTable.fillData(map, new String[]{"id", "name", "login", "email", "DOB", "phone"});
+			manageRegTable.fillData(map, new String[]{"id", "name", "login", "email", "DOB", "phone", "gender"});
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Could not get the users data from the database","warning",JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -526,8 +528,8 @@ public class MainFrame extends JFrame {
 		
 		JComboBox regGenderCombo = new JComboBox();
 		regGenderCombo.setFont(new Font("Tahoma", Font.BOLD, 10));
-		regGenderCombo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
-		regGenderCombo.setBounds(233, 416, 45, 21);
+		regGenderCombo.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female", "Other"}));
+		regGenderCombo.setBounds(233, 416, 105, 21);
 		registerPanel.add(regGenderCombo);
 		
 		JDateChooser regDateChooser = new JDateChooser();
@@ -572,7 +574,8 @@ public class MainFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "The user with such phone already exists","warning",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
-					user = new User(new String[] {id, name, login, password, email, dob, phone});
+					String gender = String.valueOf(regGenderCombo.getSelectedItem());
+					user = new User(new String[] {id, name, login, password, email, dob, phone, gender});
 					boolean regStatus = false;
 					switch (userType) {
 						case TRAINER:
@@ -647,6 +650,12 @@ public class MainFrame extends JFrame {
 						}
 						user.dob = LocalDate.parse(String.valueOf(manageRegTable.getValueAt(i, 4)), localDateFormatter);
 						user.phone = String.valueOf(manageRegTable.getValueAt(i, 5));
+						user.gender = String.valueOf(manageRegTable.getValueAt(i, 6));
+						String[] genderOptions = {"Male", "Female", "Other"};
+						if (!Arrays.asList(genderOptions).contains(user.gender)) {
+							JOptionPane.showMessageDialog(null, "Gender can only be Male, Female, or Other","warning",JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
 						checkId = db.checkPhone(user.phone);
 						if (checkId != null && !checkId.equals(user.id)) {
 							JOptionPane.showMessageDialog(null, "There is already a user with phone " + user.phone,"warning",JOptionPane.INFORMATION_MESSAGE);
@@ -1199,7 +1208,7 @@ public class MainFrame extends JFrame {
 		
 		personalEmailEdit = new JTextField();
 		personalEmailEdit.setColumns(10);
-		personalEmailEdit.setBounds(219, 371, 96, 20);
+		personalEmailEdit.setBounds(219, 317, 96, 20);
 		personalPanel.add(personalEmailEdit);
 		
 		JLabel personalNameLabel = new JLabel("name");
@@ -1209,12 +1218,12 @@ public class MainFrame extends JFrame {
 		
 		JLabel personalDateLabel = new JLabel("DOB");
 		personalDateLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-		personalDateLabel.setBounds(10, 316, 45, 13);
+		personalDateLabel.setBounds(10, 277, 45, 13);
 		personalPanel.add(personalDateLabel);
 		
 		JLabel personalEmailLabel = new JLabel("email");
 		personalEmailLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-		personalEmailLabel.setBounds(10, 369, 61, 20);
+		personalEmailLabel.setBounds(10, 315, 61, 20);
 		personalPanel.add(personalEmailLabel);
 		
 		JButton personalBackButton = new JButton("Back");
@@ -1228,7 +1237,7 @@ public class MainFrame extends JFrame {
 		personalPanel.add(personalBackButton);
 		
 		JDateChooser personalDateChooser = new JDateChooser();
-		personalDateChooser.setBounds(219, 304, 96, 19);
+		personalDateChooser.setBounds(219, 265, 96, 19);
 		personalPanel.add(personalDateChooser);
 		
 
@@ -1254,12 +1263,14 @@ public class MainFrame extends JFrame {
 					LocalDate oldDob = user.dob;
 					String oldEmail = user.email;
 					String oldPhone = user.phone;
+					String oldGender = user.gender;
 					user.name = personalNameEdit.getText();
 					user.password = String.valueOf(personalNewPassEdit.getPassword());
 					if (user.password.equals("")) user.password = oldPassword;
 					user.dob = personalDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 					user.email = personalEmailEdit.getText();
 					user.phone = personalPhoneEdit.getText();
+					user.gender = String.valueOf(personalGenderCombo.getSelectedItem());
 						
 					if (db.setUser(user)) {
 						JOptionPane.showMessageDialog(null, "The details were successfully updated","message",JOptionPane.INFORMATION_MESSAGE);
@@ -1269,6 +1280,7 @@ public class MainFrame extends JFrame {
 						user.dob = oldDob;
 						user.email = oldEmail;
 						user.phone = oldPhone;
+						user.gender = oldGender;
 						JOptionPane.showMessageDialog(null, "We're sorry but the system's servers right now are unavailable","warning",JOptionPane.INFORMATION_MESSAGE);
 					}
 				} catch (IOException exc) {
@@ -1283,31 +1295,42 @@ public class MainFrame extends JFrame {
 		
 		JLabel personalOldPassLabel = new JLabel("Old password");
 		personalOldPassLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-		personalOldPassLabel.setBounds(10, 192, 167, 13);
+		personalOldPassLabel.setBounds(10, 171, 167, 13);
 		personalPanel.add(personalOldPassLabel);
 		
 		JLabel personalNewPassLabel = new JLabel("New password");
 		personalNewPassLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-		personalNewPassLabel.setBounds(10, 251, 135, 13);
+		personalNewPassLabel.setBounds(10, 220, 135, 13);
 		personalPanel.add(personalNewPassLabel);
 		
 		personalOldPassEdit = new JPasswordField();
-		personalOldPassEdit.setBounds(219, 190, 96, 20);
+		personalOldPassEdit.setBounds(219, 169, 96, 20);
 		personalPanel.add(personalOldPassEdit);
 		
 		personalNewPassEdit = new JPasswordField();
-		personalNewPassEdit.setBounds(219, 249, 96, 20);
+		personalNewPassEdit.setBounds(219, 218, 96, 20);
 		personalPanel.add(personalNewPassEdit);
 		
 		JLabel personalPhoneLabel = new JLabel("phone");
 		personalPhoneLabel.setFont(new Font("Dialog", Font.BOLD, 15));
-		personalPhoneLabel.setBounds(10, 438, 61, 20);
+		personalPhoneLabel.setBounds(10, 367, 61, 20);
 		personalPanel.add(personalPhoneLabel);
 		
 		personalPhoneEdit = new JTextField();
 		personalPhoneEdit.setColumns(10);
-		personalPhoneEdit.setBounds(219, 440, 96, 20);
+		personalPhoneEdit.setBounds(219, 369, 96, 20);
 		personalPanel.add(personalPhoneEdit);
+		
+		personalGenderCombo = new JComboBox();
+		personalGenderCombo.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female", "Other"}));
+		personalGenderCombo.setFont(new Font("Tahoma", Font.BOLD, 10));
+		personalGenderCombo.setBounds(219, 419, 105, 21);
+		personalPanel.add(personalGenderCombo);
+		
+		JLabel personalGenderLabel = new JLabel("gender");
+		personalGenderLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		personalGenderLabel.setBounds(10, 418, 72, 19);
+		personalPanel.add(personalGenderLabel);
 		
 		JPanel payPanel = new JPanel();
 		contentPane.add(payPanel, "name_85984622353700");
@@ -1404,6 +1427,7 @@ public class MainFrame extends JFrame {
 				personalDateChooser.setDate(Date.from(user.dob.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 				personalEmailEdit.setText(user.email);
 				personalPhoneEdit.setText(user.phone);
+				personalGenderCombo.setSelectedItem(user.gender);
 			}
 		});
 		payButton.setFont(new Font("Tahoma", Font.BOLD, 14));

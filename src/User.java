@@ -15,6 +15,7 @@ public class User {
 	public String email;
 	public LocalDate dob;
 	public String phone;
+	public String gender;
 	
 	// the class constructor that accepts the parameters in a String array format
 	public User(String[] args) {
@@ -25,6 +26,7 @@ public class User {
 		email = args[4];
 		dob = LocalDate.parse(args[5], dateFormatter);
 		phone = args[6];
+		gender = args[7];
 	}
 	
 	// the class constructor that accepts the parameters in a Map format
@@ -37,6 +39,7 @@ public class User {
 				map.get("email"),
 				map.get("DOB"),
 				map.get("phone"),
+				map.get("gender"),
 		});
 	}
 	
@@ -50,6 +53,7 @@ public class User {
 		map.put("email", email);
 		map.put("DOB", dob.format(dateFormatter));
 		map.put("phone", phone);
+		map.put("gender", gender);
 		return map;
 	}
 }

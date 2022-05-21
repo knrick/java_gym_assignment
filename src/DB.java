@@ -22,7 +22,7 @@ public class DB {
 	private static String endLine = "\r\n###############END#################";
 	
 	// the column names for each table
-	private static String[] userCols = {"id", "name", "login", "password", "email", "DOB", "phone"};
+	private static String[] userCols = {"id", "name", "login", "password", "email", "DOB", "phone", "gender"};
 	private static String[] trainerCols = {"id"};
 	private static String[] managerCols = {"id"};
 	private static String[] customerCols = {"id"};

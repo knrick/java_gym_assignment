@@ -1,7 +1,7 @@
-##############USERS################1;John Smith;John Smith;SuperJohnny89;john.smith@gmail.com;1989-01-01;60123456789
-2;Jane Smith;Jane Smith;SuperJaney78;jane.smith@gmail.com;1978-02-02;60123445678
-3;Elon Musk;Elon Musk;T3sl4T3sl4;elon.musk@paypal.com;1971-06-28;10023456789
-4;Esmail;esqa432;esqa1234;aasdasdasd@gmail.com;2003-06-02;0186616542
+##############USERS################1;John Smith;John Smith;SuperJohnny89;john.smith@gmail.com;1989-01-01;60123456789;Male
+2;Jane Smith;Jane Smith;SuperJaney78;jane.smith@gmail.com;1978-02-02;60123445678;Female
+3;Elon Musk;Elon Musk;T3sl4T3sl4;elon.musk@paypal.com;1971-06-28;10023456789;Male
+4;Esmail;esqa432;esqa1234;aasdasdasd@gmail.com;2003-06-02;0186616542;Other
 ###############END#################
 #############TRAINERS##############
 1

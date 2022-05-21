@@ -31,6 +31,7 @@ public class Trainer extends User{
 			user.email,
 			user.dob.format(dateFormatter),
 			user.phone,
+			user.gender
 		});
 	}
 	

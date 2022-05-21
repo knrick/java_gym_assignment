@@ -21,6 +21,7 @@ public class Customer extends User {
 			user.email,
 			user.dob.format(dateFormatter),
 			user.phone,
+			user.gender
 		});
 	}
 
