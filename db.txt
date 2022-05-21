@@ -1,14 +1,12 @@
 ##############USERS################1;John Smith;John Smith;SuperJohnny89;john.smith@gmail.com;1989-01-01;60123456789
 2;Jane Smith;Jane Smith;SuperJaney78;jane.smith@gmail.com;1978-02-02;60123445678
 3;Elon Musk;Elon Musk;T3sl4T3sl4;elon.musk@paypal.com;1971-06-28;10023456789
-4;adasd;asdad;adsasd;asdads;2022-05-19;24334
 ###############END#################
 #############TRAINERS##############
 1
 ###############END#################
 #############MANAGERS##############
 2
-4
 ###############END#################
 #############CUSTOMERS#############
 3
