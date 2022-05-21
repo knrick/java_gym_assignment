@@ -11,9 +11,9 @@ import java.util.Map;
 
 public class Trainer extends User{
 	// helps in string to datetime conversion and vice versa
-	protected static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	protected static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	// helps in string to time conversion and vice versa
-	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	protected static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 	
 	// the class constructor that accepts the parameters in a String array format
 	public Trainer(String[] args) {
